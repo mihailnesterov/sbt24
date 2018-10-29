@@ -1,0 +1,3 @@
+User-agent: *
+Host: http://sbt24.ru
+Sitemap: http://sbt24.ru/sitemap.xml
