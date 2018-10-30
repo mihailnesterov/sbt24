@@ -3,7 +3,7 @@
 return [
     'id' => 'sbt24',
     'basePath' => realpath(__DIR__.'/../'),
-    'name'=>'СпецБанкТехника',
+    'name'=>'СПЕЦБАНКТЕХНИКА',
     'language' => 'ru-RU',
     'bootstrap' => [
         'debug',
@@ -33,6 +33,9 @@ return [
                 'identityClass' => 'app\models\Users',
                 'enableAutoLogin' => true,
             ],
+        'errorHandler' => [
+            'errorAction' => 'site/error'
+        ],
         'mailer' => [ // подключаем swiftmailer
                 'class' => 'yii\swiftmailer\Mailer',
                 'useFileTransport' => true, // send to file in runtime\mail

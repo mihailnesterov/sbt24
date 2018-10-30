@@ -121,4 +121,16 @@
 		})
 	});
 	
-	
+        /* active menu */
+	$(function () {
+            var location = window.location.href;
+            var cur_url = '/sbt24/' + location.split('/').pop();    // !!!убрать '/sbt24/' заменить на '/'
+
+            $('#main-menu ul li').each(function () {
+                var link = $(this).find('a').attr('href');
+                
+                if (cur_url == link) {
+                    $(this).find('a').addClass('active_menu');
+                }
+            });
+        });

@@ -197,9 +197,6 @@ a:hover {
 /* main-menu ---------------------- */
 
 #main-menu-container {
-	/*background-color: #17324F;*/
-	/*background-color: #316DD1;*/
-	/*background-color: #3188B6;*/
 	background-color: #212121;
 }
 
@@ -225,13 +222,16 @@ a:hover {
 }
 #main-menu ul li a:hover,
 #main-menu ul li .active_menu {
-	/*background-color: #CC0000;*/
-	/*background-color: #FF693A;*/
 	background-color: #5BB112;
 	text-decoration: none;
 }
+
+#main-menu ul li a:active {
+        background-color: #5BB112;
+	text-decoration: none;
+}
+
 #main-menu ul li a:hover{
-	/*color: #17324F;*/
 	opacity: 0.95;
 }
 
@@ -239,8 +239,6 @@ a:hover {
 
 #cart {
 	padding: 0.9em 1em;
-	/*text-align: center;*/
-	/*border: 1px #5BB112 solid;*/
 }
 #cart i, #cart span {
 	margin-left: 0.1em;
@@ -260,9 +258,6 @@ a:hover {
 }
 
 #cart #cart-quantity {
-	/*background-color: #CC0000;*/
-	/*background-color: #FF523A;*/
-	/*background-color: #FF693A;*/
 	background-color: #5BB112;
 	text-decoration: none;
 	padding: 0.45em 0.7em;
@@ -271,12 +266,13 @@ a:hover {
 
 /* search ---------------------- */
 #search {
-	padding-left: 1.3em;
+	padding-left: 0.8em;
+        margin-top: 0.5em;
 }
 
-#search input {
+/*#search input {
 	max-width: 250px;
-}
+}*/
 
 #search input,
 #search button {
@@ -284,13 +280,9 @@ a:hover {
 }
 
 #search button {
-	/*background-color: #CC0000;
-	background-color: #FF523A;*/
-	/*background-color: #FF693A;*/
 	background-color: #5BB112;
 	border: 1px #5BB112 solid;
 	color: #fff;
-	font-size: 1.125em;
 }
 
 /* main ---------------------- */
@@ -357,18 +349,16 @@ a:hover {
 	padding: 0;
 	margin: 0;
 	margin-bottom: 2em;
-	transition: .3s;
+	transition: .2s;
 }
 /* catalog-menu ---------------------- */
-.navbar {
-	/*background-color: #17324F;*/
-	/*background-color: #fff;*/
-	padding: 0;
-	
+.navbar, #navbar {
+	background-color: #fff;
+	padding: 0;	
 	margin: 0;
 	width: 100%;
-	/*padding: 3em 2em 2em 3em;*/
 }
+
 #catalog-menu .navbar-nav {
 	/*background-color: #17324F;*/
 	/*background-color: #fff;*/
@@ -376,48 +366,51 @@ a:hover {
 	padding: 0;
 	margin: 0;
 	width: 100%;
-	margin-bottom: 2em;
+	margin-bottom: 1.5em;
 	/*padding: 3em 2em 2em 3em;*/
 }
 
-#catalog-menu .navbar-nav li {
+#catalog-menu ul li {
 	padding: 0 1.2em;
-	margin: 0;
-	line-height: 2.5;
+	margin: 0.5em 0;
+	line-height: 3.5;
+        width: 100%;
+        /*border: 1px red solid;*/
 }
 
-#catalog-menu .navbar-nav li a {
+#catalog-menu ul li a {
 	font-size: 1.2em;
 	/*color: #bbb;*/
 	color: #444;
 	padding: 0.3em 0;
 }
-#catalog-menu .navbar-nav li a i {
+
+#catalog-menu ul li a i {
 	margin-right: 0.8em;
 	color: #5BB112;
 }
-/*#catalog-menu .navbar-nav a:hover > #catalog-wide-menu {
-	display: block;
-}*/
-#catalog-menu .navbar-nav a:hover,
-#catalog-menu .navbar-nav .active_menu {
+
+#catalog-menu ul li a .fa-caret-right {
+	margin-top: 0.2em;
+        float: right;
+}
+
+#catalog-menu a:hover,
+#catalog-menu .active_menu {
 	color: #5BB112;
 	text-decoration: underline;
-	margin-left: 0.05em;
+	margin-left: 0.3em;
 }
 
 #catalog-menu .navbar-nav h3 {
-	/*border-bottom: 1px #E5E5E5 solid;*/
 	background-color: #5BB112;
 	padding: 1em;
 	margin-bottom: 0.5em;
-	/*color: #444;*/
 	color: #fff;
 	font-weight: normal;
 }
 #catalog-menu .navbar-nav h3 i {
 	padding-right: 0.3em;
-	/*color: #FF693A;*/
 	color: #fff;
 }
 
@@ -425,9 +418,19 @@ a:hover {
 	margin-right: 0.3em;
 }
 
-#catalog-menu .navbar-nav .dropdown:hover > .dropdown-menu
-{ 
+#catalog-menu .dropdown:hover > .dropdown-menu { 
 	display: block;	/* разворачиваем меню при наведении, а не клике */
+}
+
+#catalog-menu .dropdown .dropdown-menu { /* разворачиваем выпадающие пункты справа */
+        transform: translateY(-50%);
+        left: 100%;
+        padding: 1em 0.5em;
+}
+
+#catalog-menu .dropdown .dropdown-menu li a
+{ 
+        padding: 0.5em 1em;
 }
 
 /* banner-block ---------------------- */
@@ -719,9 +722,9 @@ footer
 /* media */
 
 @media (max-width: 543px) {
-  #search input {
-		max-width: 180px;
-	}
+    /*#search input {
+            max-width: 180px;
+    }*/
 }
 
 @media (min-width: 544px) {
