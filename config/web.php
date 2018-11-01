@@ -14,9 +14,12 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [ // правила формирования ссылок
-                    '' => 'site/index',           
+                    '' => 'site/index',
+                    
                     '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
                     '<action>' => 'site/<action>',
+                    //'category' => 'category/index',
+                    'category/<id:\d+>' => '/category-view',
                 
                     /*'<module:cabinet>/<controller:\w+>/<id:\d+>' => '<module>/<controller>/view',
                     '<module:cabinet>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<module>/<controller>/<action>',

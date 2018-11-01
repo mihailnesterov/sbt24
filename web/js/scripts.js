@@ -71,24 +71,39 @@
 	
 	/* add to cart by click on button */
 		$('.goods-buy').click(function () {			
-			$('#cart-price').html(
-				parseInt($('#cart-price').html()) + parseInt($(this.parentNode).find('span').html())
-			);
-			$('#cart-quantity').html(parseInt($('#cart-quantity').html()) + 1);
-			$.gritter.add({
-                    title: 'Товар добавлен:',
-                    text: $(this.parentNode).find('h4').html(),
-                    image: $(this.parentNode).find('img').attr('src'),
-                    sticky: false,
-					position: 'top-right',
-                    time: '2000'
-                });
+                    $('#cart-price').html(
+                            parseInt($('#cart-price').html()) + parseInt($(this.parentNode).find('span').html())
+                    );
+                    $('#cart-quantity').html(parseInt($('#cart-quantity').html()) + 1);
+                    Cookies.set('cart-price', parseInt($('#cart-price').html()), { expires: 10 });
+                    Cookies.set('cart-quantity', parseInt($('#cart-quantity').html()), { expires: 10 });
+                    $.gritter.add({
+                        title: 'Товар добавлен:',
+                        text: $(this.parentNode).find('h4').html(),
+                        image: $(this.parentNode).find('img').attr('src'),
+                        sticky: false,
+                        position: 'top-right',
+                        time: '2000'
+                    });
 		}) ;
+        
+        
+        /* read cart from cookies https://itchief.ru/lessons/javascript/javascript-working-with-cookies */
+                $(document).ready(function () {
+                    if (Cookies.get('cart-quantity')) {
+                        $('#cart-price').html(parseInt(Cookies.get('cart-price')));
+                        $('#cart-quantity').html(parseInt(Cookies.get('cart-quantity')));
+                    } else {
+                        $('#cart-price').html('0.00');
+                        $('#cart-quantity').html(parseInt(0));
+                    }
+                    
+                });
 	
 	/* swiper slider */
 	$(document).ready(function () {
-    //initialize swiper when document ready
-    var mySwiper = new Swiper ('.swiper-container', {
+        //initialize swiper when document ready
+        var mySwiper = new Swiper ('.swiper-container', {
 		// Optional parameters
 		autoplay: {
 			delay: 5000,

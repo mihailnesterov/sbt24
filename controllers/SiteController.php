@@ -3,8 +3,10 @@
 namespace app\controllers;
 
 use Yii;
+use yii\helpers\Html;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use app\models\Category;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use yii\data\Pagination;
@@ -175,4 +177,65 @@ class SiteController extends Controller
     {
         return $this->render('404');
     }*/
+    
+    public function actionCatalog()
+    {
+        $this->view->title = 'Каталог товаров';
+        $this->view->params['breadcrumbs'][] = $this->view->title;
+        
+        \Yii::$app->view->registerMetaTag([
+            'name' => 'keywords',
+            'content' => ''
+        ]);
+        \Yii::$app->view->registerMetaTag([
+            'name' => 'description',
+            'content' => ''
+        ]);
+
+        return $this->render('catalog');
+    }
+    
+    /**
+     * Displays a single Catalog model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionCatalogView($id)
+    {
+        $model = $this->findCatalogModel($id);
+        
+        $catalog_url = '..'.Yii::$app->homeUrl.'catalog';
+        $this->view->title = $model->title;
+        $this->view->params['breadcrumbs'][] = ['label' => 'Каталог', 'url' => [$catalog_url]];
+        $this->view->params['breadcrumbs'][] = $model->title;
+        
+        \Yii::$app->view->registerMetaTag([
+            'name' => 'keywords',
+            'content' => $model->keywords
+        ]);
+        \Yii::$app->view->registerMetaTag([
+            'name' => 'description',
+            'content' => $model->description
+        ]);
+
+        return $this->render('catalog/view', [
+            'model' => $model,
+        ]);
+    }
+    /**
+     * Finds the Catalog model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Category the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findCatalogModel($id)
+    {
+        if (($model = Category::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
 }

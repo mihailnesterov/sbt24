@@ -87,6 +87,7 @@
                                     <nav id="main-menu" class="row">
                                             <ul class="col-sm-10">
                                                     <li><a href="<?= Yii::$app->urlManager->createUrl('/') ?>">Главная</a></li>
+                                                    <li><a href="<?= Yii::$app->urlManager->createUrl('catalog') ?>">Каталог</a></li>
                                                     <li><a href="<?= Yii::$app->urlManager->createUrl('services') ?>">Услуги</a></li>
                                                     <li><a href="<?= Yii::$app->urlManager->createUrl('dostavka') ?>">Доставка</a></li>
                                                     <li><a href="<?= Yii::$app->urlManager->createUrl('payment') ?>">Оплата</a></li>

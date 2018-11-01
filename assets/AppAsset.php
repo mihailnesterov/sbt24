@@ -22,6 +22,7 @@ class AppAsset extends AssetBundle
     public $js = [
         'plugins/gritter/js/jquery.gritter.js',
         'js/swiper.min.js',
+        'js/js.cookie.js',
         'js/scripts.js'
     ];
     public $depends = [
