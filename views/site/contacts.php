@@ -42,7 +42,16 @@ use yii\widgets\Breadcrumbs;
                                                     <h1><?= Html::encode($this->title) ?></h1>
                                                 </header>
                                             
+                                                <ul class="company-contacts">
+                                                    <li><i class="fa fa-address-card" aria-hidden="true"></i> <?= Yii::$app->controller->getCompany('company')->company_name ?></li>
+                                                    <li><i class="fa fa-map-marker" aria-hidden="true"></i> <?= Yii::$app->controller->getCompany('company')->address ?></li>
+                                                    <li><i class="fa fa-phone" aria-hidden="true"></i> <?= Yii::$app->controller->getCompany('company')->phone1 ?></li>
+                                                    <li><i class="fa fa-envelope" aria-hidden="true"></i> <a href="mailto:<?= Yii::$app->controller->getCompany('company')->email ?>"><?= Yii::$app->controller->getCompany('company')->email ?></a></li>
+                                                </ul>
                                             
+                                                <div class="company-map">
+                                                    <?= Yii::$app->controller->getCompany('company')->map ?>
+                                                </div>
                                                 
                                         </div>	<!-- end content-block -->
 

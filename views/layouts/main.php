@@ -2,7 +2,9 @@
     use yii\helpers\Html;
     use app\assets\AppAsset;
     
-    $directoryAsset = Yii::$app->assetManager->getPublishedUrl(Yii::$app->homeUrl.'web');
+    $directoryAsset = Yii::$app->assetManager->getPublishedUrl(Yii::$app->homeUrl.'web');   
+    $metrika = Yii::$app->controller->getYandexMetrika('metrika');
+    
     $this->beginPage();
 ?>
 
@@ -61,17 +63,17 @@
                                                                     <a href="<?= Yii::$app->urlManager->createUrl('/') ?>"><img src="images/image.png" alt="logo" class="img-responsive"></a>
                                                             </div>
                                                             <div class="col-sm-9">
-                                                                    <p id="site-name"><a href="/">СПЕЦБАНКТЕХНИКА</a></p>
-                                                                    <p id="slogan">Специализированное банковское оборудование, сервис и сопровождение</p>
+                                                                    <p id="site-name"><a href="/"><?= Yii::$app->controller->getCompany('company')->name ?></a></p>
+                                                                    <p id="slogan"><?= Yii::$app->controller->getCompany('company')->description ?></p>
                                                             </div>
                                                     </div>
                                             </div>
                                             <div id="schedule-block" class="col-md-4 text-center">
-                                                    <!--<p>Расписание</p>
-                                                    <p>Расписание</p>-->
+                                                    <p>Курс USD = <?= Yii::$app->controller->getCBRdata('currency')->Valute->USD->Value ?></p>
+                                                    <p>Курс EUR = <?= Yii::$app->controller->getCBRdata('currency')->Valute->EUR->Value ?></p>
                                             </div>
                                             <div id="top-phone-block" class="col-md-3">
-                                                    <p id="top-phone" class="text-left"><i class="fa fa-phone" aria-hidden="true"></i>+7 (391) 20-50-900</p>
+                                                    <p id="top-phone" class="text-left"><i class="fa fa-phone" aria-hidden="true"></i><?= Yii::$app->controller->getCompany('company')->phone1 ?></p>
                                                     <p id="top-user" class="text-left">
                                                             <i class="fa fa-user-o" aria-hidden="true"></i><a href="#">userlogin</a>
                                                             / 
@@ -113,7 +115,7 @@
                     <div class="container">
                             1232
                             <div class="row">
-                                    <p id="copyright" class="col-12 text-center"> <?= date('Y') ?> &copy <?= Html::a(Yii::$app->name.' | Интернет-магазин', ['/']) ?></p>
+                                    <p id="copyright" class="col-12 text-center"> <?= date('Y') ?> &copy <?= Html::a(Yii::$app->controller->getCompany('company')->name.' | Интернет-магазин', ['/']) ?> <?= Yii::$app->controller->getCompany('company')->phone1 ?> Красноярск</p>
                             </div>
                     </div>
             </footer>
@@ -122,7 +124,7 @@
         
         <div id="toTop"><i class="fa fa-chevron-up" aria-hidden="true"></i></div>
         <script>ActiveLinksMain('main-menu')</script>
-        
+        <?= $metrika ?>
         <?php $this->endBody(); ?>
     </body>
 </html>

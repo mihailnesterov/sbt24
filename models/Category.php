@@ -14,6 +14,7 @@ use Yii;
  * @property int $id id категории
  * @property int $parent id родительской категории
  * @property string $name название категории
+ * @property string $link ссылка категории
  * @property string $title заголовок категории
  * @property string $keywords ключевые слова
  * @property string $description описание категории
@@ -35,8 +36,8 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             [['parent'], 'integer'],
-            [['name'], 'required'],
-            [['name', 'title', 'keywords'], 'string', 'max' => 255],
+            [['name', 'link'], 'required'],
+            [['name', 'link', 'title', 'keywords'], 'string', 'max' => 255],
             [['description'], 'string', 'max' => 500],
         ];
     }
@@ -50,6 +51,7 @@ class Category extends \yii\db\ActiveRecord
             'id' => 'id категории',
             'parent' => 'id родительской категории',
             'name' => 'Название',
+            'link' => 'Ссылка',
             'title' => 'Заголовок',
             'keywords' => 'Ключевые слова',
             'description' => 'Описание',

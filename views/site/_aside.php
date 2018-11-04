@@ -34,7 +34,7 @@
                                 echo '<li><a href="'.Yii::$app->urlManager->createUrl(['catalog/'.$cat->id]).'"><i class="fa fa-arrow-right"></i>'.$cat->name.'</a></li>';
                             } else {
                                 echo '<li role="presentation" class="dropdown">'
-                                . '<a href="'.Yii::$app->urlManager->createUrl(['catalog/'.$cat->id]).'" data-target="'.Yii::$app->urlManager->createUrl(['catalog/'.$cat->id]).'" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-arrow-right"></i>'.$cat->name.'  <i class="fa fa-caret-right" aria-hidden="true"></i></a>';
+                                . '<a href="'.Yii::$app->urlManager->createUrl(['catalog/'.$cat->id]).'" data-target="'.Yii::$app->urlManager->createUrl(['catalog/'.$cat->link]).'" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-arrow-right"></i>'.$cat->name.'  <i class="fa fa-caret-right" aria-hidden="true"></i></a>';
                                     echo '<ul class="dropdown-menu">';
                                         foreach ($sub_category as $sub_cat):
                                             echo '<li><a href="'.Yii::$app->urlManager->createUrl(['catalog/'.$sub_cat->id]).'">'.$sub_cat->name.'</a></li>';
@@ -65,7 +65,7 @@
     <div class="aside-block">
             <div class="banner-block">
                     <header>
-                            <h3>Скидки недели</h3>
+                            <h3>Товары со скидками</h3>
                             <br>
                     </header>
                     <div class="goods-container">

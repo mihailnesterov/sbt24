@@ -15,12 +15,11 @@ return [
             'showScriptName' => false,
             'rules' => [ // правила формирования ссылок
                     '' => 'site/index',
-                    
+                    'catalog/<id:\d+>' => 'site/catalog-view',
+                    'view?id=<id:\d+>' => 'site/view',
                     '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
                     '<action>' => 'site/<action>',
-                    //'category' => 'category/index',
-                    'category/<id:\d+>' => '/category-view',
-                
+                    
                     /*'<module:cabinet>/<controller:\w+>/<id:\d+>' => '<module>/<controller>/view',
                     '<module:cabinet>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<module>/<controller>/<action>',
                     '<module:cabinet>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',*/
