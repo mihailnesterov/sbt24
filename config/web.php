@@ -29,6 +29,9 @@ return [
             'cookieValidationKey' => 'gq6Alod93xz9Sm69Qlg7E',
             'baseUrl' => '/sbt24'    // убрать web из url, на хостинге - ''
         ],
+        'cache' => [
+            'class' => 'yii\caching\FileCache',
+        ],
         'db' => require(__DIR__.'/db.php'),
         'user' => [ // подключаем текущую логику аутентификации
                 //'identityClass' => 'app\models\SignupForm',

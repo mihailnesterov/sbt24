@@ -92,6 +92,19 @@ class SiteController extends Controller
     }
     
     /*
+     * get currency daily course (2) - http://know-online.com/post/php-valuta
+     */
+    public function getCurrencies() {
+        $xml = simplexml_load_file('http://cbr.ru/scripts/XML_daily.asp');
+        $currencies = array();
+        foreach ($xml->xpath('//Valute') as $valute) {
+            $currencies[(string)$valute->CharCode] = (float)str_replace(',', '.', $valute->Value);
+        }
+        return $currencies;
+        //return $this->view->params['currency'] = $currencies;
+    }
+    
+    /*
      * get Yandex.Metrika
      */
     public function getYandexMetrika()
@@ -256,10 +269,8 @@ class SiteController extends Controller
      */
     public function actionCatalogView($id)
     {
-        $model = $this->findCatalogModel($id);
-        
-        $tovar = Tovar::find()->where(['category_id' => $model->id])->all();
-        
+        $model = $this->findCatalogModel($id);      
+        $tovar = Tovar::find()->where(['category_id' => $model->id])->all();  
         $sub_category = Category::find()->where(['parent' => $model->id])->all();
         
         $catalog_url = '..'.Yii::$app->homeUrl.'catalog';
@@ -318,6 +329,8 @@ class SiteController extends Controller
         $category = Category::find()->where(['id' => $model->category_id])->one();
         $parent_category = Category::find()->where(['id' => $category->parent])->one();
         
+        $currencies = $this->getCurrencies();
+        
         $category_url = '..'.Yii::$app->homeUrl.'catalog/'.$model->category_id;
         $parent_category_url = '..'.Yii::$app->homeUrl.'catalog/'.$parent_category->id;
         $catalog_url = '..'.Yii::$app->homeUrl.'catalog';
@@ -340,6 +353,7 @@ class SiteController extends Controller
 
         return $this->render('view', [
             'model' => $model,
+            'currencies' => $currencies
             //'sub_category' => $sub_category
         ]);
     }

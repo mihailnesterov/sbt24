@@ -56,10 +56,12 @@ use yii\widgets\Breadcrumbs;
                                                     $price = $model->price_rub;
                                                 } 
                                                 if ($model->price_usd != 0) {
-                                                    $price = $model->price_usd * Yii::$app->controller->getCBRdata('currency')->Valute->USD->Value;
+                                                    //$price = $model->price_usd * Yii::$app->controller->getCBRdata('currency')->Valute->USD->Value;
+                                                    $price = $model->price_usd * $currencies['USD'];
                                                 } 
                                                 if ($model->price_eur != 0) {
-                                                    $price = $model->price_eur * Yii::$app->controller->getCBRdata('currency')->Valute->EUR->Value;
+                                                    //$price = $model->price_eur * Yii::$app->controller->getCBRdata('currency')->Valute->EUR->Value;
+                                                    $price = $model->price_eur * $currencies['EUR'];
                                                 }
                                                 echo 'Цена: '.round($price).' руб.<br>';
                                                 

@@ -5,6 +5,8 @@
     $directoryAsset = Yii::$app->assetManager->getPublishedUrl(Yii::$app->homeUrl.'web');   
     $metrika = Yii::$app->controller->getYandexMetrika('metrika');
     
+    $currencies = Yii::$app->controller->getCurrencies();
+    
     $this->beginPage();
 ?>
 
@@ -69,8 +71,8 @@
                                                     </div>
                                             </div>
                                             <div id="schedule-block" class="col-md-4 text-center">
-                                                    <p>Курс USD = <?= Yii::$app->controller->getCBRdata('currency')->Valute->USD->Value ?></p>
-                                                    <p>Курс EUR = <?= Yii::$app->controller->getCBRdata('currency')->Valute->EUR->Value ?></p>
+                                                    <p>Курс USD = <?= $currencies['USD'] ?></p>
+                                                    <p>Курс EUR = <?= $currencies['EUR'] ?></p>
                                             </div>
                                             <div id="top-phone-block" class="col-md-3">
                                                     <p id="top-phone" class="text-left"><i class="fa fa-phone" aria-hidden="true"></i><?= Yii::$app->controller->getCompany('company')->phone1 ?></p>
