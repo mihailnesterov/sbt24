@@ -13,10 +13,17 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            //'enableStrictParsing' => true,
             'rules' => [ // правила формирования ссылок
                     '' => 'site/index',
+                    /*[
+                        'pattern' => 'catalog/<link:\w+>',
+                        'route' => 'site/catalog-view',
+                        'suffix' => '',
+                    ],*/
                     'catalog/<id:\d+>' => 'site/catalog-view',
                     'view?id=<id:\d+>' => 'site/view',
+                    'sitemap.xml' => 'site/sitemap',
                     '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
                     '<action>' => 'site/<action>',
                     

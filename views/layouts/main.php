@@ -56,72 +56,118 @@
         
         <div id="wrapper">
             <header id="header">
-                    <div id="top" class="container-fluid">
-                            <div class="container">
-                                    <div class="row">
-                                            <div id="logo-block" class="col-md-5">
-                                                    <div class="row">
-                                                            <div id="logo" class="col-sm-3">
-                                                                    <a href="<?= Yii::$app->urlManager->createUrl('/') ?>"><img src="images/image.png" alt="logo" class="img-responsive"></a>
-                                                            </div>
-                                                            <div class="col-sm-9">
-                                                                    <p id="site-name"><a href="/"><?= Yii::$app->controller->getCompany('company')->name ?></a></p>
-                                                                    <p id="slogan"><?= Yii::$app->controller->getCompany('company')->description ?></p>
-                                                            </div>
-                                                    </div>
-                                            </div>
-                                            <div id="schedule-block" class="col-md-4 text-center">
-                                                    <p>Курс USD = <?= $currencies['USD'] ?></p>
-                                                    <p>Курс EUR = <?= $currencies['EUR'] ?></p>
-                                            </div>
-                                            <div id="top-phone-block" class="col-md-3">
-                                                    <p id="top-phone" class="text-left"><i class="fa fa-phone" aria-hidden="true"></i><?= Yii::$app->controller->getCompany('company')->phone1 ?></p>
-                                                    <p id="top-user" class="text-left">
-                                                            <i class="fa fa-user-o" aria-hidden="true"></i><a href="#">userlogin</a>
-                                                            / 
-                                                            <a href="#">Выйти</a>
-                                                    </p>
-                                            </div>
-                                    </div>	<!-- end row -->
-                            </div>	<!-- end container -->
-                    </div>
+                <div id="top" class="container-fluid">
+                        <div class="container">
+                                <div class="row">
+                                        <div id="logo-block" class="col-md-5">
+                                                <div class="row">
+                                                        <div id="logo" class="col-sm-3">
+                                                                <a href="<?= Yii::$app->urlManager->createUrl('/') ?>"><img src="images/image.png" alt="logo" class="img-responsive"></a>
+                                                        </div>
+                                                        <div class="col-sm-9">
+                                                                <p id="site-name"><a href="/"><?= Yii::$app->controller->getCompany('company')->name ?></a></p>
+                                                                <p id="slogan"><?= Yii::$app->controller->getCompany('company')->description ?></p>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                        <div id="schedule-block" class="col-md-4 text-center">
+                                                <p>Курс USD = <?= $currencies['USD'] ?></p>
+                                                <p>Курс EUR = <?= $currencies['EUR'] ?></p>
+                                        </div>
+                                        <div id="top-phone-block" class="col-md-3">
+                                                <p id="top-phone" class="text-left"><i class="fa fa-phone" aria-hidden="true"></i><?= Yii::$app->controller->getCompany('company')->phone1 ?></p>
+                                                <p id="top-user" class="text-left">
+                                                        <i class="fa fa-user-o" aria-hidden="true"></i><a href="#">userlogin</a>
+                                                        / 
+                                                        <a href="#">Выйти</a>
+                                                </p>
+                                        </div>
+                                </div>	<!-- end row -->
+                        </div>	<!-- end container -->
+                </div>
 
-                    <div id="main-menu-container" class="container-fluid">
-                            <div class="container">
-                                    <nav id="main-menu" class="row">
-                                            <ul class="col-sm-10">
-                                                    <li><a href="<?= Yii::$app->urlManager->createUrl('/') ?>">Главная</a></li>
-                                                    <li><a href="<?= Yii::$app->urlManager->createUrl('catalog') ?>">Каталог</a></li>
-                                                    <li><a href="<?= Yii::$app->urlManager->createUrl('services') ?>">Услуги</a></li>
-                                                    <li><a href="<?= Yii::$app->urlManager->createUrl('dostavka') ?>">Доставка</a></li>
-                                                    <li><a href="<?= Yii::$app->urlManager->createUrl('payment') ?>">Оплата</a></li>
-                                                    <li><a href="<?= Yii::$app->urlManager->createUrl('about') ?>">О компании</a></li>
-                                                    <li><a href="<?= Yii::$app->urlManager->createUrl('contacts') ?>">Контакты</a></li>
-                                            </ul>
-                                            <div id="cart" class="col-sm-2 text-right">
-                                                    <a href="#">
-                                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                                            <span id="cart-price">0.00</span>
-                                                            <i class="fa fa-rub" aria-hidden="true"></i>
-                                                            <span id="cart-quantity">0</span>
-                                                    </a>
+                <div id="main-menu-container" class="container-fluid">
+                    <div class="container">
+                        <nav id="main-menu" class="row">
+                            <ul class="col-sm-10">
+                                <li><a href="<?= Yii::$app->urlManager->createUrl('/') ?>">Главная</a></li>
+                                <li><a href="<?= Yii::$app->urlManager->createUrl('catalog') ?>">Каталог</a></li>
+                                <li><a href="<?= Yii::$app->urlManager->createUrl('services') ?>">Услуги</a></li>
+                                <li><a href="<?= Yii::$app->urlManager->createUrl('dostavka') ?>">Доставка</a></li>
+                                <li><a href="<?= Yii::$app->urlManager->createUrl('payment') ?>">Оплата</a></li>
+                                <li><a href="<?= Yii::$app->urlManager->createUrl('about') ?>">О компании</a></li>
+                                <li><a href="<?= Yii::$app->urlManager->createUrl('contacts') ?>">Контакты</a></li>
+                            </ul>
+                            <div id="cart" class="col-sm-2 text-right">
+                                <div class="dropdown">
+                                    <a href="#" id="cart-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                        <span id="cart-price">0.00</span>
+                                        <i class="fa fa-rub" aria-hidden="true"></i>
+                                        <span id="cart-quantity">0</span>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="cart-link">
+                                        <header>
+                                            <h3><i class="fa fa-shopping-cart" aria-hidden="true"></i> Ваша корзина:</h3>
+                                        </header>
+                                        <div class="dropdown-menu-body">
+                                            <table class="table table-responsive">
+                                                <!--<thead>
+                                                    <tr>
+                                                        <th>№</th>
+                                                        <th>Наименование</th>
+                                                        <th>Цена, руб.</th>
+                                                    </tr>
+                                                </thead>-->
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="text-center"><a href="#"><img src="images/tovar1.jpg" alt="" class="img-responsive"></a></td>
+                                                        <td><?= Html::a('2-х карманный сортировщик банкнот SBM', [Yii::$app->urlManager->createUrl('catalog/')], ['class' => '']) ?></td>
+                                                        <td class="text-center">15000</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center"><a href="#"><img src="images/tovar2.jpg" alt="" class="img-responsive"></a></td>
+                                                        <td><?= Html::a('Двухкарманная счетно-сортировальная машина', [Yii::$app->urlManager->createUrl('catalog/')], ['class' => '']) ?></td>
+                                                        <td class="text-center">19560</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center"><a href="#"><img src="images/tovar3.jpg" alt="" class="img-responsive"></a></td>
+                                                        <td><?= Html::a('Двухкарманная счетно-сортировальная машина', [Yii::$app->urlManager->createUrl('catalog/')], ['class' => '']) ?></td>
+                                                        <td class="text-center">19560</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td>Итого:</td>
+                                                        <td class="text-center text-danger"><span id="cart-total">59600</span></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="text-right">
+                                                <?= Html::a('<i class="fa fa-shopping-cart" aria-hidden="true"></i> Перейти в корзину', [Yii::$app->urlManager->createUrl('../catalog')], ['class' => 'btn btn-success btn-lg']) ?>
+                                                <?= Html::a('Оформить заказ <i class="fa fa-chevron-right" aria-hidden="true"></i>', [Yii::$app->urlManager->createUrl('../catalog')], ['class' => 'btn btn-danger btn-lg']) ?>
                                             </div>
-                                    </nav>	<!-- end nav -->
-                            </div> <!-- end container -->
-                    </div>	 <!-- end container-fluid -->
-            </header>
+                                        </div>      <!-- end dropdown-menu-body -->
+                                    </div>      <!-- end dropdown-menu -->
+                                </div>      <!-- end dropdown -->
+                            </div>      <!-- end cart -->
+                        </nav>      <!-- end nav -->
+                    </div>      <!-- end container -->
+                </div>      <!-- end container-fluid -->
+            </header>   <!-- end header -->
             
             <?= $content ?>
             
             <footer class="container-fluid">
+                <div class="row">
                     <div class="container">
-                            1232
-                            <div class="row">
-                                    <p id="copyright" class="col-12 text-center"> <?= date('Y') ?> &copy <?= Html::a(Yii::$app->controller->getCompany('company')->name.' | Интернет-магазин', ['/']) ?> <?= Yii::$app->controller->getCompany('company')->phone1 ?> Красноярск</p>
-                            </div>
-                    </div>
-            </footer>
-        </div> 	<!-- end wrapper-->
+                        1232
+                        <div class="row">
+                                <p id="copyright" class="col-12 text-center"> <?= date('Y') ?> &copy <?= Html::a(Yii::$app->controller->getCompany('company')->name.' | Интернет-магазин', ['/']) ?> <?= Yii::$app->controller->getCompany('company')->phone1 ?> Красноярск</p>
+                        </div>      <!-- end row -->
+                    </div>      <!-- end container -->
+                </div>      <!-- end row -->
+            </footer>   <!-- end footer-->
+        </div>      <!-- end wrapper-->
          
         
         <div id="toTop"><i class="fa fa-chevron-up" aria-hidden="true"></i></div>

@@ -149,3 +149,14 @@
                 }
             });
         });
+        
+        /* preview i chevron change */
+	$(function () {
+            $('.preview').on('click', function(){
+                if ($(this).find('i').hasClass('fa-chevron-down')) {
+                    $(this).find('i').removeClass('fa-chevron-down').addClass('fa-chevron-up');
+                } else {
+                    $(this).find('i').removeClass('fa-chevron-up').addClass('fa-chevron-down');
+                }
+            });
+        });

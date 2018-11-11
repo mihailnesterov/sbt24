@@ -14,7 +14,7 @@ use yii\web\NotFoundHttpException;
 use yii\base\Event;
 use yii\web\View;
 use yii\data\Pagination;
-
+// https://codezeel.com/opencart/OPC02/OPC020030/
 class SiteController extends Controller
 {
     
@@ -72,7 +72,7 @@ class SiteController extends Controller
     /*
      * get daily currency course from CBR into web/daily.json
      */
-    protected function CBR_XML_Daily_Ru() {
+    /*protected function CBR_XML_Daily_Ru() {
         $json_daily_file = '../web/daily.json';
         if (!is_file($json_daily_file) || filemtime($json_daily_file) < time() - 3600) {
             if ($json_daily = file_get_contents('https://www.cbr-xml-daily.ru/daily_json.js')) {
@@ -80,19 +80,19 @@ class SiteController extends Controller
             }
         }
         return json_decode(file_get_contents($json_daily_file));
-    }
+    }*/
     
     /*
      * get currency daily course
      */
-    public function getCBRdata()
+    /*public function getCBRdata()
     {
         $data = $this->CBR_XML_Daily_Ru();        
         return $this->view->params['currency'] = $data;
-    }
+    }*/
     
     /*
-     * get currency daily course (2) - http://know-online.com/post/php-valuta
+     * get currency daily course - http://know-online.com/post/php-valuta
      */
     public function getCurrencies() {
         $xml = simplexml_load_file('http://cbr.ru/scripts/XML_daily.asp');
@@ -101,7 +101,6 @@ class SiteController extends Controller
             $currencies[(string)$valute->CharCode] = (float)str_replace(',', '.', $valute->Value);
         }
         return $currencies;
-        //return $this->view->params['currency'] = $currencies;
     }
     
     /*
@@ -272,6 +271,8 @@ class SiteController extends Controller
         $model = $this->findCatalogModel($id);      
         $tovar = Tovar::find()->where(['category_id' => $model->id])->all();  
         $sub_category = Category::find()->where(['parent' => $model->id])->all();
+        $brands = Tovar::find()->select('brand')->where(['category_id' => $model->id])->orderby(['brand'=>SORT_ASC])->distinct()->all();
+        $currencies = $this->getCurrencies();
         
         $catalog_url = '..'.Yii::$app->homeUrl.'catalog';
         $this->view->title = $model->title;
@@ -298,7 +299,9 @@ class SiteController extends Controller
         return $this->render('catalog-view', [
             'model' => $model,
             'sub_category' => $sub_category,
-            'tovar' => $tovar
+            'tovar' => $tovar,
+            'brands' => $brands,
+            'currencies' => $currencies
         ]);
     }
     /**
@@ -354,9 +357,38 @@ class SiteController extends Controller
         return $this->render('view', [
             'model' => $model,
             'currencies' => $currencies
-            //'sub_category' => $sub_category
         ]);
     }
+    
+    /**
+     * Build sitemap.xml page
+     * http://itelect.ru/post/4/sitemap-dlya-proekta-na-yii2
+     */
+    public function actionSitemap() {
+        $urls = array();
+        array_push($urls, [ \Yii::$app->urlManager->createUrl(['/']), 'weekly' ]);
+        array_push($urls, [ \Yii::$app->urlManager->createUrl(['/place-ads']), 'weekly' ]);
+        array_push($urls, [ \Yii::$app->urlManager->createUrl(['/category']), 'weekly' ]);
+
+        $categories = Category::find()->all();
+        foreach ($categories as $category) {
+            array_push($urls, [ \Yii::$app->urlManager->createUrl(['/category/' . $category->id]), 'weekly' ]);
+        }
+
+        $tovar_list = Tovar::find()->all();
+        foreach ($tovar_list as $tovar) {
+            array_push($urls, [ \Yii::$app->urlManager->createUrl(['/view?id=' . $tovar->id]), 'daily' ]);
+        }
+        
+        $xml_sitemap = $this->renderPartial('sitemap', [
+            'host' => \Yii::$app->request->hostInfo,
+            'urls' => $urls
+        ]);
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_XML;
+        echo $xml_sitemap;
+    }
+    
+    
     /**
      * Finds the Tovar model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

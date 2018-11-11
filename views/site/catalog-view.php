@@ -42,7 +42,7 @@ use yii\widgets\Breadcrumbs;
                                         <a href="#"><img src="images/category-banner-889x200.jpg" alt="" class="img-responsive"></a>
                                     </div>-->  <!-- end banner-block -->
                                     
-                                    <div class="filter-block btn-toolbar" role="group" aria-label="...">
+                                    <!--<div class="filter-block btn-toolbar" role="group" aria-label="...">
                                         <button type="button" class="btn btn-default"><i class="fa fa-eye" aria-hidden="true"></i> Новинки</button>
                                         <button type="button" class="btn btn-default"><i class="fa fa-star-o" aria-hidden="true"></i> Популярные</button>
                                         <button type="button" class="btn btn-default"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Скидки</button>
@@ -59,16 +59,37 @@ use yii\widgets\Breadcrumbs;
                                                 <li><a href="#">SBM</a></li>
                                             </ul>
                                         </div>
-                                    </div>  <!-- end filter-block -->
+                                    </div> --> <!-- end filter-block -->
                                     
                                     <div class="content-block">
                                         <header>
                                             <h1><?= Html::encode($this->title) ?></h1>
                                         </header>
                                         
+                                        <div class="filter-block btn-toolbar" role="group" aria-label="...">
+                                            <button type="button" class="btn btn-default"><i class="fa fa-eye" aria-hidden="true"></i> Новинки</button>
+                                            <button type="button" class="btn btn-default"><i class="fa fa-star-o" aria-hidden="true"></i> Популярные</button>
+                                            <button type="button" class="btn btn-default"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Скидки</button>
+
+                                            <div class="btn-group" role="group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa fa-fa" aria-hidden="true"></i> Бренды
+                                                <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <?php
+                                                        // выводим бренды
+                                                        foreach ($brands as $brand):
+                                                            echo '<li><a href="#">'.$brand->brand.'</a></li>';
+                                                        endforeach;
+                                                    ?>
+                                                </ul>
+                                            </div>
+                                        </div>  <!-- end filter-block -->
                                         
                                         <div class="goods-container">	
                                             <div class="row">
+                                                
                                                 <?php
                                                 // если есть подкатегории - выводим их, иначе - выводим товары категории
                                                 if ($sub_category != NULL) {
@@ -87,14 +108,137 @@ use yii\widgets\Breadcrumbs;
                                                 } else {
                                                     
                                                     foreach ($tovar as $good):
-                                                        //echo $good->name.'<br>';
-                                                        echo Yii::$app->urlManager->createUrl('catalog/'.$model->id.'/view?id='.$good->id);
-                                                    echo $good->name.'<br>';
-                                                        echo Html::a($good->name, [Yii::$app->urlManager->createUrl('../view?id='.$good->id)], ['class' => 'goods-more']);
+                                                        if ($good->price_rub != 0) { 
+                                                            $price = $good->price_rub;
+                                                        } 
+                                                        if ($good->price_usd != 0) {
+                                                            $price = $good->price_usd * $currencies['USD'];
+                                                        } 
+                                                        if ($good->price_eur != 0) {
+                                                            $price = $good->price_eur * $currencies['EUR'];
+                                                        }
+                                                        if ($good->discount != 0) {
+                                                            $discount = '<a href="'.Yii::$app->urlManager->createUrl('../view?id='.$good->id).'" class="label discount"><span>'.$good->discount.'%</span></a>';
+                                                        } else {
+                                                            $discount = '';
+                                                        }
+                                                        if ($good->hit != 0) {
+                                                            $hit = '<a href="'.Yii::$app->urlManager->createUrl('../view?id='.$good->id).'" class="label hit"><span><i class="fa fa-star-o" aria-hidden="true"></i></span></a>';
+                                                        } else {
+                                                            $hit = '';
+                                                        }
+                                                        echo '<div class="goods-list-block">'
+                                                            .'<div class="row">'
+                                                            .'<div class="col-md-4 col-lg-3">'
+                                                            .'<a href="'.Yii::$app->urlManager->createUrl('../view?id='.$good->id).'"><img src="images/tovar1.jpg" alt="" class="img-responsive"></a>'
+                                                            .$hit
+                                                            .$discount
+                                                            .'</div>  <!-- end col -->'
+                                                            .'<div class="col-md-8 col-lg-9">'
+                                                            .'<h3>'.Html::a($good->name, [Yii::$app->urlManager->createUrl('../view?id='.$good->id)], ['class' => 'goods-more']).'</h3>'
+                                                            .'<div class="row">'
+                                                            .'<i class="goods-price col-md-6"><span>'.round($price).'</span> &#8381;</i>'
+                                                            .'<button class="goods-buy col-md-5"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>'
+                                                            .'<p class="col-xs-12">'
+                                                            .'<a class="preview" role="button" data-toggle="collapse" href="#collapse-more-'.$good->id.'" aria-expanded="false" aria-controls="collapse-more-'.$good->id.'">'
+                                                            .$good->description
+                                                            .'<i class="fa fa-chevron-down" aria-hidden="true"></i>'
+                                                            .'</a>'
+                                                            .'</p>'
+                                                            .'</div>'
+                                                            .'<div class="collapse" id="collapse-more-'.$good->id.'">'
+                                                            .'<div class="well">'
+                                                            .$good->text
+                                                            .'</div>  <!-- end well -->'
+                                                            .'</div>  <!-- end collapse -->'
+                                                            .'<a class="preview"  role="button" data-toggle="collapse" href="#collapse-options-'.$good->id.'" aria-expanded="false" aria-controls="collapse-options-'.$good->id.'">Характеристики'
+                                                            .'<i class="fa fa-chevron-down" aria-hidden="true"></i>'
+                                                            .'</a>'
+                                                            .'<div class="collapse" id="collapse-options-'.$good->id.'">'
+                                                            .'<div class="well">'
+                                                            .'<table class="table table-bordered table-striped">'
+                                                            .'<tbody>'
+                                                            .'<tr> <td>Бренд</td><td>'.$good->brand.'</td></tr>'
+                                                            .'<tr><td>Тип</td><td>'.$good->type.'</td></tr>'
+                                                            .'<tr><td>Модель</td><td>'.$good->model.'</td></tr>'
+                                                            .'<tr><td>Гарантия</td><td>'.$good->garantee.' мес.</td></tr>'
+                                                            .'</tbody>'
+                                                            .'</table>'
+                                                            .'</div> <!-- end well -->'
+                                                            .'</div>  <!-- end collapse -->'
+                                                            .'<a href="'.Yii::$app->urlManager->createUrl('view?id='.$good->id).'" class="goods-more">Подробнее...</a>'
+                                                            .'</div>  <!-- end col -->'
+                                                            .'</div>  <!-- end row -->'
+                                                            .'</div>  <!-- end goods-list-block -->';
                                                     endforeach;
                                                 }
 
                                                 ?>
+                                                <div class="goods-list-block">
+                                                    <div class="row"> 
+                                                                                                       
+                                                        <div class="col-md-4 col-lg-3">
+                                                            <a href="#"><img src="images/tovar1.jpg" alt="" class="img-responsive"></a>
+                                                            <a href="#" class="label">
+                                                                <span><i class="fa fa-star-o" aria-hidden="true"></i></span>
+                                                            </a>
+                                                        </div>  <!-- end col -->
+                                                        <div class="col-md-8 col-lg-9">
+                                                            <h3><a href="#">Счетчик банкнот DoCash 3400 Heavy Duty</a></h3>
+                                                            
+                                                            <div class="row">
+                                                                <i class="goods-price col-md-6"><span>13560</span> &#8381;</i>
+                                                                
+                                                                <button class="goods-buy col-md-5"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
+                                                                
+                                                                <p class="col-xs-12">
+                                                                    <a class="preview" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                                                        Экономичный в использовании 2-х карманный сортировщик банкнот SBM SB-2000E для обработки средних и больших объемов наличности в операционных кассах банка и кассах пересчета. 
+                                                                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                                                    </a>
+                                                                </p>
+                                                            </div>
+                                                            
+                                                            <!--<a class="btn btn-link" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                                            Подробнее...
+                                                            </a>-->
+                                                            
+                                                            <div class="collapse" id="collapseExample">
+                                                                <div class="well">
+                                                                    Экономичный в использовании 2-х карманный сортировщик банкнот SBM SB-2000E для обработки средних и больших объемов наличности в операционных кассах банка и кассах пересчета. Два датчика видимого образа CIS позволяют считывать и сравнивать серийные номера банкнот в любой ориентации.
+                                                                </div> <!-- end well -->
+                                                            </div>  <!-- end collapse -->
+                                                            <a class="preview"  role="button" data-toggle="collapse" href="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">
+                                                                Характеристики 
+                                                                <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                                            </a>
+                                                            <div class="collapse" id="collapseExample1">
+                                                                <div class="well">
+                                                                    <table class="table table-bordered table-striped">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>Бренд</td>
+                                                                                <td>DoCash</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Вес</td>
+                                                                                <td>6,5 кг</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Скорость</td>
+                                                                                <td>10 к/с</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+
+                                                                </div> <!-- end well -->
+                                                            </div>  <!-- end collapse -->
+                                                            <a href="#" class="goods-more">Подробнее...</a>
+                                                        </div>  <!-- end col -->
+                                                    </div>  <!-- end row -->
+                                                </div>  <!-- end goods-list-block -->
+                                                
+                                                
                                         
                                             </div>	<!-- end row -->
                                         </div>	<!-- end goods-container -->

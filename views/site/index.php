@@ -74,7 +74,7 @@ use yii\widgets\Breadcrumbs;
                                                                                 <button class="goods-buy"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
                                                                         </div>
                                                                         <a href="#" class="label">
-                                                                                <span><i class="fa fa-cart-plus" aria-hidden="true"></i></span>
+                                                                                <span><i class="fa fa-eye" aria-hidden="true"></i></span>
                                                                         </a>
                                                                 </div>	<!-- end col -->
 
@@ -86,7 +86,7 @@ use yii\widgets\Breadcrumbs;
                                                                                 <button class="goods-buy"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
                                                                         </div>
                                                                         <a href="#" class="label">
-                                                                                <span><i class="fa fa-cart-plus" aria-hidden="true"></i></span>
+                                                                                <span><i class="fa fa-eye" aria-hidden="true"></i></span>
                                                                         </a>
                                                                 </div>	<!-- end col -->
 
@@ -98,7 +98,7 @@ use yii\widgets\Breadcrumbs;
                                                                                 <button class="goods-buy"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
                                                                         </div>
                                                                         <a href="#" class="label">
-                                                                                <span><i class="fa fa-cart-plus" aria-hidden="true"></i></span>
+                                                                                <span><i class="fa fa-eye" aria-hidden="true"></i></span>
                                                                         </a>
                                                                 </div>	<!-- end col -->
 
@@ -126,7 +126,7 @@ use yii\widgets\Breadcrumbs;
                                                                                 <button class="goods-buy"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
                                                                         </div>
                                                                         <a href="#" class="label">
-                                                                                <span>хит</span>
+                                                                                <span><i class="fa fa-star-o" aria-hidden="true"></i></span>
                                                                         </a>
                                                                 </div>	<!-- end col -->
 
@@ -138,7 +138,7 @@ use yii\widgets\Breadcrumbs;
                                                                                 <button class="goods-buy"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
                                                                         </div>
                                                                         <a href="#" class="label">
-                                                                                <span>хит</span>
+                                                                                <span><i class="fa fa-star-o" aria-hidden="true"></i></span>
                                                                         </a>
                                                                 </div>	<!-- end col -->
 
@@ -150,7 +150,7 @@ use yii\widgets\Breadcrumbs;
                                                                                 <button class="goods-buy"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
                                                                         </div>
                                                                         <a href="#" class="label">
-                                                                                <span>хит</span>
+                                                                                <span><i class="fa fa-star-o" aria-hidden="true"></i></span>
                                                                         </a>
                                                                 </div>	<!-- end col -->
 
