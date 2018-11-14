@@ -16,15 +16,15 @@
         <meta charset="<?= Yii::$app->charset ?>">
         
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="<?= Yii::$app->homeUrl ?>" />
+        <meta property="og:url" content="<?= Yii::$app->request->url ?>" />
         <meta property="og:title" content="<?= $this->title ?> | <?= Yii::$app->name ?>" />
-        <meta property="og:description" content="" />
-        <meta property="og:image" content="<?= Yii::$app->homeUrl ?>images/logo.png" />
+        <meta property="og:description" content="<?= $this->title ?>" />
+        <meta property="og:image" content="<?= Yii::$app->homeUrl ?>web/images/logo.png" />
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content="<?= $this->title ?> | <?= Yii::$app->name ?>" />
-        <meta name="twitter:image:src" content="<?= Yii::$app->homeUrl ?>images/logo.png" />
-        <meta name="twitter:description" content="" />
-        <link rel="image_src" href="<?= Yii::$app->homeUrl ?>images/logo.png" />
+        <meta name="twitter:image:src" content="<?= Yii::$app->homeUrl ?>web/images/logo.png" />
+        <meta name="twitter:description" content="<?= $this->title ?>" />
+        <link rel="image_src" href="<?= Yii::$app->homeUrl ?>web/images/image.png" />
 
         <base href="<?= Yii::$app->homeUrl ?>">
 

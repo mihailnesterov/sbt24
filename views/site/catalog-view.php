@@ -109,18 +109,21 @@ use yii\widgets\Breadcrumbs;
                                                     
                                                     foreach ($tovar as $good):
                                                         if ($good->price_rub != 0) { 
-                                                            $price = $good->price_rub;
+                                                            $price = round($good->price_rub);
                                                         } 
                                                         if ($good->price_usd != 0) {
-                                                            $price = $good->price_usd * $currencies['USD'];
+                                                            $price = round($good->price_usd * $currencies['USD']);
                                                         } 
                                                         if ($good->price_eur != 0) {
-                                                            $price = $good->price_eur * $currencies['EUR'];
+                                                            $price = round($good->price_eur * $currencies['EUR']);
                                                         }
                                                         if ($good->discount != 0) {
-                                                            $discount = '<a href="'.Yii::$app->urlManager->createUrl('../view?id='.$good->id).'" class="label discount"><span>'.$good->discount.'%</span></a>';
+                                                            $discount = '<a href="'.Yii::$app->urlManager->createUrl('../view?id='.$good->id).'" class="label discount"><span class="flash animated">'.$good->discount.'%</span></a>';
+                                                            $old_price = round($price);
+                                                            $price = round($price - $price/100*$good->discount);
                                                         } else {
                                                             $discount = '';
+                                                            $old_price = '';
                                                         }
                                                         if ($good->hit != 0) {
                                                             $hit = '<a href="'.Yii::$app->urlManager->createUrl('../view?id='.$good->id).'" class="label hit"><span><i class="fa fa-star-o" aria-hidden="true"></i></span></a>';
@@ -137,7 +140,7 @@ use yii\widgets\Breadcrumbs;
                                                             .'<div class="col-md-8 col-lg-9">'
                                                             .'<h3>'.Html::a($good->name, [Yii::$app->urlManager->createUrl('../view?id='.$good->id)], ['class' => 'goods-more']).'</h3>'
                                                             .'<div class="row">'
-                                                            .'<i class="goods-price col-md-6"><span>'.round($price).'</span> &#8381;</i>'
+                                                            .'<i class="goods-price col-md-6"><s>'.$old_price.'</s> <span>'.$price.'</span> &#8381;</i>'
                                                             .'<button class="goods-buy col-md-5"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>'
                                                             .'<p class="col-xs-12">'
                                                             .'<a class="preview" role="button" data-toggle="collapse" href="#collapse-more-'.$good->id.'" aria-expanded="false" aria-controls="collapse-more-'.$good->id.'">'
@@ -174,70 +177,6 @@ use yii\widgets\Breadcrumbs;
                                                 }
 
                                                 ?>
-                                                <div class="goods-list-block">
-                                                    <div class="row"> 
-                                                                                                       
-                                                        <div class="col-md-4 col-lg-3">
-                                                            <a href="#"><img src="images/tovar1.jpg" alt="" class="img-responsive"></a>
-                                                            <a href="#" class="label">
-                                                                <span><i class="fa fa-star-o" aria-hidden="true"></i></span>
-                                                            </a>
-                                                        </div>  <!-- end col -->
-                                                        <div class="col-md-8 col-lg-9">
-                                                            <h3><a href="#">Счетчик банкнот DoCash 3400 Heavy Duty</a></h3>
-                                                            
-                                                            <div class="row">
-                                                                <i class="goods-price col-md-6"><span>13560</span> &#8381;</i>
-                                                                
-                                                                <button class="goods-buy col-md-5"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
-                                                                
-                                                                <p class="col-xs-12">
-                                                                    <a class="preview" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                                                        Экономичный в использовании 2-х карманный сортировщик банкнот SBM SB-2000E для обработки средних и больших объемов наличности в операционных кассах банка и кассах пересчета. 
-                                                                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                                                                    </a>
-                                                                </p>
-                                                            </div>
-                                                            
-                                                            <!--<a class="btn btn-link" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                                            Подробнее...
-                                                            </a>-->
-                                                            
-                                                            <div class="collapse" id="collapseExample">
-                                                                <div class="well">
-                                                                    Экономичный в использовании 2-х карманный сортировщик банкнот SBM SB-2000E для обработки средних и больших объемов наличности в операционных кассах банка и кассах пересчета. Два датчика видимого образа CIS позволяют считывать и сравнивать серийные номера банкнот в любой ориентации.
-                                                                </div> <!-- end well -->
-                                                            </div>  <!-- end collapse -->
-                                                            <a class="preview"  role="button" data-toggle="collapse" href="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">
-                                                                Характеристики 
-                                                                <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                                                            </a>
-                                                            <div class="collapse" id="collapseExample1">
-                                                                <div class="well">
-                                                                    <table class="table table-bordered table-striped">
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <td>Бренд</td>
-                                                                                <td>DoCash</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>Вес</td>
-                                                                                <td>6,5 кг</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>Скорость</td>
-                                                                                <td>10 к/с</td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-
-                                                                </div> <!-- end well -->
-                                                            </div>  <!-- end collapse -->
-                                                            <a href="#" class="goods-more">Подробнее...</a>
-                                                        </div>  <!-- end col -->
-                                                    </div>  <!-- end row -->
-                                                </div>  <!-- end goods-list-block -->
-                                                
                                                 
                                         
                                             </div>	<!-- end row -->

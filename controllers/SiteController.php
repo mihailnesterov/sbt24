@@ -95,7 +95,13 @@ class SiteController extends Controller
      * get currency daily course - http://know-online.com/post/php-valuta
      */
     public function getCurrencies() {
-        $xml = simplexml_load_file('http://cbr.ru/scripts/XML_daily.asp');
+        //$xml = simplexml_load_file('http://cbr.ru/scripts/XML_daily.asp');
+        if (file_exists('http://cbr.ru/scripts/XML_daily.asp')) {
+            $xml = simplexml_load_file('http://cbr.ru/scripts/XML_daily.asp');
+        } else {
+            $xml = simplexml_load_file('../web/plugins/XML_daily.asp');
+        }
+        
         $currencies = array();
         foreach ($xml->xpath('//Valute') as $valute) {
             $currencies[(string)$valute->CharCode] = (float)str_replace(',', '.', $valute->Value);
@@ -125,11 +131,7 @@ class SiteController extends Controller
             'content' => ''
         ]);
         
-        $company = Company::find()->where(['status' => '1'])->one();
-
-        return $this->render('index', [
-            'company' => $company
-        ]);
+        return $this->render('index');
     }
     
     public function actionServices()

@@ -539,7 +539,7 @@ a:hover {
 }
 
 
-/* goods-block --------------------------*/
+/* goods-block - вывод категорий товаров --------------------------*/
 .goods-container {
 	margin: 0;
 }
@@ -553,7 +553,8 @@ a:hover {
 	transition: .1s;
 }
 .goods-container .goods-block:hover,
-.goods-container .goods-list-block:hover {
+.goods-container .goods-list-block:hover,
+.goods-container .goods-view-block:hover {
 	box-shadow: 3px 3px 5px rgba(229,229,229,0.5);
 }
 
@@ -583,7 +584,8 @@ a:hover {
 	max-height: 150px;
 }
 .goods-container .goods-block a img:hover,
-.goods-container .goods-list-block a img:hover {
+.goods-container .goods-list-block a img:hover,
+.goods-container .goods-view-block a img:hover{
 	opacity: 0.7;
 }
 
@@ -605,16 +607,15 @@ a:hover {
 }
 
 .goods-container .goods-block .goods-price,
-.goods-container .goods-list-block .goods-price {
+.goods-container .goods-list-block .goods-price,
+.goods-container .goods-view-block .goods-price{
 	margin: 0.8em 0;
 	font-size: 1.6em;
-	/*color: #555;*/
 	color: #5BB112;
-	/*font-weight: 600;*/
 }
-
 .goods-container .goods-block .goods-buy,
-.goods-container .goods-list-block .goods-buy {
+.goods-container .goods-list-block .goods-buy,
+.goods-container .goods-view-block .goods-buy {
 	display: inline-block;
 	font-size: 1.2em;
 	background-color: #fff;
@@ -629,12 +630,14 @@ a:hover {
 }
 
 .goods-container .goods-block .goods-buy i,
-.goods-container .goods-list-block .goods-buy i {
+.goods-container .goods-list-block .goods-buy i,
+.goods-container .goods-view-block .goods-buy i {
 	margin-right: 0.5em;
 }
 
 .goods-container .goods-block .goods-buy:hover,
-.goods-container .goods-list-block .goods-buy:hover {
+.goods-container .goods-list-block .goods-buy:hover,
+.goods-container .goods-view-block .goods-buy:hover {
 	box-shadow: none;
 	opacity: 0.9;
 	border: 0;
@@ -687,6 +690,7 @@ a:hover {
         font-size: 1.3em;
 }
 
+/* goods-list-block - вывод списка товаров в категории --------------------------*/
 .goods-container .goods-list-block {    /* блок товара в списке */
 	border-bottom: 1px #E5E5E5 solid;
         border-left: 0;
@@ -715,20 +719,108 @@ a:hover {
 .goods-container .goods-list-block .preview {
 	color: #1F1F1F;
         display: block;
-        margin-bottom: 0.8em;
+        margin-bottom: 0.8em;       
 }
 .goods-container .goods-list-block .preview:hover,
-.goods-container .goods-list-block .preview:active {
-        opacity: 0.8;
+.goods-container .goods-list-block .preview:active,
+.goods-container .goods-list-block .preview:visited {
+        opacity: 0.7;
 }
 .goods-container .goods-list-block .preview .fa-chevron-up,
 .goods-container .goods-list-block .preview .fa-chevron-down {
 	color: #5BB112;
         font-size: 1.4em;
+        margin-left: 0.5em;
+}
+.goods-container .goods-list-block .well {
+	line-height: 2;
+        background-color: #fff;
 }
 .goods-container .goods-list-block .label {
 	top: 0;
 	left: 0;
+}
+.goods-container .goods-list-block .goods-price s {
+	margin-right: 0.2em;
+	font-size: 0.9em;
+	color: #a5a5a5;
+}
+
+/* goods-view-block - вывод карточки товаров --------------------------*/
+.goods-container .goods-view-block {
+	/*border-bottom: 1px #E5E5E5 solid;*/
+        border-left: 0;
+        border-right: 0;
+	margin: 0;
+	padding: 1em 2em 2em 2em;
+	transition: .1s;
+}
+.goods-container .goods-view-block .goods-view-img-block {
+	border: 1px #E5E5E5 solid;
+        padding: 1em;
+}
+.goods-container .goods-view-block .goods-view-img-block:hover {
+	box-shadow: 3px 3px 5px rgba(229,229,229,0.5);
+}
+.goods-container .goods-view-block a img{
+	width: 100%;
+}
+/*.goods-container .goods-view-block h3 a {
+	color: #1F1F1F;
+}
+.goods-container .goods-view-block h3 a:hover {
+	color: #5BB112;
+}*/
+/*.goods-container .goods-view-block .preview {
+	color: #1F1F1F;
+        display: block;
+        margin-bottom: 0.8em;       
+}
+.goods-container .goods-view-block .preview:hover,
+.goods-container .goods-view-block .preview:active,
+.goods-container .goods-view-block .preview:visited {
+        opacity: 0.7;
+}
+.goods-container .goods-view-block .preview .fa-chevron-up,
+.goods-container .goods-view-block .preview .fa-chevron-down {
+	color: #5BB112;
+        font-size: 1.4em;
+        margin-left: 0.5em;
+}
+.goods-container .goods-view-block .well {
+	line-height: 2;
+        background-color: #fff;
+}*/
+.goods-container .goods-view-block .label {
+	top: 10px;
+	left: 10px;
+        cursor: default;
+}
+.goods-container .goods-view-block .goods-price s {
+	margin-right: 0.2em;
+	font-size: 0.9em;
+	color: #a5a5a5;
+}
+.goods-container .goods-view-block table {
+	margin: 1em 0;
+}
+.goods-container .goods-view-block .goods-view-tabs {
+        margin: 2em 0;
+}
+.goods-container .goods-view-block .goods-view-tabs .nav-tabs {
+        border-bottom: 0;
+}
+.goods-container .goods-view-block .goods-view-tabs .nav-tabs a {
+        /*color: #808080;*/
+}
+.goods-container .goods-view-block .goods-view-tabs .nav-tabs a:hover {
+        color: #5BB112;
+}
+.goods-container .goods-view-block .goods-view-tabs .tab-content .tab-pane {
+	padding: 1.5em;
+        text-align: justify;
+        line-height: 2;
+        border: 1px #E5E5E5 solid;
 }
 
 /* Swiper-cлайдер --------------------------*/
