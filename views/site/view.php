@@ -46,34 +46,8 @@ use yii\widgets\Breadcrumbs;
                                             <div class="goods-container">	
                                                 <div class="row">
                                                     <div class="goods-view-block">
-                                                            
-                                                            <?php
-                                                                if ($model->price_rub != 0) { 
-                                                                    $price = round($model->price_rub);
-                                                                } 
-                                                                if ($model->price_usd != 0) {
-                                                                    $price = round($model->price_usd * $currencies['USD']);
-                                                                } 
-                                                                if ($model->price_eur != 0) {
-                                                                    $price = round($model->price_eur * $currencies['EUR']);
-                                                                }
-                                                                if ($model->discount != 0) {
-                                                                    $discount = '<div class="label discount"><span class="flash animated">'.$model->discount.'%</span></div>';
-                                                                    $old_price = round($price);
-                                                                    $price = round($price - $price/100*$model->discount);
-                                                                } else {
-                                                                    $discount = '';
-                                                                    $old_price = '';
-                                                                }
-                                                                if ($model->hit != 0) {
-                                                                    $hit = '<div class="label hit"><span><i class="fa fa-star-o" aria-hidden="true"></i></span></div>';
-                                                                } else {
-                                                                    $hit = '';
-                                                                }
-                                                            ?>
-
                                                             <div class="goods-view-img-block col-md-4 col-lg-4">
-                                                                <a href="#"><img src="images/tovar1.jpg" alt="" class="img-responsive"></a>
+                                                                <img src="images/tovar1.jpg" alt="" class="img-responsive">
                                                                 <?= $hit ?>
                                                                 <?= $discount ?>
                                                             </div>  <!-- end col -->
@@ -123,7 +97,7 @@ use yii\widgets\Breadcrumbs;
 
                                                             <!-- Tabs content -->  
                                                             <div class="tab-content">
-                                                                <div role="tabpanel" class="tab-pane active" id="description"><?= $model->text ?></div>
+                                                                <div role="tabpanel" class="tab-pane active" id="description"><?= $video ?><?= $model->text ?></div>
                                                                 <div role="tabpanel" class="tab-pane" id="feature">...</div>
                                                                 <div role="tabpanel" class="tab-pane" id="ability">...</div>
                                                                 <div role="tabpanel" class="tab-pane" id="advantage">...</div>

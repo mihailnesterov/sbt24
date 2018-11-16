@@ -763,13 +763,13 @@ a:hover {
 .goods-container .goods-view-block .goods-view-img-block {
 	border: 1px #E5E5E5 solid;
         padding: 1em;
+        height: 257px;
 }
 .goods-container .goods-view-block .goods-view-img-block:hover {
 	box-shadow: 3px 3px 5px rgba(229,229,229,0.5);
 }
-.goods-container .goods-view-block a img{
+.goods-container .goods-view-block img {
 	width: 100%;
-        height: 228px;
 }
 /*.goods-container .goods-view-block h3 a {
 	color: #1F1F1F;

@@ -297,7 +297,6 @@ class SiteController extends Controller
             'name' => 'description',
             'content' => $model->description
         ]);       
-
         return $this->render('catalog-view', [
             'model' => $model,
             'sub_category' => $sub_category,
@@ -354,11 +353,45 @@ class SiteController extends Controller
         \Yii::$app->view->registerMetaTag([
             'name' => 'description',
             'content' => $model->description
-        ]);       
+        ]);  
+        
+        // настройки view
+        if ($model->price_rub != 0) { 
+            $price = round($model->price_rub);
+        } 
+        if ($model->price_usd != 0) {
+            $price = round($model->price_usd * $currencies['USD']);
+        } 
+        if ($model->price_eur != 0) {
+            $price = round($model->price_eur * $currencies['EUR']);
+        }
+        if ($model->discount != 0) {
+            $discount = '<div class="label discount"><span class="flash animated">'.$model->discount.'%</span></div>';
+            $old_price = round($price);
+            $price = round($price - $price/100*$model->discount);
+        } else {
+            $discount = '';
+            $old_price = '';
+        }
+        if ($model->hit != 0) {
+            $hit = '<div class="label hit"><span><i class="fa fa-star-o" aria-hidden="true"></i></span></div>';
+        } else {
+            $hit = '';
+        }
+        if ($model->video != NULL) {
+            $video = '<div style="position:relative;height:0;padding-bottom:56.25%;margin-bottom: 15px;"><iframe src="https://www.youtube.com/embed/'. $model->video .'?ecver=2" style="position:absolute;width:100%;height:100%;left:0" width="640" height="360" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>';
+        } else {
+            $video = '';
+        }
 
         return $this->render('view', [
             'model' => $model,
-            'currencies' => $currencies
+            'currencies' => $currencies,
+            'price' => $price,
+            'discount' => $discount,
+            'old_price' => $old_price,
+            'hit' => $hit,
+            'video' => $video
         ]);
     }
     

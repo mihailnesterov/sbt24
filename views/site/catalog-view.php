@@ -118,7 +118,7 @@ use yii\widgets\Breadcrumbs;
                                                             $price = round($good->price_eur * $currencies['EUR']);
                                                         }
                                                         if ($good->discount != 0) {
-                                                            $discount = '<a href="'.Yii::$app->urlManager->createUrl('../view?id='.$good->id).'" class="label discount"><span class="flash animated">'.$good->discount.'%</span></a>';
+                                                            $discount = '<a href="'.Yii::$app->urlManager->createUrl(Yii::$app->homeUrl.'../view?id='.$good->id).'" class="label discount"><span class="flash animated">'.$good->discount.'%</span></a>';
                                                             $old_price = round($price);
                                                             $price = round($price - $price/100*$good->discount);
                                                         } else {
@@ -126,14 +126,14 @@ use yii\widgets\Breadcrumbs;
                                                             $old_price = '';
                                                         }
                                                         if ($good->hit != 0) {
-                                                            $hit = '<a href="'.Yii::$app->urlManager->createUrl('../view?id='.$good->id).'" class="label hit"><span><i class="fa fa-star-o" aria-hidden="true"></i></span></a>';
+                                                            $hit = '<a href="'.Yii::$app->urlManager->createUrl(Yii::$app->homeUrl.'../view?id='.$good->id).'" class="label hit"><span><i class="fa fa-star-o" aria-hidden="true"></i></span></a>';
                                                         } else {
                                                             $hit = '';
                                                         }
                                                         echo '<div class="goods-list-block">'
                                                             .'<div class="row">'
                                                             .'<div class="col-md-4 col-lg-3">'
-                                                            .'<a href="'.Yii::$app->urlManager->createUrl('../view?id='.$good->id).'"><img src="images/tovar1.jpg" alt="" class="img-responsive"></a>'
+                                                            .'<a href="'.Yii::$app->urlManager->createUrl(Yii::$app->homeUrl.'../view?id='.$good->id).'"><img src="images/tovar1.jpg" alt="" class="img-responsive"></a>'
                                                             .$hit
                                                             .$discount
                                                             .'</div>  <!-- end col -->'
@@ -169,7 +169,7 @@ use yii\widgets\Breadcrumbs;
                                                             .'</table>'
                                                             .'</div> <!-- end well -->'
                                                             .'</div>  <!-- end collapse -->'
-                                                            .'<a href="'.Yii::$app->urlManager->createUrl('view?id='.$good->id).'" class="goods-more">Подробнее...</a>'
+                                                            .Html::a('Подробнее...', ['view?id='.$good->id], ['class' => 'goods-more'])
                                                             .'</div>  <!-- end col -->'
                                                             .'</div>  <!-- end row -->'
                                                             .'</div>  <!-- end goods-list-block -->';

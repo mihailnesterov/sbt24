@@ -24,6 +24,7 @@ use Yii;
  * @property string $photo2 фото 2
  * @property string $photo3 фото 3
  * @property string $photo4 фото 4
+ * @property string $video видео
  * @property string $file1 файл 1
  * @property string $file2 файл 2
  * @property string $file3 файл 3
@@ -49,9 +50,9 @@ class Tovar extends \yii\db\ActiveRecord
         return [
             [['category_id', 'name','text'], 'required'],
             [['category_id', 'garantee'], 'integer'],
-            [['text'], 'string'],
+            [['text', 'video'], 'string'],
             [['created'], 'safe'],
-            [['name', 'keywords', 'description', 'brand', 'type', 'model', 'photo1', 'photo2', 'photo3', 'photo4', 'file1', 'file2', 'file3'], 'string', 'max' => 255],
+            [['name', 'keywords', 'description', 'brand', 'type', 'model', 'photo1', 'photo2', 'photo3', 'photo4', 'video', 'file1', 'file2', 'file3'], 'string', 'max' => 255],
             [['price_rub', 'price_usd', 'price_eur'], 'string', 'max' => 20],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
         ];
@@ -80,6 +81,7 @@ class Tovar extends \yii\db\ActiveRecord
             'photo2' => 'Фото 2',
             'photo3' => 'Фото 3',
             'photo4' => 'Фото 4',
+            'video' => 'Видео',
             'file1' => 'Файл 1',
             'file2' => 'Файл 2',
             'file3' => 'Файл 3',
