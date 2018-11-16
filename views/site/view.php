@@ -46,7 +46,6 @@ use yii\widgets\Breadcrumbs;
                                             <div class="goods-container">	
                                                 <div class="row">
                                                     <div class="goods-view-block">
-                                                        <div class="row"> 
                                                             
                                                             <?php
                                                                 if ($model->price_rub != 0) { 
@@ -88,7 +87,7 @@ use yii\widgets\Breadcrumbs;
                                                                 
                                                                 <br>
                                                                 
-                                                                <table class="table table-bordered">
+                                                                <table id="goods-view-table" class="table table-bordered table-striped">
                                                                     <tbody>
                                                                         <tr>
                                                                             <td>Бренд</td>
@@ -111,7 +110,6 @@ use yii\widgets\Breadcrumbs;
                                                                 
                                                                 
                                                             </div>  <!-- end col -->
-                                                        </div>  <!-- end row -->
                                                         <hr>
                                                         <div class="goods-view-tabs">
 

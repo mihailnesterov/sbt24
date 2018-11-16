@@ -121,30 +121,30 @@
                                                 </thead>-->
                                                 <tbody>
                                                     <tr>
-                                                        <td class="text-center"><a href="#"><img src="images/tovar1.jpg" alt="" class="img-responsive"></a></td>
-                                                        <td><?= Html::a('2-х карманный сортировщик банкнот SBM', [Yii::$app->urlManager->createUrl('catalog/')], ['class' => '']) ?></td>
+                                                        <td class="text-center" width="20%"><a href="#"><img src="images/tovar1.jpg" alt="" class="img-responsive"></a></td>
+                                                        <td><?= Html::a('2-х карманный сортировщик банкнот SBM SB-2000Е', [Yii::$app->urlManager->createUrl('catalog/')], ['class' => '']) ?></td>
                                                         <td class="text-center">15000</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="text-center"><a href="#"><img src="images/tovar2.jpg" alt="" class="img-responsive"></a></td>
-                                                        <td><?= Html::a('Двухкарманная счетно-сортировальная машина', [Yii::$app->urlManager->createUrl('catalog/')], ['class' => '']) ?></td>
+                                                        <td><?= Html::a('Счетчик банкнот DoCash 3400 Heavy Duty ', [Yii::$app->urlManager->createUrl('catalog/')], ['class' => '']) ?></td>
                                                         <td class="text-center">19560</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="text-center"><a href="#"><img src="images/tovar3.jpg" alt="" class="img-responsive"></a></td>
-                                                        <td><?= Html::a('Двухкарманная счетно-сортировальная машина', [Yii::$app->urlManager->createUrl('catalog/')], ['class' => '']) ?></td>
+                                                        <td><?= Html::a('Счетчик банкнот SBM SB-1050 <i class="fa fa-close" aria-hidden="true"></i>', [Yii::$app->urlManager->createUrl('catalog/')], ['class' => '']) ?></td>
                                                         <td class="text-center">19560</td>
                                                     </tr>
                                                     <tr>
                                                         <td></td>
-                                                        <td>Итого:</td>
+                                                        <td>Сумма:</td>
                                                         <td class="text-center text-danger"><span id="cart-total">59600</span></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                             <div class="text-right">
                                                 <?= Html::a('<i class="fa fa-shopping-cart" aria-hidden="true"></i> Перейти в корзину', [Yii::$app->urlManager->createUrl('../catalog')], ['class' => 'btn btn-success btn-lg']) ?>
-                                                <?= Html::a('Оформить заказ <i class="fa fa-chevron-right" aria-hidden="true"></i>', [Yii::$app->urlManager->createUrl('../catalog')], ['class' => 'btn btn-danger btn-lg']) ?>
+                                                <?= Html::a('Оплатить <i class="fa fa-chevron-right" aria-hidden="true"></i>', [Yii::$app->urlManager->createUrl('../catalog')], ['class' => 'btn btn-danger btn-lg']) ?>
                                             </div>
                                         </div>      <!-- end dropdown-menu-body -->
                                     </div>      <!-- end dropdown-menu -->

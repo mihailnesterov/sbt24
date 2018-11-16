@@ -274,11 +274,11 @@ a:hover {
         margin-top: 10px;
         padding: 0;
         line-height: 1.5;
-        min-width: 800px;
+        min-width: 500px;
         background-color: #fff;
 }
 #cart .dropdown .dropdown-menu header {
-        padding: 1.5em 2em;
+        padding: 1em 2em;
         background-color: #5BB112;
         color: #fff;
 }
@@ -290,7 +290,7 @@ a:hover {
         margin-right: 0.5em;
 }
 #cart .dropdown .dropdown-menu .dropdown-menu-body {
-        padding: 3em;
+        padding: 2em;
 }
 #cart .dropdown .dropdown-menu table {
         background-color: #fff;
@@ -299,7 +299,7 @@ a:hover {
 }
 #cart .dropdown .dropdown-menu table td {
         vertical-align: middle;
-        padding: 1em;
+        padding: 0.5em;
         font-size: 1.2em;
         border: 0;
         border: 1px #f1f1f1 solid;
@@ -553,8 +553,7 @@ a:hover {
 	transition: .1s;
 }
 .goods-container .goods-block:hover,
-.goods-container .goods-list-block:hover,
-.goods-container .goods-view-block:hover {
+.goods-container .goods-list-block:hover {
 	box-shadow: 3px 3px 5px rgba(229,229,229,0.5);
 }
 
@@ -719,7 +718,8 @@ a:hover {
 .goods-container .goods-list-block .preview {
 	color: #1F1F1F;
         display: block;
-        margin-bottom: 0.8em;       
+        margin-bottom: 0.8em;  
+        text-align: justify;
 }
 .goods-container .goods-list-block .preview:hover,
 .goods-container .goods-list-block .preview:active,
@@ -735,6 +735,7 @@ a:hover {
 .goods-container .goods-list-block .well {
 	line-height: 2;
         background-color: #fff;
+        text-align: justify;
 }
 .goods-container .goods-list-block .label {
 	top: 0;
@@ -744,6 +745,10 @@ a:hover {
 	margin-right: 0.2em;
 	font-size: 0.9em;
 	color: #a5a5a5;
+}
+.goods-container .goods-list-block .goods-buy {
+	float: right;
+        margin-right: 1em;
 }
 
 /* goods-view-block - вывод карточки товаров --------------------------*/
@@ -764,6 +769,7 @@ a:hover {
 }
 .goods-container .goods-view-block a img{
 	width: 100%;
+        height: 228px;
 }
 /*.goods-container .goods-view-block h3 a {
 	color: #1F1F1F;
@@ -796,12 +802,16 @@ a:hover {
 	left: 10px;
         cursor: default;
 }
+.goods-container .goods-view-block .goods-buy {
+	float: right;
+        margin-right: 1em;
+}
 .goods-container .goods-view-block .goods-price s {
 	margin-right: 0.2em;
 	font-size: 0.9em;
 	color: #a5a5a5;
 }
-.goods-container .goods-view-block table {
+.goods-container .goods-view-block #goods-view-table {
 	margin: 1em 0;
 }
 .goods-container .goods-view-block .goods-view-tabs {
