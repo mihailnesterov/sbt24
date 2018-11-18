@@ -76,11 +76,21 @@
                                         </div>
                                         <div id="top-phone-block" class="col-md-3">
                                                 <p id="top-phone" class="text-left"><i class="fa fa-phone" aria-hidden="true"></i><?= Yii::$app->controller->getCompany('company')->phone1 ?></p>
-                                                <p id="top-user" class="text-left">
-                                                        <i class="fa fa-user-o" aria-hidden="true"></i><a href="#">userlogin</a>
-                                                        / 
-                                                        <a href="#">Выйти</a>
-                                                </p>
+                                                <div id="top-user" class="text-left">
+                                                    <span class="dropdown">
+                                                        <i class="fa fa-user-o" aria-hidden="true"></i>
+                                                        <a href="#" id="user-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">userlogin</a>
+                                                        <ul class="dropdown-menu" aria-labelledby="user-menu">
+                                                            <li><a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Моя корзина</a></li>
+                                                            <li><a href="#"><i class="fa fa-list-ol" aria-hidden="true"></i> Мои заказы</a></li>
+                                                            <li><a href="#"><i class="fa fa-user-o" aria-hidden="true"></i> Мой профиль</a></li>
+                                                            <li role="separator" class="divider"></li>
+                                                            <li><a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i> Выйти</a></li>
+                                                        </ul>
+                                                    </span>
+                                                    / 
+                                                    <a href="#">Выйти</a>
+                                                </div>
                                         </div>
                                 </div>	<!-- end row -->
                         </div>	<!-- end container -->
