@@ -21,6 +21,7 @@ return [
                         'route' => 'site/catalog-view',
                         'suffix' => '',
                     ],*/
+                    'view?id=<id:\d+>' => 'site/view',
                     'catalog/<id:\d+>' => 'site/catalog-view',
                     'view?id=<id:\d+>' => 'site/view',
                     'sitemap.xml' => 'site/sitemap',

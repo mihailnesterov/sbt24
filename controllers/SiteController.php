@@ -9,6 +9,9 @@ use yii\web\Controller;
 use app\models\Company;
 use app\models\Category;
 use app\models\Tovar;
+use app\models\Clients;
+use app\models\Order;
+use app\models\OrderItems;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use yii\base\Event;
@@ -116,6 +119,30 @@ class SiteController extends Controller
     {
         $metrika = '<!-- Yandex.Metrika counter --> <script type="text/javascript" > (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter51001274 = new Ya.Metrika2({ id:51001274, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = "https://mc.yandex.ru/metrika/tag.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks2"); </script> <noscript><div><img src="https://mc.yandex.ru/watch/51001274" style="position:absolute; left:-9999px;" alt="" /></div></noscript> <!-- /Yandex.Metrika counter -->';
         return $this->view->params['metrika'] = $metrika;
+    }
+    
+    /*
+     * get order from cookies
+     */
+    public function getOrderFromCookies()
+    {
+        /*$cookies = Yii::$app->getRequest()->getCookies()->getValue('cart-goods', (isset($_COOKIE['cart-goods']))? $_COOKIE['cart-goods']: 'cart-goods');
+        if($cookies != NULL) {
+            $order = Order::find()->where(['cookies' => $cookies])->one();
+            return $this->view->params['order'] = $order;
+        }
+        else {
+            return $this->view->params['order'] = '';
+        }*/
+        
+        $cookies = Yii::$app->getRequest()->getCookies()->getValue('cart-goods', (isset($_COOKIE['cart-goods']))? $_COOKIE['cart-goods']: 'cart-goods');
+        if(Yii::$app->request->cookies->has('cart-goods')) {
+        $cartGoods = Tovar::find()->where(['cookies' => $cookies])->one();
+            return $this->view->params['cartGoods'] = $cartGoods;
+        }
+        else {
+            return $this->view->params['cartGoods'] = '';
+        }
     }
     
     
@@ -438,5 +465,22 @@ class SiteController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+    
+    /**
+     * ajax cart-add-client - проверить, надо ли? если нет - удалить views/ajax/cart-to-client
+     */
+    public function actionCartAddClient()
+    {
+        $model = new Clients();
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $model->company = 'new';
+            $model->save();
+        }
+        
+        return $this->renderAjax('cart-add-client', [
+            'model' => $model,
+        ]);
     }
 }

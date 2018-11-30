@@ -41,6 +41,7 @@ use yii\widgets\Breadcrumbs;
                                         <div class="content-block">
                                             <header>
                                                 <h1><?= Html::encode($this->title) ?></h1>
+                                                <span id="goods-id" class="hidden"><?= $model->id ?></span>
                                             </header>
                                             
                                             <div class="goods-container">	
@@ -56,7 +57,7 @@ use yii\widgets\Breadcrumbs;
                                                                 
                                                                 <div class="row">                                                                    
                                                                     <i class="goods-price col-md-6"><s><?= $old_price ?></s><span><?= $price ?></span> &#8381;</i>
-                                                                    <button class="goods-buy col-md-5"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
+                                                                    <button class="goods-buy buy-from-view col-md-5"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
                                                                 </div> <!-- end row -->
                                                                 
                                                                 <br>

@@ -1,11 +1,14 @@
 <?php
     use yii\helpers\Html;
     use app\assets\AppAsset;
+    use yii\widgets\Pjax;
     
     $directoryAsset = Yii::$app->assetManager->getPublishedUrl(Yii::$app->homeUrl.'web');   
     $metrika = Yii::$app->controller->getYandexMetrika('metrika');
     
     $currencies = Yii::$app->controller->getCurrencies();
+    
+    $order = Yii::$app->controller->getOrderFromCookies('order');
     
     $this->beginPage();
 ?>
@@ -108,7 +111,9 @@
                                 <li><a href="<?= Yii::$app->urlManager->createUrl('about') ?>">О компании</a></li>
                                 <li><a href="<?= Yii::$app->urlManager->createUrl('contacts') ?>">Контакты</a></li>
                             </ul>
+                            <?php Pjax::begin(); ?>
                             <div id="cart" class="col-sm-2 text-right">
+
                                 <div class="dropdown">
                                     <a href="#" id="cart-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -118,10 +123,10 @@
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="cart-link">
                                         <header>
-                                            <h3><i class="fa fa-shopping-cart" aria-hidden="true"></i> Ваша корзина:</h3>
+                                            <h3><i class="fa fa-shopping-cart" aria-hidden="true"></i> Корзина</h3>
                                         </header>
                                         <div class="dropdown-menu-body">
-                                            <table class="table table-responsive">
+                                            <table id="cart-table" class="table table-responsive">
                                                 <!--<thead>
                                                     <tr>
                                                         <th>№</th>
@@ -130,7 +135,7 @@
                                                     </tr>
                                                 </thead>-->
                                                 <tbody>
-                                                    <tr>
+                                                    <!--<tr>
                                                         <td class="text-center" width="20%"><a href="#"><img src="images/tovar1.jpg" alt="" class="img-responsive"></a></td>
                                                         <td><?= Html::a('2-х карманный сортировщик банкнот SBM SB-2000Е', [Yii::$app->urlManager->createUrl('catalog/')], ['class' => '']) ?></td>
                                                         <td class="text-center">15000</td>
@@ -144,15 +149,18 @@
                                                         <td class="text-center"><a href="#"><img src="images/tovar3.jpg" alt="" class="img-responsive"></a></td>
                                                         <td><?= Html::a('Счетчик банкнот SBM SB-1050 <i class="fa fa-close" aria-hidden="true"></i>', [Yii::$app->urlManager->createUrl('catalog/')], ['class' => '']) ?></td>
                                                         <td class="text-center">19560</td>
+                                                    </tr>-->
+                                                    <tr id="cart-table-empty-tr">
+                                                        <td>Ваша корзина пуста...</td>
                                                     </tr>
-                                                    <tr>
+                                                    <!--<tr id="cart-table-total-tr">
                                                         <td></td>
-                                                        <td>Сумма:</td>
-                                                        <td class="text-center text-danger"><span id="cart-total">59600</span></td>
-                                                    </tr>
+                                                        <td>Корзина пуста...</td>
+                                                        <td class="text-center text-danger"><span id="cart-total"></span></td>
+                                                    </tr>-->
                                                 </tbody>
                                             </table>
-                                            <div class="text-right">
+                                            <div id="cart-table-buttons-block" class="text-right hidden">
                                                 <?= Html::a('<i class="fa fa-shopping-cart" aria-hidden="true"></i> Перейти в корзину', [Yii::$app->urlManager->createUrl('../catalog')], ['class' => 'btn btn-success btn-lg']) ?>
                                                 <?= Html::a('Оплатить <i class="fa fa-chevron-right" aria-hidden="true"></i>', [Yii::$app->urlManager->createUrl('../catalog')], ['class' => 'btn btn-danger btn-lg']) ?>
                                             </div>
@@ -160,6 +168,7 @@
                                     </div>      <!-- end dropdown-menu -->
                                 </div>      <!-- end dropdown -->
                             </div>      <!-- end cart -->
+                            <?php Pjax::end(); ?>
                         </nav>      <!-- end nav -->
                     </div>      <!-- end container -->
                 </div>      <!-- end container-fluid -->
@@ -181,7 +190,7 @@
          
         
         <div id="toTop"><i class="fa fa-chevron-up" aria-hidden="true"></i></div>
-        <script>ActiveLinksMain('main-menu')</script>
+        <!--<script>ActiveLinksMain('main-menu')</script>-->
         <?= $metrika ?>
         <?php $this->endBody(); ?>
     </body>

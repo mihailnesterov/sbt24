@@ -141,7 +141,7 @@ use yii\widgets\Breadcrumbs;
                                                             .'<h3>'.Html::a($good->name, [Yii::$app->urlManager->createUrl('../view?id='.$good->id)], ['class' => 'goods-more']).'</h3>'
                                                             .'<div class="row">'
                                                             .'<i class="goods-price col-md-6"><s>'.$old_price.'</s> <span>'.$price.'</span> &#8381;</i>'
-                                                            .'<button class="goods-buy col-md-5"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>'
+                                                            .'<button class="goods-buy buy-from-catalog-view col-md-5"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>'
                                                             .'<p class="col-xs-12">'
                                                             .'<a class="preview" role="button" data-toggle="collapse" href="#collapse-more-'.$good->id.'" aria-expanded="false" aria-controls="collapse-more-'.$good->id.'">'
                                                             .$good->description

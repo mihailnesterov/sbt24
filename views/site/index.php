@@ -3,7 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
 use yii\widgets\Breadcrumbs;
-
 ?>
 
 <main role="main">
@@ -71,7 +70,7 @@ use yii\widgets\Breadcrumbs;
                                                                                 <a href="#"><img src="images/tovar2.jpg" alt="" class="img-responsive"></a>
                                                                                 <h4>Двухкарманный счетчик банкнот банковского класса DORS 800</h4>
                                                                                 <p class="goods-price"><span>15236</span> &#8381;</p>
-                                                                                <button class="goods-buy"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
+                                                                                <button class="goods-buy buy-from-preview"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
                                                                         </div>
                                                                         <a href="#" class="label">
                                                                                 <span><i class="fa fa-eye" aria-hidden="true"></i></span>
@@ -83,7 +82,7 @@ use yii\widgets\Breadcrumbs;
                                                                                 <a href="#"><img src="images/tovar3.jpg" alt="" class="img-responsive"></a>
                                                                                 <h4>2-х карманный сортировщик банкнот SBM SB-2000Е</h4>
                                                                                 <p class="goods-price"><span>13560</span> &#8381;</p>
-                                                                                <button class="goods-buy"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
+                                                                                <button class="goods-buy buy-from-preview"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
                                                                         </div>
                                                                         <a href="#" class="label">
                                                                                 <span><i class="fa fa-eye" aria-hidden="true"></i></span>
@@ -95,7 +94,7 @@ use yii\widgets\Breadcrumbs;
                                                                                 <a href="#"><img src="images/tovar1.jpg" alt="" class="img-responsive"></a>
                                                                                 <h4>Двухкарманная счетно-сортировальная машина с функцией ветхования GLORY USF-51</h4>
                                                                                 <p class="goods-price"><span>28963.56</span> &#8381;</p>
-                                                                                <button class="goods-buy"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
+                                                                                <button class="goods-buy buy-from-preview"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
                                                                         </div>
                                                                         <a href="#" class="label">
                                                                                 <span><i class="fa fa-eye" aria-hidden="true"></i></span>
@@ -123,7 +122,7 @@ use yii\widgets\Breadcrumbs;
                                                                                 <a href="#"><img src="images/tovar1.jpg" alt="" class="img-responsive"></a>
                                                                                 <h4>2-х карманный сортировщик банкнот SBM SB-2000Е</h4>
                                                                                 <p class="goods-price"><span>13560</span> &#8381;</p>
-                                                                                <button class="goods-buy"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
+                                                                                <button class="goods-buy buy-from-preview"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
                                                                         </div>
                                                                         <a href="#" class="label">
                                                                                 <span><i class="fa fa-star-o" aria-hidden="true"></i></span>
@@ -135,7 +134,7 @@ use yii\widgets\Breadcrumbs;
                                                                                 <a href="#"><img src="images/tovar2.jpg" alt="" class="img-responsive"></a>
                                                                                 <h4>Cортировщик банкнот SBM SB-2000Е</h4>
                                                                                 <p class="goods-price"><span>11286</span> &#8381;</p>
-                                                                                <button class="goods-buy"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
+                                                                                <button class="goods-buy buy-from-preview"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
                                                                         </div>
                                                                         <a href="#" class="label">
                                                                                 <span><i class="fa fa-star-o" aria-hidden="true"></i></span>
@@ -147,7 +146,7 @@ use yii\widgets\Breadcrumbs;
                                                                                 <a href="#"><img src="images/tovar3.jpg" alt="" class="img-responsive"></a>
                                                                                 <h4>2-х карманный сортировщик банкнот SBM SB-2000Е</h4>
                                                                                 <p class="goods-price"><span>22563</span> &#8381;</p>
-                                                                                <button class="goods-buy"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
+                                                                                <button class="goods-buy buy-from-preview"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
                                                                         </div>
                                                                         <a href="#" class="label">
                                                                                 <span><i class="fa fa-star-o" aria-hidden="true"></i></span>
