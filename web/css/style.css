@@ -133,8 +133,11 @@ a:hover {
 	padding: 0.5em 0.7em;
 }
 #header #top #schedule-block {
-	border: 0px red solid;
 	padding-top: 1.5em;
+	color: #B2B2B2;
+}
+#header #top #schedule-block-admin {
+	padding-top: 0.5em;
 	color: #B2B2B2;
 }
 #header #top #logo {
@@ -467,7 +470,8 @@ a:hover {
 }
 
 #catalog-menu ul li a i {
-	margin-right: 0.8em;
+	width: 20px;
+        margin-right: 0.8em;
 	color: #5BB112;
 }
 

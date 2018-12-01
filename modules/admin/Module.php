@@ -18,8 +18,10 @@ class Module extends \yii\base\Module
     public function init()
     {
         parent::init();
-        \Yii::$app->user->loginUrl = 'admin/login';
         // custom initialization code goes here
+        
+        // login page url
+        //\Yii::$app->user->loginUrl = \Yii::$app->urlManager->createUrl('/admin/login');
     }
     
     /*

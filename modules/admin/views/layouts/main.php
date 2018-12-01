@@ -23,7 +23,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?= Html::csrfMetaTags() ?>
-        <title><?= Html::encode($this->title) ?> | Кабинет | <?= Html::encode(Yii::$app->name) ?></title>
+        <title><?= Html::encode($this->title) ?> | <?= Html::encode(Yii::$app->name) ?></title>
         
         <?php $this->head(); ?>
         
@@ -59,15 +59,15 @@
                                                         </div>
                                                 </div>
                                         </div>
-                                        <div id="schedule-block" class="col-md-4 text-center">
+                                        <div id="schedule-block-admin" class="col-md-4 text-center">
                                                 <p>Курс USD = <?= $currencies['USD'] ?></p>
                                                 <p>Курс EUR = <?= $currencies['EUR'] ?></p>
                                         </div>
                                         <div id="top-phone-block" class="col-md-3">
                                                 <div id="top-user" class="text-right">
-                                                    <i class="fa fa-user-o" aria-hidden="true"></i><a href="#" id="user-menu">userlogin</a>
+                                                    <i class="fa fa-user-o" aria-hidden="true"></i><a href="<?= Yii::$app->urlManager->createUrl('/admin/login') ?>" id="user-menu">userlogin</a>
                                                     / 
-                                                    <a href="#">Выйти</a>
+                                                    <a href="<?= Yii::$app->urlManager->createUrl('/admin/logout') ?>">Выйти</a>
                                                 </div>
                                         </div>
                                 </div>	<!-- end row -->

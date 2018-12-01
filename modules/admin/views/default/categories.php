@@ -7,16 +7,19 @@ use yii\widgets\Breadcrumbs;
 
 <main role="main">
 
-        <div id="breadcrumbs-container" class="container-fluid">
+        <div id="breadcrumbs-container" class="container-fluid hidden-xs">
                 <div class="container">
                         <div class="row">
                                 <div class="col-xs-12">
                                     <?php
                                         echo Breadcrumbs::widget([
+                                            'homeLink' => [
+                                                'label' => 'Кабинет',
+                                                'url' => Yii::$app->urlManager->createUrl('/admin'),
+                                            ],
                                             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
                                         ]);
                                     ?>
-                                    <br>
                                 </div>
                         </div>	 <!-- end row -->
                 </div> <!-- end container -->
