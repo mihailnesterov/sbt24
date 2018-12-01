@@ -16,21 +16,22 @@ return [
             //'enableStrictParsing' => true,
             'rules' => [ // правила формирования ссылок
                     '' => 'site/index',
-                    /*[
-                        'pattern' => 'catalog/<link:\w+>',
-                        'route' => 'site/catalog-view',
-                        'suffix' => '',
-                    ],*/
                     'view?id=<id:\d+>' => 'site/view',
                     'catalog/<id:\d+>' => 'site/catalog-view',
                     'view?id=<id:\d+>' => 'site/view',
                     'sitemap.xml' => 'site/sitemap',
+                    
+                    //'loginUrl' => 'admin/login',
+                
+                    '<module:admin>' => 'admin/default/index',
+                    '<module:admin>/<action>' => 'admin/default/<action>',
+                
                     '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
                     '<action>' => 'site/<action>',
-                    
-                    /*'<module:cabinet>/<controller:\w+>/<id:\d+>' => '<module>/<controller>/view',
-                    '<module:cabinet>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<module>/<controller>/<action>',
-                    '<module:cabinet>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',*/
+
+                    /*'<module:admin>/<controller:\w+>/<id:\d+>' => '<module>/<controller>/view',
+                    '<module:admin>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<module>/<controller>/<action>',
+                    '<module:admin>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',*/
             ],
         ],
         'request' => [
@@ -42,7 +43,6 @@ return [
         ],
         'db' => require(__DIR__.'/db.php'),
         'user' => [ // подключаем текущую логику аутентификации
-                //'identityClass' => 'app\models\SignupForm',
                 'identityClass' => 'app\models\Users',
                 'enableAutoLogin' => true,
             ],
@@ -68,9 +68,10 @@ return [
             'class' => 'yii\gii\Module',
             'allowedIPs' => ['*']
         ],
-        /*'cabinet' => [
-            'class' => 'app\modules\cabinet\Module',
-        ]*/
+        'admin' => [
+            'class' => 'app\modules\admin\Module',
+            'layout' => '@app/modules/admin/views/layouts/main',
+        ]
     ],
     // подключить extensions.php для: Gii
     'extensions' => require(__DIR__.'/../vendor/yiisoft/extensions.php')
