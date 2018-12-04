@@ -410,6 +410,15 @@ class SiteController extends Controller
         } else {
             $video = '';
         }
+        
+        // добавляем клиента при добавлении товара в корзину
+        $client = new Clients();
+        $client->contact='new';
+        $client->phone='+7';
+        $client->email='@';
+        if ($client->load(Yii::$app->request->post()) && $client->save() ) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
 
         return $this->render('view', [
             'model' => $model,
@@ -418,7 +427,8 @@ class SiteController extends Controller
             'discount' => $discount,
             'old_price' => $old_price,
             'hit' => $hit,
-            'video' => $video
+            'video' => $video,
+            'client' => $client
         ]);
     }
     

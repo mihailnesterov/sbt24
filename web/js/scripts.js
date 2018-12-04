@@ -144,8 +144,8 @@
                         $('#cart-total').html(totalSum);
                     });
                     $('#cart-table-buttons-block').removeClass('hidden');
-                    Cookies.set('cart-price', parseInt($('#cart-price').html()), { expires: 10 });
-                    Cookies.set('cart-quantity', parseInt($('#cart-quantity').html()), { expires: 10 });
+                    Cookies.set('cart-price', parseInt($('#cart-price').html()), { expires: -1 });
+                    Cookies.set('cart-quantity', parseInt($('#cart-quantity').html()), { expires: -1 });
                     
                     /*
                      * алгоритм:
@@ -170,7 +170,7 @@
                             price: parseInt($(this.parentNode).find('span').html())
                         };
                     }
-                    Cookies.set('cart-goods', JSON.stringify(goodsArray), { expires: 10 });
+                    Cookies.set('cart-goods', JSON.stringify(goodsArray), { expires: -1 });
                     //alert(goodsFromCookies.id + ', ' + goodsFromCookies.count + ', ' + goodsFromCookies.price);
                     
                     /*if (!Cookies.get('sbt24order')) {

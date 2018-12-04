@@ -5,8 +5,9 @@
  */
 
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+use yii\widgets\Pjax;
 use yii\widgets\Breadcrumbs;
-
 ?>
 
 <main role="main">
@@ -54,11 +55,18 @@ use yii\widgets\Breadcrumbs;
                                                             </div>  <!-- end col -->
                                                             
                                                             <div class="col-md-8 col-lg-8">
-                                                                
+
+                                                                <?php $form = ActiveForm::begin(); ?>
                                                                 <div class="row">                                                                    
                                                                     <i class="goods-price col-md-6"><s><?= $old_price ?></s><span><?= $price ?></span> &#8381;</i>
-                                                                    <button class="goods-buy buy-from-view col-md-5"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
+                                                                   <?= $form->field($client, 'company')
+                                                                        ->textInput(['type' => 'hidden', 'value' => 'new'])
+                                                                        ->label(false) ?>
+                                                                    <?= Html::submitButton('<i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину', ['class' => 'goods-buy buy-from-view col-md-5']) ?>
+                                                                    <!--<button class="goods-buy buy-from-view col-md-5"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>-->
                                                                 </div> <!-- end row -->
+                                                                <?php ActiveForm::end(); ?>
+
                                                                 
                                                                 <br>
                                                                 
