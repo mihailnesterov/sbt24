@@ -5,6 +5,8 @@ namespace app\modules\admin\controllers;
 use Yii;
 use yii\web\Controller;
 use app\models\Company;
+use app\models\Category;
+use app\models\Tovar;
 use app\modules\admin\models\Login;
 
 /**
@@ -68,7 +70,10 @@ class DefaultController extends Controller
     {
         $this->view->title = 'Категории товаров';
         $this->view->params['breadcrumbs'][] = $this->view->title;
-        return $this->render('categories');
+        $model = Category::find()->where(['parent' => 0])->all();
+        return $this->render('categories', [
+            'model' => $model,
+        ]);
     }
     
     /**

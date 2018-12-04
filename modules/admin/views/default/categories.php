@@ -25,7 +25,7 @@ use yii\widgets\Breadcrumbs;
                 </div> <!-- end container -->
         </div> <!-- end container-fluid -->
 
-        <div id="page-container" class="container">
+        <div id="page-container1" class="container">
 
                 <div class="row">
 
@@ -44,11 +44,33 @@ use yii\widgets\Breadcrumbs;
                                                 </header>
 
                                                 <div class="goods-container">	
-                                                        <div class="row">
-
+                                                    <div class="admin-categories-list">    
+                                                        <ul class="category-level-0">
+                                                            <?php
+                                                            // вывод каталога из БД
+                                                            foreach ($model as $cat):
+                                                                $count = \app\models\Tovar::find()->where(['category_id' => $cat->id])->count();
+                                                                $subcategory = \app\models\Category::find()->where(['parent' => $cat->id])->all();
                                                                 
-
-                                                        </div>	<!-- end row -->
+                                                                if($subcategory) {
+                                                                    echo '<li>'. $cat->name.' ('.$count.') <i class="fa fa-close hidden" title="Удалить"></i> <i class="fa fa-pencil-square" title="Редактировать"></i></li>';
+                                                                    echo '<ul class="category-level-1">';
+                                                                        foreach ($subcategory as $sub):
+                                                                            $count = \app\models\Tovar::find()->where(['category_id' => $sub->id])->count();
+                                                                            if($count == 0) {
+                                                                                echo '<li>'. $sub->name.' ('.$count.') <i class="fa fa-close" title="Удалить"></i> <i class="fa fa-pencil-square" title="Редактировать"></i></li>';
+                                                                            } else {
+                                                                                echo '<li>'. $sub->name.' ('.$count.') <i class="fa fa-close hidden" title="Удалить"></i> <i class="fa fa-pencil-square" title="Редактировать"></i></li>';
+                                                                            }
+                                                                        endforeach;
+                                                                    echo '</ul>';
+                                                                } else {
+                                                                    echo '<li>'. $cat->name.' ('.$count.') <i class="fa fa-close" title="Удалить"></i> <i class="fa fa-pencil-square" title="Редактировать"></i></li>';
+                                                                }
+                                                            endforeach;
+                                                            ?>
+                                                        </ul>
+                                                    </div>	<!-- end admin-categories-list -->
                                                 </div>	<!-- end goods-container -->
                                         </div>	<!-- end content-block -->
 

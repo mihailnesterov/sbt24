@@ -290,3 +290,10 @@
             for ( ; str.length < length; str += Math.random().toString(36).substr(2) );
             return str.substr(0, length);
         }(20);
+        
+        // admin: edit category
+        $('.admin-categories-list').on('click', '.fa-close', function () {
+            
+            alert($(this.parentNode).text());
+            
+        });
