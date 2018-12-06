@@ -117,7 +117,7 @@
                     $('#cart-table').append('<tr>');
                     $('#cart-table').append(
                         '<tr>' +
-                        '<td class="text-center" width="20%"><img src="' + $(this.parentNode.parentNode.parentNode).find('img').attr('src') + '" alt="" class="img-responsive"></td>' +
+                        '<td class="text-center" width="20%"><img src="' + $(this.parentNode.parentNode.parentNode.parentNode).find('img').attr('src') + '" alt="" class="img-responsive"></td>' +
                         '<td>' + $('h1').html() + $('#goods-id').html() + '</td>' +
                         '<td class="cart-table-price">' + parseInt($(this.parentNode).find('span').html()) + '</td></tr>'
                     );
@@ -144,8 +144,8 @@
                         $('#cart-total').html(totalSum);
                     });
                     $('#cart-table-buttons-block').removeClass('hidden');
-                    Cookies.set('cart-price', parseInt($('#cart-price').html()), { expires: -1 });
-                    Cookies.set('cart-quantity', parseInt($('#cart-quantity').html()), { expires: -1 });
+                    Cookies.set('cart-price', parseInt($('#cart-price').html()), { expires: 10 });
+                    Cookies.set('cart-quantity', parseInt($('#cart-quantity').html()), { expires: 10 });
                     
                     /*
                      * алгоритм:
@@ -154,7 +154,7 @@
                      * если есть - читаем куку, и обновляем кол-во товара (+1)
                      * сохранаяем куку
                      */
-                    var goodsArray = {};
+                    /*var goodsArray = {};
                     var goodsFromCookies;
                     if (!Cookies.get('cart-goods')) {
                         goodsArray = { 
@@ -170,7 +170,7 @@
                             price: parseInt($(this.parentNode).find('span').html())
                         };
                     }
-                    Cookies.set('cart-goods', JSON.stringify(goodsArray), { expires: -1 });
+                    Cookies.set('cart-goods', JSON.stringify(goodsArray), { expires: -1 });*/
                     //alert(goodsFromCookies.id + ', ' + goodsFromCookies.count + ', ' + goodsFromCookies.price);
                     
                     /*if (!Cookies.get('sbt24order')) {
@@ -201,11 +201,11 @@
                         }
                     });*/
                     
-                    Cookies.remove('sbt24order');
+                    //Cookies.remove('sbt24order');
                     $.gritter.add({
                         title: 'Товар добавлен:',
                         text: $('h1').html(),
-                        image: $(this.parentNode.parentNode.parentNode).find('img').attr('src'),
+                        image: $(this.parentNode.parentNode.parentNode.parentNode.parentNode).find('img').attr('src'),
                         sticky: false,
                         position: 'top-right',
                         time: '2000'
@@ -297,3 +297,48 @@
             alert($(this.parentNode).text());
             
         });
+        
+        
+
+        /*$('.goods-view-block').find('form').on('beforeValidate', function(event) {
+            alert('beforeValidate');
+            event.preventDefault();
+            $('#cart-price').html(
+                            parseInt($('#cart-price').html()) + parseInt($(this.parentNode).find('span').html())
+                    );
+            $('#cart-quantity').html(parseInt($('#cart-quantity').html()) + 1);
+            Cookies.set('cart-price', parseInt($('#cart-price').html()), { expires: 10 });
+            Cookies.set('cart-quantity', parseInt($('#cart-quantity').html()), { expires: 10 });
+            $.gritter.add({
+                title: 'Товар добавлен:',
+                text: $('h1').html(),
+                image: $(this.parentNode.parentNode.parentNode).find('img').attr('src'),
+                sticky: false,
+                position: 'top-right',
+                time: '2000'
+            });
+            return false;
+        });*/
+        
+        /*$('.goods-view-block').find('form').on('submit', function(event) {
+            event.preventDefault();
+            alert($(this).html());
+            $('#cart-price').html(
+                            parseInt($('#cart-price').html()) + parseInt($(this.parentNode).find('span').html())
+                    );
+            $('#cart-quantity').html(parseInt($('#cart-quantity').html()) + 1);
+            Cookies.set('cart-price', parseInt($('#cart-price').html()), { expires: 10 });
+            Cookies.set('cart-quantity', parseInt($('#cart-quantity').html()), { expires: 10 });
+            $.gritter.add({
+                title: 'Товар добавлен:',
+                text: $('h1').html(),
+                image: $(this.parentNode.parentNode.parentNode).find('img').attr('src'),
+                sticky: false,
+                position: 'top-right',
+                time: '2000'
+            });
+            $('.goods-view-block').find('form').reset();
+            $.pjax.reload({container: $(this)});
+            return true;
+        });*/
+        

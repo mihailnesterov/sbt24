@@ -416,8 +416,10 @@ class SiteController extends Controller
         $client->contact='new';
         $client->phone='+7';
         $client->email='@';
+        
         if ($client->load(Yii::$app->request->post()) && $client->save() ) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            //return $this->redirect(['view', 'id' => $model->id]);
+            $client = new Clients();
         }
 
         return $this->render('view', [
