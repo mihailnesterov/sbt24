@@ -71,29 +71,7 @@ class SiteController extends Controller
         $company = Company::find()->where(['status' => '1'])->one();
         return $this->view->params['company'] = $company;
     }
-    
-    /*
-     * get daily currency course from CBR into web/daily.json
-     */
-    /*protected function CBR_XML_Daily_Ru() {
-        $json_daily_file = '../web/daily.json';
-        if (!is_file($json_daily_file) || filemtime($json_daily_file) < time() - 3600) {
-            if ($json_daily = file_get_contents('https://www.cbr-xml-daily.ru/daily_json.js')) {
-                file_put_contents($json_daily_file, $json_daily);
-            }
-        }
-        return json_decode(file_get_contents($json_daily_file));
-    }*/
-    
-    /*
-     * get currency daily course
-     */
-    /*public function getCBRdata()
-    {
-        $data = $this->CBR_XML_Daily_Ru();        
-        return $this->view->params['currency'] = $data;
-    }*/
-    
+        
     /*
      * get currency daily course - http://know-online.com/post/php-valuta
      */
@@ -148,17 +126,27 @@ class SiteController extends Controller
     
     public function actionIndex()
     {
+        $newTovar = Tovar::find()->orderby(['created'=>SORT_ASC])->limit(3)->all();
+        $hitTovar = Tovar::find()->where((['hit' => 1]))->orderby(['created'=>SORT_ASC])->limit(3)->all();
+        $brands = Tovar::find()->select('brand')->orderby(['brand'=>SORT_ASC])->distinct()->all();
+        $currencies = $this->getCurrencies();
+        
         $this->view->title = 'Главная';
         \Yii::$app->view->registerMetaTag([
             'name' => 'keywords',
-            'content' => ''
+            'content' => 'банковское оборудование красноярск'
         ]);
         \Yii::$app->view->registerMetaTag([
             'name' => 'description',
-            'content' => ''
+            'content' => 'Специализированное банковское оборудование, сервис, ремонт и сопровождение в Красноярске'
         ]);
         
-        return $this->render('index');
+        return $this->render('index', [
+            'newTovar' => $newTovar,
+            'hitTovar' => $hitTovar,
+            'brands' => $brands,
+            'currencies' => $currencies
+        ]);
     }
     
     public function actionServices()

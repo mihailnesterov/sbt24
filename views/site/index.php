@@ -64,43 +64,38 @@ use yii\widgets\Breadcrumbs;
 
                                                 <div class="goods-container">	
                                                         <div class="row">
-
-                                                                <div class="col-sm-12 col-lg-4">
-                                                                        <div class="goods-block">
-                                                                                <a href="#"><img src="images/tovar2.jpg" alt="" class="img-responsive"></a>
-                                                                                <h4>Двухкарманный счетчик банкнот банковского класса DORS 800</h4>
-                                                                                <p class="goods-price"><span>15236</span> &#8381;</p>
-                                                                                <button class="goods-buy buy-from-preview"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
-                                                                        </div>
-                                                                        <a href="#" class="label">
-                                                                                <span><i class="fa fa-eye" aria-hidden="true"></i></span>
-                                                                        </a>
-                                                                </div>	<!-- end col -->
-
-                                                                <div class="col-sm-6 col-lg-4">
-                                                                        <div class="goods-block">
-                                                                                <a href="#"><img src="images/tovar3.jpg" alt="" class="img-responsive"></a>
-                                                                                <h4>2-х карманный сортировщик банкнот SBM SB-2000Е</h4>
-                                                                                <p class="goods-price"><span>13560</span> &#8381;</p>
-                                                                                <button class="goods-buy buy-from-preview"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
-                                                                        </div>
-                                                                        <a href="#" class="label">
-                                                                                <span><i class="fa fa-eye" aria-hidden="true"></i></span>
-                                                                        </a>
-                                                                </div>	<!-- end col -->
-
-                                                                <div class="col-sm-6 col-lg-4">
-                                                                        <div class="goods-block">
-                                                                                <a href="#"><img src="images/tovar1.jpg" alt="" class="img-responsive"></a>
-                                                                                <h4>Двухкарманная счетно-сортировальная машина с функцией ветхования GLORY USF-51</h4>
-                                                                                <p class="goods-price"><span>28963.56</span> &#8381;</p>
-                                                                                <button class="goods-buy buy-from-preview"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
-                                                                        </div>
-                                                                        <a href="#" class="label">
-                                                                                <span><i class="fa fa-eye" aria-hidden="true"></i></span>
-                                                                        </a>
-                                                                </div>	<!-- end col -->
-
+                                                        
+                                                            <?php
+                                                            // вывод 3-х последних новинок
+                                                                foreach ($newTovar as $new):
+                                                                    if ($new->price_rub != 0) { 
+                                                                    $price = round($new->price_rub,2);
+                                                                    } 
+                                                                    if ($new->price_usd != 0) {
+                                                                        $price = round(($new->price_usd * $currencies['USD']),2);
+                                                                    } 
+                                                                    if ($new->price_eur != 0) {
+                                                                        $price = round(($new->price_eur * $currencies['EUR']),2);
+                                                                    }
+                                                                    if ($new->discount != 0) {
+                                                                        $discount = '<a href="'.Yii::$app->urlManager->createUrl(Yii::$app->homeUrl.'../view?id='.$new->id).'" class="label discount"><span class="flash animated">'.$new->discount.'%</span></a>';
+                                                                        $old_price = round($price,2);
+                                                                        $price = round(($price - $price/100*$new->discount),2);
+                                                                    } else {
+                                                                        $discount = '';
+                                                                        $old_price = '';
+                                                                    }
+                                                                    echo '<div class="col-sm-12 col-lg-4">'
+                                                                        . '<div class="goods-block">'
+                                                                        . Html::a('<img src="images/tovar2.jpg" alt="'.$new->model.'" class="img-responsive">', [Yii::$app->homeUrl.'../view?id='.$new->id])
+                                                                        . '<h4>'.$new->name.'</h4>'
+                                                                        . '<p class="goods-price"><span>'.$price.'</span> &#8381;</p>'
+                                                                        . Html::button('<i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину', ['class' => 'goods-buy buy-from-preview'])
+                                                                        . '</div>    <!-- end goods-block -->'
+                                                                        . Html::a('<span><i class="fa fa-eye" aria-hidden="true"></i></span>', [Yii::$app->homeUrl.'../view?id='.$new->id], ['class' => 'label'])    
+                                                                        . '</div>    <!-- end col -->';
+                                                                endforeach;
+                                                            ?>
                                                         </div>	<!-- end row -->
                                                 </div>	<!-- end goods-container -->
                                         </div>	<!-- end content-block -->
@@ -116,44 +111,38 @@ use yii\widgets\Breadcrumbs;
 
                                                 <div class="goods-container">	
                                                         <div class="row">
-
-                                                                <div class="col-sm-6 col-lg-4">
-                                                                        <div class="goods-block">
-                                                                                <a href="#"><img src="images/tovar1.jpg" alt="" class="img-responsive"></a>
-                                                                                <h4>2-х карманный сортировщик банкнот SBM SB-2000Е</h4>
-                                                                                <p class="goods-price"><span>13560</span> &#8381;</p>
-                                                                                <button class="goods-buy buy-from-preview"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
-                                                                        </div>
-                                                                        <a href="#" class="label">
-                                                                                <span><i class="fa fa-star-o" aria-hidden="true"></i></span>
-                                                                        </a>
-                                                                </div>	<!-- end col -->
-
-                                                                <div class="col-sm-6 col-lg-4">
-                                                                        <div class="goods-block">
-                                                                                <a href="#"><img src="images/tovar2.jpg" alt="" class="img-responsive"></a>
-                                                                                <h4>Cортировщик банкнот SBM SB-2000Е</h4>
-                                                                                <p class="goods-price"><span>11286</span> &#8381;</p>
-                                                                                <button class="goods-buy buy-from-preview"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
-                                                                        </div>
-                                                                        <a href="#" class="label">
-                                                                                <span><i class="fa fa-star-o" aria-hidden="true"></i></span>
-                                                                        </a>
-                                                                </div>	<!-- end col -->
-
-                                                                <div class="col-sm-6 col-lg-4">
-                                                                        <div class="goods-block">
-                                                                                <a href="#"><img src="images/tovar3.jpg" alt="" class="img-responsive"></a>
-                                                                                <h4>2-х карманный сортировщик банкнот SBM SB-2000Е</h4>
-                                                                                <p class="goods-price"><span>22563</span> &#8381;</p>
-                                                                                <button class="goods-buy buy-from-preview"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
-                                                                        </div>
-                                                                        <a href="#" class="label">
-                                                                                <span><i class="fa fa-star-o" aria-hidden="true"></i></span>
-                                                                        </a>
-                                                                </div>	<!-- end col -->
-
-
+                                                            
+                                                                <?php
+                                                                // вывод 3-х хитов продаж
+                                                                    foreach ($hitTovar as $hit):
+                                                                        if ($hit->price_rub != 0) { 
+                                                                        $price = round($hit->price_rub,2);
+                                                                        } 
+                                                                        if ($hit->price_usd != 0) {
+                                                                            $price = round(($hit->price_usd * $currencies['USD']),2);
+                                                                        } 
+                                                                        if ($hit->price_eur != 0) {
+                                                                            $price = round(($hit->price_eur * $currencies['EUR']),2);
+                                                                        }
+                                                                        if ($hit->discount != 0) {
+                                                                            $discount = '<a href="'.Yii::$app->urlManager->createUrl(Yii::$app->homeUrl.'../view?id='.$hit->id).'" class="label discount"><span class="flash animated">'.$hit->discount.'%</span></a>';
+                                                                            $old_price = round($price,2);
+                                                                            $price = round(($price - $price/100*$hit->discount),2);
+                                                                        } else {
+                                                                            $discount = '';
+                                                                            $old_price = '';
+                                                                        }
+                                                                        echo '<div class="col-sm-12 col-lg-4">'
+                                                                            . '<div class="goods-block">'
+                                                                            . Html::a('<img src="images/tovar2.jpg" alt="'.$hit->model.'" class="img-responsive">', [Yii::$app->homeUrl.'../view?id='.$hit->id])
+                                                                            . '<h4>'.$hit->name.'</h4>'
+                                                                            . '<p class="goods-price"><span>'.$price.'</span> &#8381;</p>'
+                                                                            . Html::button('<i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину', ['class' => 'goods-buy buy-from-preview'])
+                                                                            . '</div>    <!-- end goods-block -->'
+                                                                            . Html::a('<span><i class="fa fa-star-o" aria-hidden="true"></i></span>', [Yii::$app->homeUrl.'../view?id='.$hit->id], ['class' => 'label'])    
+                                                                            . '</div>    <!-- end col -->';
+                                                                    endforeach;
+                                                                ?>
                                                         </div>	<!-- end row -->
                                                 </div>	<!-- end goods-container -->
                                         </div>	<!-- end content-block -->
