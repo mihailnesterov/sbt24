@@ -372,18 +372,18 @@ class SiteController extends Controller
         
         // настройки view
         if ($model->price_rub != 0) { 
-            $price = round($model->price_rub);
+            $price = round($model->price_rub,2);
         } 
         if ($model->price_usd != 0) {
-            $price = round($model->price_usd * $currencies['USD']);
+            $price = round(($model->price_usd * $currencies['USD']),2);
         } 
         if ($model->price_eur != 0) {
-            $price = round($model->price_eur * $currencies['EUR']);
+            $price = round(($model->price_eur * $currencies['EUR']),2);
         }
         if ($model->discount != 0) {
             $discount = '<div class="label discount"><span class="flash animated">'.$model->discount.'%</span></div>';
-            $old_price = round($price);
-            $price = round($price - $price/100*$model->discount);
+            $old_price = round($price,2);
+            $price = round(($price - $price/100*$model->discount),2);
         } else {
             $discount = '';
             $old_price = '';
@@ -405,7 +405,7 @@ class SiteController extends Controller
         $client->phone='+7';
         $client->email='@';
         
-        if ($client->load(Yii::$app->request->post()) && $client->save() ) {
+        if ( $client->load(Yii::$app->request->post()) && $client->save()) {
             //return $this->redirect(['view', 'id' => $model->id]);
             $client = new Clients();
         }

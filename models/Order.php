@@ -3,6 +3,9 @@
 namespace app\models;
 
 use Yii;
+use app\models\Clients;
+use app\models\OrderItems;
+use app\models\Tovar;
 
 /**
  * This is the model class for table "sbt_order".
@@ -33,7 +36,7 @@ class Order extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['client_id', 'number', 'cookies'], 'required'],
+            [['client_id'], 'required'],
             [['client_id', 'status'], 'integer'],
             [['created'], 'safe'],
             [['number'], 'string', 'max' => 50],
@@ -70,5 +73,29 @@ class Order extends \yii\db\ActiveRecord
     public function getOrderItems()
     {
         return $this->hasMany(OrderItems::className(), ['order_id' => 'id']);
+    }
+    
+    /*
+     * add new order item if new order added
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        
+        if ($insert) {
+            // if new order
+            $orderItem = new OrderItems();
+            $orderItem->order_id = $this->id;
+            
+            $url=$_SERVER['REQUEST_URI'];
+            $tovarId = explode('=', $url); 
+            $orderItem->tovar_id = $tovarId[1];
+            //$orderItem->sum = $this->price;
+            $orderItem->count = 1;
+            $orderItem->save();
+        } else {
+            // if updates order
+        }
+
     }
 }

@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use app\models\Tovar;
+use app\models\Order;
 
 /**
  * This is the model class for table "sbt_order_items".
@@ -32,7 +34,7 @@ class OrderItems extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['order_id', 'tovar_id', 'sum', 'count'], 'required'],
+            [['order_id', 'tovar_id'], 'required'],
             [['order_id', 'tovar_id', 'count'], 'integer'],
             [['sum'], 'string', 'max' => 20],
             [['tovar_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tovar::className(), 'targetAttribute' => ['tovar_id' => 'id']],

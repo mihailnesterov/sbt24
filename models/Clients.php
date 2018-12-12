@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use app\models\Order;
+use app\models\OrderItems;
 
 /**
  * This is the model class for table "sbt_clients".
@@ -73,5 +75,23 @@ class Clients extends \yii\db\ActiveRecord
     public function getOrders()
     {
         return $this->hasMany(Order::className(), ['client_id' => 'id']);
+    }
+    
+    /*
+     * add new order if new client added
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        
+        if ($insert) {
+            // if new client
+            $order = new Order();
+            $order->client_id = $this->id;
+            $order->save();
+        } else {
+            // if updates client
+        }
+
     }
 }
