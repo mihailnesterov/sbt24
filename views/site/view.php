@@ -54,22 +54,22 @@ use yii\widgets\Breadcrumbs;
                                                             </div>  <!-- end col -->
                                                             
                                                             <div class="col-md-8 col-lg-8">
-                                                                <?php yii\widgets\Pjax::begin([
+                                                                <?php /*yii\widgets\Pjax::begin([
                                                                     'id' => 'addToCartFromViewPjax',
                                                                     'timeout' => 0
-                                                                    ]) 
+                                                                    ]) */
                                                                 ?>
-                                                                <?php $form = ActiveForm::begin(['options' => ['data-pjax' => true]]); ?>
+                                                                <?php $form = ActiveForm::begin(/*['options' => ['data-pjax' => true]]*/); ?>
                                                                     <div class="row">                                                                    
                                                                         <i class="goods-price col-md-6"><s><?= $old_price ?></s><span><?= $price ?></span> &#8381;</i>
                                                                        <?= $form->field($client, 'company')
-                                                                            ->textInput(['type' => 'hidden', 'value' => 'new'])
+                                                                            ->textInput(['type' => 'hidden'])
                                                                             ->label(false) ?>
                                                                         <?= Html::submitButton('<i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину', ['class' => 'goods-buy buy-from-view col-md-5']) ?>
                                                                         <!--<button class="goods-buy buy-from-view col-md-5"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>-->
                                                                     </div> <!-- end row -->
                                                                 <?php ActiveForm::end(); ?>
-                                                                <?php yii\widgets\Pjax::end(); ?>
+                                                                <?php //yii\widgets\Pjax::end(); ?>
                                                                 
                                                                 <br>
                                                                 

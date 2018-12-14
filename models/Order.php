@@ -90,9 +90,16 @@ class Order extends \yii\db\ActiveRecord
             $url=$_SERVER['REQUEST_URI'];
             $tovarId = explode('=', $url); 
             $orderItem->tovar_id = $tovarId[1];
-            //$orderItem->sum = $this->price;
             $orderItem->count = 1;
             $orderItem->save();
+            
+            // add cookie
+            $cookie = new \yii\web\Cookie([
+                'name' => 'sbt24order',
+                'value' => $this->id,
+                'expire' => time() + 60 * 60 * 24 * 30,
+            ]);
+            Yii::$app->getResponse()->getCookies()->add($cookie);            
         } else {
             // if updates order
         }

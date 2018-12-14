@@ -100,27 +100,79 @@ class SiteController extends Controller
     }
     
     /*
+     *  random string generation function
+     */
+    /*public function generateRandomString($length = 12) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }*/
+    
+    /*
+     * set cookie when client adds order to cart
+     */
+    /*public function setOrderCookie($order_id)
+    {
+        $orderCookie = new \yii\web\Cookie([
+            'name' => 'sbt24order',
+            'value' => $order_id,
+            'expire' => 86400*30,
+        ]);
+        Yii::$app->response->cookies->add($orderCookie);
+    }*/
+    
+    /*
      * get order from cookies
      */
-    public function getOrderFromCookies()
-    {
-        /*$cookies = Yii::$app->getRequest()->getCookies()->getValue('cart-goods', (isset($_COOKIE['cart-goods']))? $_COOKIE['cart-goods']: 'cart-goods');
-        if($cookies != NULL) {
-            $order = Order::find()->where(['cookies' => $cookies])->one();
-            return $this->view->params['order'] = $order;
+    public function getOrderFromCookie()
+    {                
+        if(Yii::$app->request->cookies->has('sbt24order')) {
+            $cookie = Yii::$app->getRequest()->getCookies()->getValue('sbt24order');
+            $order = Order::find()->where(['id' => $cookie])->one();
+            $orderItems = OrderItems::find()->where(['order_id' => $cookie])->all();
+            //$orderItemsCount = OrderItems::find()->where(['order_id' => $cookie])->count();
+            $currencies = $this->getCurrencies();            
+            
+            $orderItemsSum = 0;
+            $orderItemsCount = 0;
+            foreach ($order['orderItems'] as $item):
+                $tovar = Tovar::find()->where(['id' => $item->tovar_id])->one();
+                if ($tovar->price_rub != 0) { 
+                    $price = round($tovar->price_rub,2);
+                } 
+                if ($tovar->price_usd != 0) {
+                    $price = round(($tovar->price_usd * $currencies['USD']),2);
+                } 
+                if ($tovar->price_eur != 0) {
+                    $price = round(($tovar->price_eur * $currencies['EUR']),2);
+                }
+                if ($tovar->discount != 0) {
+                    $price = round(($price - $price/100*$tovar->discount),2);
+                }
+                $orderItemsSum = $orderItemsSum + $price*$item->count;
+                $orderItemsCount += $item->count;
+            endforeach;
+
+            $params = [
+                'cookie' => $cookie,
+                'order' => $order,
+                'orderItems' => $orderItems,
+                'orderItemsCount' => $orderItemsCount,
+                'orderItemsSum' => $orderItemsSum,
+                'tovar' => $tovar,
+                'currencies' => $currencies
+            ];
+
+            return $params;
         }
-        else {
-            return $this->view->params['order'] = '';
+        /*else {
+            return FALSE;
         }*/
-        
-        $cookies = Yii::$app->getRequest()->getCookies()->getValue('cart-goods', (isset($_COOKIE['cart-goods']))? $_COOKIE['cart-goods']: 'cart-goods');
-        if(Yii::$app->request->cookies->has('cart-goods')) {
-        $cartGoods = Tovar::find()->where(['cookies' => $cookies])->one();
-            return $this->view->params['cartGoods'] = $cartGoods;
-        }
-        else {
-            return $this->view->params['cartGoods'] = '';
-        }
+ 
     }
     
     
@@ -401,9 +453,9 @@ class SiteController extends Controller
         
         // добавляем клиента при добавлении товара в корзину
         $client = new Clients();
-        $client->contact='new';
+        /*$client->contact='new';
         $client->phone='+7';
-        $client->email='@';
+        $client->email='@';*/
         
         if ( $client->load(Yii::$app->request->post()) && $client->save()) {
             //return $this->redirect(['view', 'id' => $model->id]);
@@ -420,6 +472,86 @@ class SiteController extends Controller
             'video' => $video,
             'client' => $client
         ]);
+    }
+    
+    public function actionCart()
+    {
+        $this->view->title = 'Корзина';
+        $this->view->params['breadcrumbs'][] = $this->view->title;
+        
+        \Yii::$app->view->registerMetaTag([
+            'name' => 'keywords',
+            'content' => ''
+        ]);
+        \Yii::$app->view->registerMetaTag([
+            'name' => 'description',
+            'content' => ''
+        ]);
+        
+        
+
+        return $this->render('cart',$this->getOrderFromCookie());
+    }
+    
+    /**
+     * Deletes an existing order item model.
+     * If deletion is successful, the browser will be redirected to the 'cart' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionDeleteCartItem($id)
+    {
+        $this->findOrderItemModel($id)->delete();
+
+        return $this->redirect(['/cart']);
+    }
+    /**
+     * Adds +1 in order item model.
+     * If deletion is successful, the browser will be redirected to the 'cart' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionPlusCartItem($id)
+    {
+        $item = $this->findOrderItemModel($id);
+        $item->count += 1;
+        $item->save();
+        
+        return $this->redirect(['/cart']);
+    }
+    /**
+     * Munus +1 from order item model.
+     * If deletion is successful, the browser will be redirected to the 'cart' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionMinusCartItem($id)
+    {
+        $item = $this->findOrderItemModel($id);
+        
+        if($item->count >1) {
+            $item->count -= 1;
+            $item->save();
+        }
+        return $this->redirect(['/cart']);
+    }
+    /**
+     * Finds the OrderItemModel model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return findOrderItemModel the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findOrderItemModel($id)
+    {
+        if (($model = OrderItems::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
     
     /**

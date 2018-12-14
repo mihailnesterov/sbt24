@@ -76,7 +76,7 @@
                                         <div id="schedule-block" class="col-md-4 text-center">
                                                 <p>Курс USD = <?= $currencies['USD'] ?></p>
                                                 <p>Курс EUR = <?= $currencies['EUR'] ?></p>
-                                                <!--<p>№ заказа = <?= $order['order']->id ?></p>-->
+                                                <p>№ заказа = <?= $order['order']->id ?></p>
                                         </div>
                                         <div id="top-phone-block" class="col-md-3">
                                                 <p id="top-phone" class="text-left"><i class="fa fa-phone" aria-hidden="true"></i><?= Yii::$app->controller->getCompany('company')->phone1 ?></p>
@@ -92,8 +92,8 @@
                                                             <li><a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i> Выйти</a></li>
                                                         </ul>
                                                     </span>
-                                                    <!--/ 
-                                                    <a href="#">Выйти</a>-->
+                                                    / 
+                                                    <a href="#">Выйти</a>
                                                 </div>
                                         </div>
                                 </div>	<!-- end row -->
@@ -112,16 +112,94 @@
                                 <li><a href="<?= Yii::$app->urlManager->createUrl('about') ?>">О компании</a></li>
                                 <li><a href="<?= Yii::$app->urlManager->createUrl('contacts') ?>">Контакты</a></li>
                             </ul>
-                            <?php //Pjax::begin(); ?>
+                            <?php Pjax::begin(); ?>
                             <div id="cart" class="col-sm-2 text-right">
-                                <a href="<?= Yii::$app->urlManager->createUrl('cart') ?>" id="cart-link">
-                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                    <span id="cart-price"> <?= $order['orderItemsSum'] ?> </span>
-                                    <i class="fa fa-rub" aria-hidden="true"></i>
-                                    <span id="cart-quantity"><?= $order['orderItemsCount'] ?></span>
-                                </a>
+
+                                <div class="dropdown">
+                                    <a href="#" id="cart-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                        <span id="cart-price"> <?= $order['orderItemsSum'] ?> </span>
+                                        <i class="fa fa-rub" aria-hidden="true"></i>
+                                        <span id="cart-quantity"><?= $order['orderItemsCount'] ?></span>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="cart-link">
+                                        <header>
+                                            <h3><i class="fa fa-shopping-cart" aria-hidden="true"></i> Корзина</h3>
+                                        </header>
+                                        <div class="dropdown-menu-body">
+                                            <table id="cart-table" class="table table-responsive">
+                                                <!--<thead>
+                                                    <tr>
+                                                        <th>№</th>
+                                                        <th>Наименование</th>
+                                                        <th>Цена, руб.</th>
+                                                    </tr>
+                                                </thead>-->
+                                                <tbody>
+                                                    <?php 
+                                                        foreach ($order['orderItems'] as $item):
+                                                            $tovar = app\models\Tovar::find()->where(['id' => $item->tovar_id])->one();
+                                                            if ($tovar->price_rub != 0) { 
+                                                                $price = round($tovar->price_rub,2);
+                                                            } 
+                                                            if ($tovar->price_usd != 0) {
+                                                                $price = round(($tovar->price_usd * $currencies['USD']),2);
+                                                            } 
+                                                            if ($tovar->price_eur != 0) {
+                                                                $price = round(($tovar->price_eur * $currencies['EUR']),2);
+                                                            }
+                                                            if ($tovar->discount != 0) {
+                                                                $price = round(($price - $price/100*$tovar->discount),2);
+                                                            }
+                                                            echo '<tr>'
+                                                            .'<td class="hidden">'
+                                                            .$item->id        
+                                                            .'</td>'
+                                                            .'<td class="text-center" width="15%">'
+                                                            .'<img src="images/tovar1.jpg" alt="" class="img-responsive">'
+                                                            .'</td>'
+                                                            .'<td>'
+                                                            .Html::a($tovar->name, [\Yii::$app->urlManager->createUrl('../view?id='.$tovar->id)])
+                                                            .'</td>'
+                                                            .'<td class="text-center">'
+                                                            .$price
+                                                            .'</td>'
+                                                            .'<td class="text-center">'
+                                                            .'<i class="fa fa-times-circle" aria-hidden="true" title="Удалить"></i>'
+                                                            //.Html::a('<i class="fa fa-times-circle" aria-hidden="true" title="Удалить"></i>', ['/delete-from-cart', 'id' => $item->id], ['class' => 'btn btn-danger', 'data' => ['method' => 'post']])
+                                                            .'</td>'
+                                                            . '</tr>';
+                                                        endforeach;
+                                                    ?>
+                                                    <!--<tr>
+                                                        <td class="text-center" width="20%"><a href="#"><img src="images/tovar1.jpg" alt="" class="img-responsive"></a></td>
+                                                        <td><?= Html::a('2-х карманный сортировщик банкнот SBM SB-2000Е', [Yii::$app->urlManager->createUrl('catalog/')], ['class' => '']) ?></td>
+                                                        <td class="text-center">15000</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center"><a href="#"><img src="images/tovar2.jpg" alt="" class="img-responsive"></a></td>
+                                                        <td><?= Html::a('Счетчик банкнот DoCash 3400 Heavy Duty ', [Yii::$app->urlManager->createUrl('catalog/')], ['class' => '']) ?></td>
+                                                        <td class="text-center">19560</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center"><a href="#"><img src="images/tovar3.jpg" alt="" class="img-responsive"></a></td>
+                                                        <td><?= Html::a('Счетчик банкнот SBM SB-1050 <i class="fa fa-close" aria-hidden="true"></i>', [Yii::$app->urlManager->createUrl('catalog/')], ['class' => '']) ?></td>
+                                                        <td class="text-center">19560</td>
+                                                    </tr>-->
+                                                    <tr id="cart-table-empty-tr">
+                                                        <td>Ваша корзина пуста...</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div id="cart-table-buttons-block" class="text-right hidden1">
+                                                <!--<?= Html::a('<i class="fa fa-shopping-cart" aria-hidden="true"></i> Перейти в корзину', [Yii::$app->urlManager->createUrl('../catalog')], ['class' => 'btn btn-success btn-lg']) ?>-->
+                                                <?= Html::a('Оформить заказ <i class="fa fa-chevron-right" aria-hidden="true"></i>', [Yii::$app->urlManager->createUrl('../catalog')], ['class' => 'btn btn-danger btn-lg']) ?>
+                                            </div>
+                                        </div>      <!-- end dropdown-menu-body -->
+                                    </div>      <!-- end dropdown-menu -->
+                                </div>      <!-- end dropdown -->
                             </div>      <!-- end cart -->
-                            <?php //Pjax::end(); ?>
+                            <?php Pjax::end(); ?>
                         </nav>      <!-- end nav -->
                     </div>      <!-- end container -->
                 </div>      <!-- end container-fluid -->

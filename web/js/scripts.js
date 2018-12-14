@@ -106,7 +106,7 @@
 		}) ;
         
         /* add to cart from good's view */
-		$('.buy-from-view').click(function () {			
+		$('.buy-from-view1').click(function () {			
                     $('#cart-price').html(
                         parseInt($('#cart-price').html()) + parseInt($(this.parentNode).find('span').html())
                     );
@@ -144,8 +144,8 @@
                         $('#cart-total').html(totalSum);
                     });
                     $('#cart-table-buttons-block').removeClass('hidden');
-                    Cookies.set('cart-price', parseInt($('#cart-price').html()), { expires: 10 });
-                    Cookies.set('cart-quantity', parseInt($('#cart-quantity').html()), { expires: 10 });
+                    Cookies.set('cart-price', parseInt($('#cart-price').html()), { expires: -1 });
+                    Cookies.set('cart-quantity', parseInt($('#cart-quantity').html()), { expires: -1 });
                     
                     /*
                      * алгоритм:
@@ -214,13 +214,13 @@
         
         /* read cart from cookies https://itchief.ru/lessons/javascript/javascript-working-with-cookies */
                 $(document).ready(function () {
-                    if (Cookies.get('cart-quantity')) {
+                    /*if (Cookies.get('cart-quantity')) {
                         $('#cart-price').html(parseInt(Cookies.get('cart-price')));
                         $('#cart-quantity').html(parseInt(Cookies.get('cart-quantity')));
                     } else {
                         $('#cart-price').html('0.00');
                         $('#cart-quantity').html(parseInt(0));
-                    }
+                    }*/
                 });
 	
 	/* swiper slider */
