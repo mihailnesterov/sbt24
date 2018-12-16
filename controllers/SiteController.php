@@ -129,33 +129,41 @@ class SiteController extends Controller
      * get order from cookies
      */
     public function getOrderFromCookie()
-    {                
+    {
+        $currencies = $this->getCurrencies();       
+        $cookie = 0;
+        $client = null;
+        $order = 0;
+        $orderItems = 0;
+        $orderItemsSum = 0;
+        $orderItemsCount = 0;     
+        
+        //Yii::$app->response->cookies->remove('sbt24order');
+        
         if(Yii::$app->request->cookies->has('sbt24order')) {
             $cookie = Yii::$app->getRequest()->getCookies()->getValue('sbt24order');
             $order = Order::find()->where(['id' => $cookie])->one();
+            $client = Clients::find()->where(['id' => $order->client_id])->one();
             $orderItems = OrderItems::find()->where(['order_id' => $cookie])->all();
-            //$orderItemsCount = OrderItems::find()->where(['order_id' => $cookie])->count();
-            $currencies = $this->getCurrencies();            
-            
-            $orderItemsSum = 0;
-            $orderItemsCount = 0;
-            foreach ($order['orderItems'] as $item):
-                $tovar = Tovar::find()->where(['id' => $item->tovar_id])->one();
-                if ($tovar->price_rub != 0) { 
-                    $price = round($tovar->price_rub,2);
-                } 
-                if ($tovar->price_usd != 0) {
-                    $price = round(($tovar->price_usd * $currencies['USD']),2);
-                } 
-                if ($tovar->price_eur != 0) {
-                    $price = round(($tovar->price_eur * $currencies['EUR']),2);
-                }
-                if ($tovar->discount != 0) {
-                    $price = round(($price - $price/100*$tovar->discount),2);
-                }
-                $orderItemsSum = $orderItemsSum + $price*$item->count;
-                $orderItemsCount += $item->count;
-            endforeach;
+            if($orderItems){
+                foreach ($order['orderItems'] as $item):
+                    $tovar = Tovar::find()->where(['id' => $item->tovar_id])->one();
+                    if ($tovar->price_rub != 0) { 
+                        $price = round($tovar->price_rub,2);
+                    } 
+                    if ($tovar->price_usd != 0) {
+                        $price = round(($tovar->price_usd * $currencies['USD']),2);
+                    } 
+                    if ($tovar->price_eur != 0) {
+                        $price = round(($tovar->price_eur * $currencies['EUR']),2);
+                    }
+                    if ($tovar->discount != 0) {
+                        $price = round(($price - $price/100*$tovar->discount),2);
+                    }
+                    $orderItemsSum = $orderItemsSum + $price*$item->count;
+                    $orderItemsCount += $item->count;
+                endforeach;
+            }      
 
             $params = [
                 'cookie' => $cookie,
@@ -164,14 +172,32 @@ class SiteController extends Controller
                 'orderItemsCount' => $orderItemsCount,
                 'orderItemsSum' => $orderItemsSum,
                 'tovar' => $tovar,
+                'client' => $client,
                 'currencies' => $currencies
             ];
-
-            return $params;
         }
-        /*else {
-            return FALSE;
-        }*/
+        else {
+            // add cookie
+            /*$cookie = new \yii\web\Cookie([
+                'name' => 'sbt24order',
+                'value' => 1,
+                'expire' => time() + 60 * 60 * 24 * 30,
+            ]);
+            Yii::$app->getResponse()->getCookies()->add($cookie);*/
+            //return FALSE;
+            
+            $params = [
+                'cookie' => $cookie,
+                'order' => $order,
+                'orderItems' => $orderItems,
+                'orderItemsCount' => $orderItemsCount,
+                'orderItemsSum' => $orderItemsSum,
+                'client' => $client,
+                'currencies' => $currencies
+            ];
+        }
+        
+        return $params;
  
     }
     
@@ -602,7 +628,7 @@ class SiteController extends Controller
     /**
      * ajax cart-add-client - проверить, надо ли? если нет - удалить views/ajax/cart-to-client
      */
-    public function actionCartAddClient()
+    /*public function actionCartAddClient()
     {
         $model = new Clients();
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
@@ -614,5 +640,5 @@ class SiteController extends Controller
         return $this->renderAjax('cart-add-client', [
             'model' => $model,
         ]);
-    }
+    }*/
 }

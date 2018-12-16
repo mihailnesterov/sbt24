@@ -76,14 +76,25 @@
                                         <div id="schedule-block" class="col-md-4 text-center">
                                                 <p>Курс USD = <?= $currencies['USD'] ?></p>
                                                 <p>Курс EUR = <?= $currencies['EUR'] ?></p>
-                                                <!--<p>№ заказа = <?= $order['order']->id ?></p>-->
+                                                
                                         </div>
                                         <div id="top-phone-block" class="col-md-3">
                                                 <p id="top-phone" class="text-left"><i class="fa fa-phone" aria-hidden="true"></i><?= Yii::$app->controller->getCompany('company')->phone1 ?></p>
                                                 <div id="top-user" class="text-left">
                                                     <span class="dropdown">
                                                         <i class="fa fa-user-o" aria-hidden="true"></i>
-                                                        <a href="#" id="user-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">userlogin</a>
+                                                        <?php 
+                                                            if($order['client'] == null){
+                                                                $username = 'Гость (корзина пуста)';
+                                                            } else {
+                                                                if($order['client']->company == ''){
+                                                                    $username = 'Гость';
+                                                                } else {
+                                                                     $username = $order['client']->company;
+                                                                }
+                                                            }
+                                                        ?>
+                                                        <a id="user-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= $username ?></a>
                                                         <ul class="dropdown-menu" aria-labelledby="user-menu">
                                                             <li><a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Моя корзина</a></li>
                                                             <li><a href="#"><i class="fa fa-list-ol" aria-hidden="true"></i> Мои заказы</a></li>
@@ -92,8 +103,15 @@
                                                             <li><a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i> Выйти</a></li>
                                                         </ul>
                                                     </span>
+                                                    <?php 
+                                                    if($order['client'] == null){
+                                                        echo '';
+                                                    } else {
+                                                        echo '/ <a href="'.Yii::$app->urlManager->createUrl('cart').'">Моя корзина</a>';
+                                                    }
+                                                    ?>
                                                     <!--/ 
-                                                    <a href="#">Выйти</a>-->
+                                                    <a href="#">Корзина</a>-->
                                                 </div>
                                         </div>
                                 </div>	<!-- end row -->
@@ -114,11 +132,23 @@
                             </ul>
                             <?php //Pjax::begin(); ?>
                             <div id="cart" class="col-sm-2 text-right">
-                                <a href="<?= Yii::$app->urlManager->createUrl('cart') ?>" id="cart-link">
+                                <?php 
+                                    if($order['client'] == null){
+                                        $orderItemsSum = "0.00";
+                                        $orderItemsCount = 0;
+                                        $url = $_SERVER['REQUEST_URI'];
+                                    }
+                                    else {
+                                        $orderItemsSum = $order['orderItemsSum'];
+                                        $orderItemsCount = $order['orderItemsCount'];
+                                        $url = Yii::$app->urlManager->createUrl('cart');
+                                    }
+                                ?>
+                                <a href="<?= $url ?>" id="cart-link">
                                     <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                    <span id="cart-price"> <?= $order['orderItemsSum'] ?> </span>
+                                    <span id="cart-price"> <?= $orderItemsSum ?> </span>
                                     <i class="fa fa-rub" aria-hidden="true"></i>
-                                    <span id="cart-quantity"><?= $order['orderItemsCount'] ?></span>
+                                    <span id="cart-quantity"><?= $orderItemsCount ?></span>
                                 </a>
                             </div>      <!-- end cart -->
                             <?php //Pjax::end(); ?>
