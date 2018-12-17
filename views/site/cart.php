@@ -118,7 +118,7 @@ use yii\widgets\Breadcrumbs;
                                                     <?= Html::a('<i class="fa fa-chevron-left" aria-hidden="true"></i> Назад', 'javascript:history.go(-1)', ['class' => 'btn btn-link text-right', 'title' => 'Вернуться на предыдущую страницу']) ?>
                                                 </div>
                                                 <div class="text-right col-xs-6">
-                                                     <?= Html::a('Оформить заказ', [Yii::$app->urlManager->createUrl('../pay')], ['class' => 'btn btn-success']) ?>
+                                                     <?= Html::a('Оформить заказ', [Yii::$app->urlManager->createUrl('../order')], ['class' => 'btn btn-success']) ?>
                                                 </div>
                                             </div>
                                                 

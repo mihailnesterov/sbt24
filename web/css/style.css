@@ -136,6 +136,10 @@ a:hover {
 	padding-top: 1.5em;
 	color: #B2B2B2;
 }
+#header #top #schedule-block p {
+	margin-left: 2em;
+        line-height: 1.4;
+}
 #header #top #schedule-block-admin {
 	padding-top: 0.5em;
 	color: #B2B2B2;

@@ -513,10 +513,87 @@ class SiteController extends Controller
             'name' => 'description',
             'content' => ''
         ]);
-        
-        
 
-        return $this->render('cart',$this->getOrderFromCookie());
+        return $this->render('cart', $this->getOrderFromCookie());
+    }
+    
+    public function actionOrder()
+    {
+        $this->view->title = 'Оформить заказ';
+        $this->view->params['breadcrumbs'][] = $this->view->title;
+        
+        \Yii::$app->view->registerMetaTag([
+            'name' => 'keywords',
+            'content' => ''
+        ]);
+        \Yii::$app->view->registerMetaTag([
+            'name' => 'description',
+            'content' => ''
+        ]);
+        
+        $orderItemsSum = 0;
+        $orderItemsCount = 0; 
+        
+        if(Yii::$app->request->cookies->has('sbt24order')) {
+            $currencies = $this->getCurrencies();
+            $cookie = Yii::$app->getRequest()->getCookies()->getValue('sbt24order');
+            $order = Order::find()->where(['id' => $cookie])->one();
+            $client = Clients::find()->where(['id' => $order->client_id])->one();
+            $orderItems = OrderItems::find()->where(['order_id' => $cookie])->all();
+            $company = Company::find()->where(['status' => 1])->one();
+            if($orderItems){
+                foreach ($order['orderItems'] as $item):
+                    $tovar = Tovar::find()->where(['id' => $item->tovar_id])->one();
+                    if ($tovar->price_rub != 0) { 
+                        $price = round($tovar->price_rub,2);
+                    } 
+                    if ($tovar->price_usd != 0) {
+                        $price = round(($tovar->price_usd * $currencies['USD']),2);
+                    } 
+                    if ($tovar->price_eur != 0) {
+                        $price = round(($tovar->price_eur * $currencies['EUR']),2);
+                    }
+                    if ($tovar->discount != 0) {
+                        $price = round(($price - $price/100*$tovar->discount),2);
+                    }
+                    $orderItemsSum = $orderItemsSum + $price*$item->count;
+                    $orderItemsCount += $item->count;
+                endforeach;
+            }
+        }
+        
+        if ($client->load(Yii::$app->request->post()) && $client->save()) {            
+            return $this->redirect(Yii::$app->urlManager->createUrl('invoice'));
+        }
+        
+        return $this->render('order', [
+            'cookie' => $cookie,
+            'order' => $order,
+            'orderItems' => $orderItems,
+            'orderItemsCount' => $orderItemsCount,
+            'orderItemsSum' => $orderItemsSum,
+            'tovar' => $tovar,
+            'client' => $client,
+            'company' => $company,
+            'currencies' => $currencies
+        ]);
+    }
+    
+    public function actionInvoice()
+    {
+        $this->view->title = 'Счет № sbt-';
+        $this->view->params['breadcrumbs'][] = $this->view->title;
+        
+        \Yii::$app->view->registerMetaTag([
+            'name' => 'keywords',
+            'content' => ''
+        ]);
+        \Yii::$app->view->registerMetaTag([
+            'name' => 'description',
+            'content' => ''
+        ]);
+
+        return $this->render('invoice');
     }
     
     /**
@@ -609,6 +686,21 @@ class SiteController extends Controller
     }
     
     
+    /**
+     * Finds the Client model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Category the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findClientModel($id)
+    {
+        if (($model = Clients::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
     /**
      * Finds the Tovar model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

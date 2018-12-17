@@ -73,10 +73,9 @@
                                                         </div>
                                                 </div>
                                         </div>
-                                        <div id="schedule-block" class="col-md-4 text-center">
-                                                <p>Курс USD = <?= $currencies['USD'] ?></p>
-                                                <p>Курс EUR = <?= $currencies['EUR'] ?></p>
-                                                
+                                        <div id="schedule-block" class="col-md-4 text-left">
+                                            <p>USD = <?= $currencies['USD'] ?></p>
+                                            <p>EUR = <?= $currencies['EUR'] ?></p>
                                         </div>
                                         <div id="top-phone-block" class="col-md-3">
                                                 <p id="top-phone" class="text-left"><i class="fa fa-phone" aria-hidden="true"></i><?= Yii::$app->controller->getCompany('company')->phone1 ?></p>
@@ -107,7 +106,7 @@
                                                     if($order['client'] == null){
                                                         echo '';
                                                     } else {
-                                                        echo '/ <a href="'.Yii::$app->urlManager->createUrl('cart').'">Моя корзина</a>';
+                                                        echo '/ <a href="'.Yii::$app->urlManager->createUrl('cart').'">Корзина</a>';
                                                     }
                                                     ?>
                                                     <!--/ 
