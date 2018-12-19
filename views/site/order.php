@@ -73,7 +73,8 @@ use yii\widgets\ActiveForm;
                                         <div class="content-block">
                                                 
                                             <h3>Покупатель</h3>
-                                                
+                                            
+                                            <p class="text-info bg-warning" style="padding: 1.5em; margin: 1em 0 2em 0;">Для получения счета на оплату укажите реквизиты вашей компании:</p>
                                             <?php $form = ActiveForm::begin(); ?>
                                             <table class="table table-responsive table-bordered">
                                                 <tbody>
@@ -85,9 +86,8 @@ use yii\widgets\ActiveForm;
                                                                     'inputOptions' => [
                                                                         'autofocus' => 'autofocus',
                                                                         'tabindex' => '1',
-                                                                        'placeholder' => 'Название компании *',
+                                                                        'placeholder' => 'Название компании',
                                                                         'class'=>'form-control',
-                                                                        //'pattern'=>'\D+([a-zA-Z0-9._@])$'
                                                                     ]
                                                                 ])->label(false) ?>
                                                             </div>
@@ -99,7 +99,7 @@ use yii\widgets\ActiveForm;
                                                                     'inputOptions' => [
                                                                         'autofocus' => 'autofocus',
                                                                         'tabindex' => '2',
-                                                                        'placeholder' => 'Контактное лицо *',
+                                                                        'placeholder' => 'Контактное лицо',
                                                                         'class'=>'form-control',
                                                                     ]
                                                                 ])->label(false) ?>
@@ -114,7 +114,7 @@ use yii\widgets\ActiveForm;
                                                                     'inputOptions' => [
                                                                         'autofocus' => 'autofocus',
                                                                         'tabindex' => '3',
-                                                                        'placeholder' => 'Телефон *',
+                                                                        'placeholder' => 'Телефон',
                                                                         'class'=>'form-control',
                                                                         //'pattern'=>'\D+([a-zA-Z0-9._@])$'
                                                                     ]
@@ -128,7 +128,7 @@ use yii\widgets\ActiveForm;
                                                                     'inputOptions' => [
                                                                         'autofocus' => 'autofocus',
                                                                         'tabindex' => '4',
-                                                                        'placeholder' => 'Email *',
+                                                                        'placeholder' => 'Email',
                                                                         'class'=>'form-control',
                                                                     ]
                                                                 ])->label(false) ?>
@@ -142,7 +142,7 @@ use yii\widgets\ActiveForm;
                                                                     'template' => '{input}{error}',
                                                                     'inputOptions' => [
                                                                         'autofocus' => 'autofocus',
-                                                                        'tabindex' => '3',
+                                                                        'tabindex' => '5',
                                                                         'placeholder' => 'Юр. адрес',
                                                                         'class'=>'form-control',
                                                                     ]
@@ -155,7 +155,7 @@ use yii\widgets\ActiveForm;
                                                                     'template' => '{input}{error}',
                                                                     'inputOptions' => [
                                                                         'autofocus' => 'autofocus',
-                                                                        'tabindex' => '4',
+                                                                        'tabindex' => '6',
                                                                         'placeholder' => 'ИНН',
                                                                         'class'=>'form-control',
                                                                     ]
@@ -168,7 +168,7 @@ use yii\widgets\ActiveForm;
                                                                     'template' => '{input}{error}',
                                                                     'inputOptions' => [
                                                                         'autofocus' => 'autofocus',
-                                                                        'tabindex' => '5',
+                                                                        'tabindex' => '7',
                                                                         'placeholder' => 'КПП',
                                                                         'class'=>'form-control',
                                                                     ]
@@ -246,7 +246,9 @@ use yii\widgets\ActiveForm;
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                            <hr>
+                                            
+                                            <p class="text-info bg-warning" style="padding: 1.5em; margin: 2em 0;">Внимание! Если вы хотите изменить ваш заказ - нажмите "Вернуться в корзину". После того, как вы нажмете кнопку "Оплатить счет", будет сформирован счет на оплату, при этом, все выбранные товары будут удалены из корзины</p>
+                                            
                                             <div class="form-group text-center row">
                                                 <div class="text-left col-xs-6">
                                                     <?= Html::a('<i class="fa fa-chevron-left" aria-hidden="true"></i> Вернуться в корзину', 'javascript:history.go(-1)', ['class' => 'btn btn-link text-right', 'title' => 'Вернуться на предыдущую страницу']) ?>

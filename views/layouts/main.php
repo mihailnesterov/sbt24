@@ -76,6 +76,18 @@
                                         <div id="schedule-block" class="col-md-4 text-left">
                                             <p>USD = <?= $currencies['USD'] ?></p>
                                             <p>EUR = <?= $currencies['EUR'] ?></p>
+                                            <p>
+                                                <?php
+                                                    if(Yii::$app->request->cookies->has('sbt24client'))
+                                                    echo 'Client = '.Yii::$app->getRequest()->getCookies()->getValue('sbt24client');
+                                                ?>
+                                            </p>
+                                            <p>
+                                                <?php
+                                                    if(Yii::$app->request->cookies->has('sbt24order'))
+                                                    echo 'Order = '.Yii::$app->getRequest()->getCookies()->getValue('sbt24order');
+                                                ?>
+                                            </p>
                                         </div>
                                         <div id="top-phone-block" class="col-md-3">
                                                 <p id="top-phone" class="text-left"><i class="fa fa-phone" aria-hidden="true"></i><?= Yii::$app->controller->getCompany('company')->phone1 ?></p>
@@ -83,28 +95,32 @@
                                                     <span class="dropdown">
                                                         <i class="fa fa-user-o" aria-hidden="true"></i>
                                                         <?php 
-                                                            if($order['client'] == null){
-                                                                $username = 'Гость (корзина пуста)';
-                                                            } else {
-                                                                if($order['client']->company == ''){
+                                                            if(Yii::$app->request->cookies->has('sbt24client')) {
+                                                                $clientFromCookie = \app\models\Clients::find()->where(['id' => Yii::$app->getRequest()->getCookies()->getValue('sbt24client')])->one();
+                                                                if($clientFromCookie->company === ''){
                                                                     $username = 'Гость';
                                                                 } else {
-                                                                     $username = $order['client']->company;
+                                                                     $username = $clientFromCookie->company;
                                                                 }
+                                                            } elseif ($order['client'] != null) {
+                                                                $username = 'Гость';
+                                                            }
+                                                            else {
+                                                                $username = 'Гость (корзина пуста)';
                                                             }
                                                         ?>
-                                                        <a id="user-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= $username ?></a>
+                                                        <a href="#" id="user-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= $username ?></a>
                                                         <ul class="dropdown-menu" aria-labelledby="user-menu">
-                                                            <li><a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Моя корзина</a></li>
-                                                            <li><a href="#"><i class="fa fa-list-ol" aria-hidden="true"></i> Мои заказы</a></li>
-                                                            <li><a href="#"><i class="fa fa-user-o" aria-hidden="true"></i> Мой профиль</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i> Выйти</a></li>
+                                                            <li><a href="<?= Yii::$app->urlManager->createUrl('cart') ?>"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Моя корзина</a></li>
+                                                            <li><a href="<?= Yii::$app->urlManager->createUrl('orders') ?>"><i class="fa fa-list-ol" aria-hidden="true"></i> Мои заказы</a></li>
+                                                            <li><a href="<?= Yii::$app->urlManager->createUrl('profile') ?>"><i class="fa fa-user-o" aria-hidden="true"></i> Мой профиль</a></li>
+                                                            <!--<li role="separator" class="divider"></li>
+                                                            <li><a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i> Выйти</a></li>-->
                                                         </ul>
                                                     </span>
                                                     <?php 
                                                     if($order['client'] == null){
-                                                        echo '';
+                                                        echo '/ <a href="'.$_SERVER['REQUEST_URI'].'">Корзина пуста</a>';
                                                     } else {
                                                         echo '/ <a href="'.Yii::$app->urlManager->createUrl('cart').'">Корзина</a>';
                                                     }

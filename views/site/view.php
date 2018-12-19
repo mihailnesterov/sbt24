@@ -66,7 +66,6 @@ use yii\widgets\Breadcrumbs;
                                                                             ->textInput(['type' => 'hidden'])
                                                                             ->label(false) ?>
                                                                         <?= Html::submitButton('<i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину', ['class' => 'goods-buy buy-from-view col-md-5']) ?>
-                                                                        <!--<button class="goods-buy buy-from-view col-md-5"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>-->
                                                                     </div> <!-- end row -->
                                                                 <?php ActiveForm::end(); ?>
                                                                 <?php //yii\widgets\Pjax::end(); ?>

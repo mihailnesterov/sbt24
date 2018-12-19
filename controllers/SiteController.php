@@ -138,54 +138,63 @@ class SiteController extends Controller
         $orderItemsSum = 0;
         $orderItemsCount = 0;     
         
-        //Yii::$app->response->cookies->remove('sbt24order');
+        /*Yii::$app->response->cookies->remove('sbt24order');
+        Yii::$app->response->cookies->remove('sbt24client');*/
         
         if(Yii::$app->request->cookies->has('sbt24order')) {
+            // if cookie is available
             $cookie = Yii::$app->getRequest()->getCookies()->getValue('sbt24order');
-            $order = Order::find()->where(['id' => $cookie])->one();
-            $client = Clients::find()->where(['id' => $order->client_id])->one();
-            $orderItems = OrderItems::find()->where(['order_id' => $cookie])->all();
-            if($orderItems){
-                foreach ($order['orderItems'] as $item):
-                    $tovar = Tovar::find()->where(['id' => $item->tovar_id])->one();
-                    if ($tovar->price_rub != 0) { 
-                        $price = round($tovar->price_rub,2);
-                    } 
-                    if ($tovar->price_usd != 0) {
-                        $price = round(($tovar->price_usd * $currencies['USD']),2);
-                    } 
-                    if ($tovar->price_eur != 0) {
-                        $price = round(($tovar->price_eur * $currencies['EUR']),2);
-                    }
-                    if ($tovar->discount != 0) {
-                        $price = round(($price - $price/100*$tovar->discount),2);
-                    }
-                    $orderItemsSum = $orderItemsSum + $price*$item->count;
-                    $orderItemsCount += $item->count;
-                endforeach;
-            }      
+            if($cookie !=0) {
+                // if value of cookie = order->id
+                $order = Order::find()->where(['id' => $cookie])->one();
+                $client = Clients::find()->where(['id' => $order->client_id])->one();
+                $orderItems = OrderItems::find()->where(['order_id' => $cookie])->all();
+                if($orderItems){
+                    foreach ($order['orderItems'] as $item):
+                        $tovar = Tovar::find()->where(['id' => $item->tovar_id])->one();
+                        if ($tovar->price_rub != 0) { 
+                            $price = round($tovar->price_rub,2);
+                        } 
+                        if ($tovar->price_usd != 0) {
+                            $price = round(($tovar->price_usd * $currencies['USD']),2);
+                        } 
+                        if ($tovar->price_eur != 0) {
+                            $price = round(($tovar->price_eur * $currencies['EUR']),2);
+                        }
+                        if ($tovar->discount != 0) {
+                            $price = round(($price - $price/100*$tovar->discount),2);
+                        }
+                        $orderItemsSum = $orderItemsSum + $price*$item->count;
+                        $orderItemsCount += $item->count;
+                    endforeach;
+                }
 
-            $params = [
-                'cookie' => $cookie,
-                'order' => $order,
-                'orderItems' => $orderItems,
-                'orderItemsCount' => $orderItemsCount,
-                'orderItemsSum' => $orderItemsSum,
-                'tovar' => $tovar,
-                'client' => $client,
-                'currencies' => $currencies
-            ];
+                $params = [
+                    'cookie' => $cookie,
+                    'order' => $order,
+                    'orderItems' => $orderItems,
+                    'orderItemsCount' => $orderItemsCount,
+                    'orderItemsSum' => $orderItemsSum,
+                    'tovar' => $tovar,
+                    'client' => $client,
+                    'currencies' => $currencies
+                ];
+            }
+            else {
+                // if value of cookie = 0
+                $params = [
+                    'cookie' => $cookie,
+                    'order' => $order,
+                    'orderItems' => $orderItems,
+                    'orderItemsCount' => $orderItemsCount,
+                    'orderItemsSum' => $orderItemsSum,
+                    'client' => $client,
+                    'currencies' => $currencies
+                ];
+            }
         }
         else {
-            // add cookie
-            /*$cookie = new \yii\web\Cookie([
-                'name' => 'sbt24order',
-                'value' => 1,
-                'expire' => time() + 60 * 60 * 24 * 30,
-            ]);
-            Yii::$app->getResponse()->getCookies()->add($cookie);*/
-            //return FALSE;
-            
+            // if there's no cookie
             $params = [
                 'cookie' => $cookie,
                 'order' => $order,
@@ -478,14 +487,29 @@ class SiteController extends Controller
         }
         
         // добавляем клиента при добавлении товара в корзину
-        $client = new Clients();
+        
+        if(Yii::$app->request->cookies->has('sbt24client')) {
+            // if cookie sbt24client is available - get client from DB
+            $cookie = Yii::$app->getRequest()->getCookies()->getValue('sbt24client');
+            $client = Clients::find()->where(['id' => $cookie])->one();
+        } else {
+            // else (if cookie sbt24client is not available) - create new client
+            $client = new Clients();
+        }
+        
         /*$client->contact='new';
         $client->phone='+7';
         $client->email='@';*/
         
         if ( $client->load(Yii::$app->request->post()) && $client->save()) {
-            //return $this->redirect(['view', 'id' => $model->id]);
             $client = new Clients();
+            $cookie = new \yii\web\Cookie([
+                'name' => 'sbt24client',
+                'value' => $client->id,
+                'expire' => time() + 60 * 60 * 24 * 30,
+            ]);
+            Yii::$app->getResponse()->getCookies()->add($cookie);
+            header("Refresh: 0");
         }
 
         return $this->render('view', [
@@ -502,6 +526,12 @@ class SiteController extends Controller
     
     public function actionCart()
     {
+        
+        if(!Yii::$app->request->cookies->has('sbt24order')) {
+            // if sbt24order cookie is not available - go back
+            return $this->goBack();
+        }
+        
         $this->view->title = 'Корзина';
         $this->view->params['breadcrumbs'][] = $this->view->title;
         
@@ -513,7 +543,7 @@ class SiteController extends Controller
             'name' => 'description',
             'content' => ''
         ]);
-
+        
         return $this->render('cart', $this->getOrderFromCookie());
     }
     
@@ -563,6 +593,21 @@ class SiteController extends Controller
         }
         
         if ($client->load(Yii::$app->request->post()) && $client->save()) {            
+            if( $order->status == 0) {
+                $order->status = 1;
+                $order->save();
+                // if cookie sbt24client is not added - add cookie
+                if(!Yii::$app->request->cookies->has('sbt24client')) {
+                    $cookie = new \yii\web\Cookie([
+                        'name' => 'sbt24client',
+                        'value' => $client->id,
+                        'expire' => time() + 60 * 60 * 24 * 30,
+                    ]);
+                    Yii::$app->getResponse()->getCookies()->add($cookie); 
+                }
+                // remove cookie sbt24order and empty cart
+                Yii::$app->response->cookies->remove('sbt24order');
+            }
             return $this->redirect(Yii::$app->urlManager->createUrl('invoice'));
         }
         
