@@ -88,6 +88,11 @@
                                                     echo 'Order = '.Yii::$app->getRequest()->getCookies()->getValue('sbt24order');
                                                 ?>
                                             </p>
+                                            <p>
+                                                <?php
+                                                    echo Yii::$app->controller->action->id;
+                                                ?>
+                                            </p>
                                         </div>
                                         <div id="top-phone-block" class="col-md-3">
                                                 <p id="top-phone" class="text-left"><i class="fa fa-phone" aria-hidden="true"></i><?= Yii::$app->controller->getCompany('company')->phone1 ?></p>
@@ -106,7 +111,7 @@
                                                                 $username = 'Гость';
                                                             }
                                                             else {
-                                                                $username = 'Гость (корзина пуста)';
+                                                                $username = 'Гость';
                                                             }
                                                         ?>
                                                         <a href="#" id="user-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= $username ?></a>
@@ -120,7 +125,7 @@
                                                     </span>
                                                     <?php 
                                                     if($order['client'] == null){
-                                                        echo '/ <a href="'.$_SERVER['REQUEST_URI'].'">Корзина пуста</a>';
+                                                        //echo '/ <a href="'.$_SERVER['REQUEST_URI'].'">Корзина пуста</a>';
                                                     } else {
                                                         echo '/ <a href="'.Yii::$app->urlManager->createUrl('cart').'">Корзина</a>';
                                                     }

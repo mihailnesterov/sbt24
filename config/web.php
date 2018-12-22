@@ -18,7 +18,8 @@ return [
                     '' => 'site/index',
                     'view?id=<id:\d+>' => 'site/view',
                     'catalog/<id:\d+>' => 'site/catalog-view',
-                    'view?id=<id:\d+>' => 'site/view',
+                    'invoice?id=<id:\d+>' => 'site/invoice',
+                    'invoice-pdf?id=<id:\d+>' => 'site/invoice-pdf',
                     'sitemap.xml' => 'site/sitemap',
                     
                     //'loginUrl' => 'admin/login',

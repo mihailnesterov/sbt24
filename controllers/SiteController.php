@@ -17,6 +17,7 @@ use yii\web\NotFoundHttpException;
 use yii\base\Event;
 use yii\web\View;
 use yii\data\Pagination;
+use kartik\mpdf\Pdf;
 // https://codezeel.com/opencart/OPC02/OPC020030/
 class SiteController extends Controller
 {
@@ -207,9 +208,92 @@ class SiteController extends Controller
         }
         
         return $params;
- 
     }
     
+    /**
+    * Сумма прописью
+    * @author runcore
+    * @url rche.ru
+    */
+    public function num2str($inn, $stripkop=false) {
+       $nol = 'ноль';
+       $str[100]= array('','сто','двести','триста','четыреста','пятьсот','шестьсот', 'семьсот', 'восемьсот','девятьсот');
+       $str[11] = array('','десять','одиннадцать','двенадцать','тринадцать', 'четырнадцать','пятнадцать','шестнадцать','семнадцать', 'восемнадцать','девятнадцать','двадцать');
+       $str[10] = array('','десять','двадцать','тридцать','сорок','пятьдесят', 'шестьдесят','семьдесят','восемьдесят','девяносто');
+       $sex = array(
+           array('','один','два','три','четыре','пять','шесть','семь', 'восемь','девять'),// m
+           array('','одна','две','три','четыре','пять','шесть','семь', 'восемь','девять') // f
+       );
+       $forms = array(
+           array('копейка', 'копейки', 'копеек', 1), // 10^-2
+           array('рубль', 'рубля', 'рублей',  0), // 10^ 0
+           array('тысяча', 'тысячи', 'тысяч', 1), // 10^ 3
+           array('миллион', 'миллиона', 'миллионов',  0), // 10^ 6
+           array('миллиард', 'миллиарда', 'миллиардов',  0), // 10^ 9
+           array('триллион', 'триллиона', 'триллионов',  0), // 10^12
+       );
+       $out = $tmp = array();
+       // Поехали!
+       $tmp = explode('.', str_replace(',','.', $inn));
+       $rub = number_format($tmp[ 0], 0,'','-');
+       if ($rub== 0) $out[] = $nol;
+       // нормализация копеек
+       $kop = isset($tmp[1]) ? substr(str_pad($tmp[1], 2, '0', STR_PAD_RIGHT), 0,2) : '00';
+       $segments = explode('-', $rub);
+       $offset = sizeof($segments);
+       if ((int)$rub== 0) { // если 0 рублей
+           $o[] = $nol;
+           $o[] = $this->morph( 0, $forms[1][ 0],$forms[1][1],$forms[1][2]);
+       }
+       else {
+           foreach ($segments as $k=>$lev) {
+               $sexi= (int) $forms[$offset][3]; // определяем род
+               $ri = (int) $lev; // текущий сегмент
+               if ($ri== 0 && $offset>1) {// если сегмент==0 & не последний уровень(там Units)
+                   $offset--;
+                   continue;
+               }
+               // нормализация
+               $ri = str_pad($ri, 3, '0', STR_PAD_LEFT);
+               // получаем циферки для анализа
+               $r1 = (int)substr($ri, 0,1); //первая цифра
+               $r2 = (int)substr($ri,1,1); //вторая
+               $r3 = (int)substr($ri,2,1); //третья
+               $r22= (int)$r2.$r3; //вторая и третья
+               // разгребаем порядки
+               if ($ri>99) $o[] = $str[100][$r1]; // Сотни
+               if ($r22>20) {// >20
+                   $o[] = $str[10][$r2];
+                   $o[] = $sex[ $sexi ][$r3];
+               }
+               else { // <=20
+                   if ($r22>9) $o[] = $str[11][$r22-9]; // 10-20
+                   elseif($r22> 0) $o[] = $sex[ $sexi ][$r3]; // 1-9
+               }
+               // Рубли
+               $o[] = $this->morph($ri, $forms[$offset][ 0],$forms[$offset][1],$forms[$offset][2]);
+               $offset--;
+           }
+       }
+       // Копейки
+       if (!$stripkop) {
+           $o[] = $kop;
+           $o[] = $this->morph($kop,$forms[ 0][ 0],$forms[ 0][1],$forms[ 0][2]);
+       }
+       return preg_replace("/\s{2,}/",' ',implode(' ',$o));
+   }
+     
+    /**
+    * Склоняем словоформу
+    */
+    public function morph($n, $f1, $f2, $f5) {
+        $n = abs($n) % 100;
+        $n1= $n % 10;
+        if ($n>10 && $n<20) return $f5;
+        if ($n1>1 && $n1<5) return $f2;
+        if ($n1==1) return $f1;
+        return $f5;
+   }
     
     public function actionIndex()
     {
@@ -486,30 +570,20 @@ class SiteController extends Controller
             $video = '';
         }
         
-        // добавляем клиента при добавлении товара в корзину
-        
+        // добавляем или находим существующего клиента при добавлении товара в корзину       
         if(Yii::$app->request->cookies->has('sbt24client')) {
-            // if cookie sbt24client is available - get client from DB
-            $cookie = Yii::$app->getRequest()->getCookies()->getValue('sbt24client');
-            $client = Clients::find()->where(['id' => $cookie])->one();
+            // если кука sbt24client существует, значит этот клиент уже есть в БД, находим его и сохраняем
+            $client = $this->findClientModel(Yii::$app->getRequest()->getCookies()->getValue('sbt24client'));
+            if ( $client->load(Yii::$app->request->post())) {
+                // сохранив клиента вызовем метод afterSave в модели Clients
+                $client->save();
+            }
         } else {
-            // else (if cookie sbt24client is not available) - create new client
+            // иначе, если кука отсутствует, значит это новый клиент, тогда создаем его
             $client = new Clients();
-        }
-        
-        /*$client->contact='new';
-        $client->phone='+7';
-        $client->email='@';*/
-        
-        if ( $client->load(Yii::$app->request->post()) && $client->save()) {
-            $client = new Clients();
-            $cookie = new \yii\web\Cookie([
-                'name' => 'sbt24client',
-                'value' => $client->id,
-                'expire' => time() + 60 * 60 * 24 * 30,
-            ]);
-            Yii::$app->getResponse()->getCookies()->add($cookie);
-            header("Refresh: 0");
+            if ( $client->load(Yii::$app->request->post()) && $client->save()) {
+                 $client = new Clients();
+            }
         }
 
         return $this->render('view', [
@@ -564,13 +638,16 @@ class SiteController extends Controller
         $orderItemsSum = 0;
         $orderItemsCount = 0; 
         
+        // если кука sbt24order установлена (заказ в корзине)
         if(Yii::$app->request->cookies->has('sbt24order')) {
+            // получаем данные
             $currencies = $this->getCurrencies();
             $cookie = Yii::$app->getRequest()->getCookies()->getValue('sbt24order');
             $order = Order::find()->where(['id' => $cookie])->one();
             $client = Clients::find()->where(['id' => $order->client_id])->one();
             $orderItems = OrderItems::find()->where(['order_id' => $cookie])->all();
             $company = Company::find()->where(['status' => 1])->one();
+            // если заказ имеет хоть одну позицию
             if($orderItems){
                 foreach ($order['orderItems'] as $item):
                     $tovar = Tovar::find()->where(['id' => $item->tovar_id])->one();
@@ -590,13 +667,16 @@ class SiteController extends Controller
                     $orderItemsCount += $item->count;
                 endforeach;
             }
+        } else {
+            return $this->goBack();
         }
         
         if ($client->load(Yii::$app->request->post()) && $client->save()) {            
+            // проверяем статус заказа и изменяем его (1 = оплачен, счет выставлен)
             if( $order->status == 0) {
                 $order->status = 1;
                 $order->save();
-                // if cookie sbt24client is not added - add cookie
+                // если кука sbt24client не существует - добавляем ее, чтобы хранить id клиента
                 if(!Yii::$app->request->cookies->has('sbt24client')) {
                     $cookie = new \yii\web\Cookie([
                         'name' => 'sbt24client',
@@ -605,10 +685,10 @@ class SiteController extends Controller
                     ]);
                     Yii::$app->getResponse()->getCookies()->add($cookie); 
                 }
-                // remove cookie sbt24order and empty cart
+                // удаляем куку sbt24order, чтобы удалить товары из корзины
                 Yii::$app->response->cookies->remove('sbt24order');
             }
-            return $this->redirect(Yii::$app->urlManager->createUrl('invoice'));
+            return $this->redirect(Yii::$app->urlManager->createUrl('invoice?id='.$order->id));
         }
         
         return $this->render('order', [
@@ -624,9 +704,12 @@ class SiteController extends Controller
         ]);
     }
     
-    public function actionInvoice()
+    public function actionInvoice($id)
     {
-        $this->view->title = 'Счет № sbt-';
+        $months = array( 1 => 'января' , 'февраля' , 'марта' , 'апреля' , 'мая' , 'июня' , 'июля' , 'августа' , 'сентября' , 'октября' , 'ноября' , 'декабря' );
+        
+        $this->view->title = 'Счет на оплату № sbt24-'.$id.' от '.date( 'd ' . $months[date( 'n' )] . ' Y' ).' г.';
+        $this->view->params['breadcrumbs'][] = ['label' => 'Мои счета', 'url' => ['/orders']];
         $this->view->params['breadcrumbs'][] = $this->view->title;
         
         \Yii::$app->view->registerMetaTag([
@@ -637,8 +720,50 @@ class SiteController extends Controller
             'name' => 'description',
             'content' => ''
         ]);
+        
+        $orderItemsSum = 0;
+        $orderItemsCount = 0; 
+        
+        // получаем данные
+        $currencies = $this->getCurrencies();
+        $cookie = Yii::$app->getRequest()->getCookies()->getValue('sbt24order');
+        $order = Order::find()->where(['id' => $id])->one();
+        $client = Clients::find()->where(['id' => $order->client_id])->one();
+        $orderItems = OrderItems::find()->where(['order_id' => $id])->all();
+        $company = Company::find()->where(['status' => 1])->one();
+        // если заказ имеет хоть одну позицию
+        if($orderItems){
+            foreach ($order['orderItems'] as $item):
+                $tovar = Tovar::find()->where(['id' => $item->tovar_id])->one();
+                if ($tovar->price_rub != 0) { 
+                    $price = round($tovar->price_rub,2);
+                } 
+                if ($tovar->price_usd != 0) {
+                    $price = round(($tovar->price_usd * $currencies['USD']),2);
+                } 
+                if ($tovar->price_eur != 0) {
+                    $price = round(($tovar->price_eur * $currencies['EUR']),2);
+                }
+                if ($tovar->discount != 0) {
+                    $price = round(($price - $price/100*$tovar->discount),2);
+                }
+                $orderItemsSum = $orderItemsSum + $price*$item->count;
+                $orderItemsCount += $item->count;
+            endforeach;
+        }
+       
 
-        return $this->render('invoice');
+        return $this->render('invoice', [
+            'cookie' => $cookie,
+            'order' => $order,
+            'orderItems' => $orderItems,
+            'orderItemsCount' => $orderItemsCount,
+            'orderItemsSum' => $orderItemsSum,
+            'tovar' => $tovar,
+            'client' => $client,
+            'company' => $company,
+            'currencies' => $currencies
+        ]);
     }
     
     /**
@@ -730,6 +855,93 @@ class SiteController extends Controller
         echo $xml_sitemap;
     }
     
+    public function actionInvoicePdf($id)
+    {
+
+        $months = array( 1 => 'января' , 'февраля' , 'марта' , 'апреля' , 'мая' , 'июня' , 'июля' , 'августа' , 'сентября' , 'октября' , 'ноября' , 'декабря' );
+        $orderItemsSum = 0;
+        $orderItemsCount = 0; 
+        
+        // получаем данные
+        $currencies = $this->getCurrencies();
+        $cookie = Yii::$app->getRequest()->getCookies()->getValue('sbt24order');
+        $order = Order::find()->where(['id' => $id])->one();
+        $client = Clients::find()->where(['id' => $order->client_id])->one();
+        $orderItems = OrderItems::find()->where(['order_id' => $id])->all();
+        $company = Company::find()->where(['status' => 1])->one();
+        // если заказ имеет хоть одну позицию
+        if($orderItems){
+            foreach ($order['orderItems'] as $item):
+                $tovar = Tovar::find()->where(['id' => $item->tovar_id])->one();
+                if ($tovar->price_rub != 0) { 
+                    $price = round($tovar->price_rub,2);
+                } 
+                if ($tovar->price_usd != 0) {
+                    $price = round(($tovar->price_usd * $currencies['USD']),2);
+                } 
+                if ($tovar->price_eur != 0) {
+                    $price = round(($tovar->price_eur * $currencies['EUR']),2);
+                }
+                if ($tovar->discount != 0) {
+                    $price = round(($price - $price/100*$tovar->discount),2);
+                }
+                $orderItemsSum = $orderItemsSum + $price*$item->count;
+                $orderItemsCount += $item->count;
+            endforeach;
+        }
+        
+        $this->view->title = 'Счет на оплату № sbt24-'.$id.' от '.date( 'd ' . $months[date( 'n' )] . ' Y' ).' г.';
+        
+        Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
+            'destination' => Pdf::DEST_BROWSER,
+            'format' => Pdf::FORMAT_A4,
+            'defaultFont' => 'Verdana',
+            //'cssFile' => Yii::getAlias('@webroot') .'/css/style.css',
+            'marginLeft' => 5, 
+            //'marginTop' => 10, 
+            'marginRight' => 5, 
+            //'marginBottom' => 10,
+            'defaultFontSize' => 14,
+            'filename' => 'sbt24-invoice-N'.$id,
+            'content' => $this->renderPartial('invoice-pdf', [
+                'cookie' => $cookie,
+                'order' => $order,
+                'orderItems' => $orderItems,
+                'orderItemsCount' => $orderItemsCount,
+                'orderItemsSum' => $orderItemsSum,
+                'tovar' => $tovar,
+                'client' => $client,
+                'company' => $company,
+                'currencies' => $currencies
+            ]),
+            'options' => [
+                // any mpdf options you wish to set
+            ],
+            'methods' => [
+                'SetTitle' => 'Счет на оплату № sbt-'.$id.' от '.date( 'd ' . $months[date( 'n' )] . ' Y' ).' г.',
+                'SetSubject' => 'Счет на оплату',
+                'SetHeader' => ["www.sbt24.ru, $company->phone1, $company->email||Документ создан: " . date('d.m.Y')],
+                'SetFooter' => ['||Страница {PAGENO}|'],
+                'SetAuthor' => 'sbt24.ru',
+                'SetCreator' => 'sbt24.ru',
+                'SetKeywords' => 'СПЕЦБАНКТЕХНИКА, sbt24.ru',
+            ]
+        ]);
+
+        return $pdf->render([
+            'cookie' => $cookie,
+            'order' => $order,
+            'orderItems' => $orderItems,
+            'orderItemsCount' => $orderItemsCount,
+            'orderItemsSum' => $orderItemsSum,
+            'tovar' => $tovar,
+            'client' => $client,
+            'company' => $company,
+            'currencies' => $currencies
+        ]);
+    }
     
     /**
      * Finds the Client model based on its primary key value.

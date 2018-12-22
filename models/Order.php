@@ -76,14 +76,14 @@ class Order extends \yii\db\ActiveRecord
     }
     
     /*
-     * add new order item if new order added
+     * add new order item after insert or update order
      */
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
         
         if ($insert) {
-            // if new order
+            // если новый order
             $orderItem = new OrderItems();
             $orderItem->order_id = $this->id;
             
@@ -91,17 +91,29 @@ class Order extends \yii\db\ActiveRecord
             $tovarId = explode('=', $url); 
             $orderItem->tovar_id = $tovarId[1];
             $orderItem->count = 1;
-            $orderItem->save();
-            
-            // add cookie
+            $orderItem->save();           
+            // добавляем cookie sbt24order, где храним id заказа
             $cookie = new \yii\web\Cookie([
                 'name' => 'sbt24order',
                 'value' => $this->id,
                 'expire' => time() + 60 * 60 * 24 * 30,
             ]);
-            Yii::$app->getResponse()->getCookies()->add($cookie);            
+            Yii::$app->getResponse()->getCookies()->add($cookie);
+            header("Refresh: 0");
         } else {
-            // if updates order
+            // если order уже существует
+            // если запрос пришел не из action = order, то:
+            if ( Yii::$app->controller->action->id != 'order') {  
+                $orderItem = new OrderItems();
+                // получаем order_id из куки
+                $orderItem->order_id = Yii::$app->getRequest()->getCookies()->getValue('sbt24order');
+                // получаем tovar_id из URL
+                $url=$_SERVER['REQUEST_URI'];
+                $tovarId = explode('=', $url); 
+                $orderItem->tovar_id = $tovarId[1];
+                $orderItem->count = 1;
+                $orderItem->save();
+            }
         }
 
     }
