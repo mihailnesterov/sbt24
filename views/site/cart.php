@@ -115,14 +115,30 @@ use yii\widgets\Breadcrumbs;
                                             </table>
                                             <div id="cart-table-buttons-block" class="row">
                                                 <div class="text-left col-xs-6">
-                                                    <?= Html::a('<i class="fa fa-chevron-left" aria-hidden="true"></i> Назад', 'javascript:history.go(-1)', ['class' => 'btn btn-link text-right', 'title' => 'Вернуться на предыдущую страницу']) ?>
+                                                    <?php if( $itemCount != 0 ) { ?>
+                                                        <?= Html::a('<i class="fa fa-chevron-left"></i> Назад', 'javascript:history.go(-1)', ['class' => 'btn btn-link text-right', 'title' => 'Вернуться на предыдущую страницу']) ?>
+                                                    <?php } else { ?>
+                                                        <?= Html::a('<i class="fa fa-chevron-left"></i> В каталог товаров', Yii::$app->urlManager->createUrl('catalog'), ['class' => 'btn btn-link text-right', 'title' => 'Перейти в каталог товаров']) ?>
+                                                    <?php } ?>
                                                 </div>
+                                                <?php if( $itemCount != 0 ) { ?>
                                                 <div class="text-right col-xs-6">
                                                      <?= Html::a('Оформить заказ', [Yii::$app->urlManager->createUrl('../order')], ['class' => 'btn btn-success']) ?>
                                                 </div>
+                                                <?php } ?>
                                             </div>
                                                 
                                         </div>	<!-- end content-block -->
+                                        
+                                        <?php
+                                            // new tovar
+                                            //echo $this->render('_new');
+                                        ?>
+                                        
+                                        <?php
+                                            // discont
+                                            //echo $this->render('_discount');
+                                        ?>
 
                                 </div>	<!-- end content-container -->
                         </div>	<!-- end col -->

@@ -71,4 +71,23 @@ class OrderItems extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Order::className(), ['id' => 'order_id']);
     }
+    
+    /*
+     * after delete oder item
+     */
+    /*public function afterDelete() {
+        parent::afterDelete();
+        
+        $order = $this->getOrder();
+        $orderItem = OrderItems::find()->where(['order_id' => $order->id])->all();
+        if( empty($orderItem)) {
+            Yii::$app->response->cookies->remove('sbt24order');
+            $cookie = new \yii\web\Cookie([
+                'name' => 'sbt24order',
+                'value' => 0,
+                'expire' => time() + 60 * 60 * 24 * 365,
+            ]);
+            Yii::$app->getResponse()->getCookies()->add($cookie);
+        }
+    }*/
 }

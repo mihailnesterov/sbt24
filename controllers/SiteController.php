@@ -134,6 +134,7 @@ class SiteController extends Controller
         $currencies = $this->getCurrencies();       
         $cookie = 0;
         $client = null;
+        $tovar = null;
         $order = 0;
         $orderItems = 0;
         $orderItemsSum = 0;
@@ -570,19 +571,38 @@ class SiteController extends Controller
             $video = '';
         }
         
+        $client = new Clients();
+        $order = new Order();
+        
         // добавляем или находим существующего клиента при добавлении товара в корзину       
         if(Yii::$app->request->cookies->has('sbt24client')) {
-            // если кука sbt24client существует, значит этот клиент уже есть в БД, находим его и сохраняем
+            
+            // если кука sbt24client существует, значит этот клиент уже есть в БД, находим его:
             $client = $this->findClientModel(Yii::$app->getRequest()->getCookies()->getValue('sbt24client'));
+            
+            // если post - сохраняем текущего клиента
             if ( $client->load(Yii::$app->request->post())) {
                 // сохранив клиента вызовем метод afterSave в модели Clients
                 $client->save();
             }
+            
+            // если кука sbt24order установлена, то заказ в корзине, находим его и сохраняем
+            if(Yii::$app->request->cookies->has('sbt24order')) {
+                $order = $this->findOrderModel(Yii::$app->getRequest()->getCookies()->getValue('sbt24order'));
+                // сохранив заказ вызовем метод afterSave в модели Order - не надо, задваивает пункты в заказе!!!
+                //$order->save();
+            }
+            // если куки sbt24order нет, создаем новый заказ
+            else {
+                // сохранив заказ вызовем метод afterSave в модели Order
+                $order = new Order();
+                $order->client_id = $client->id;
+                $order->save();
+            } 
         } else {
-            // иначе, если кука отсутствует, значит это новый клиент, тогда создаем его
-            $client = new Clients();
+            // иначе, если кука отсутствует, значит это новый клиент, тогда создаем его          
             if ( $client->load(Yii::$app->request->post()) && $client->save()) {
-                 $client = new Clients();
+                    $client = new Clients();
             }
         }
 
@@ -594,7 +614,7 @@ class SiteController extends Controller
             'old_price' => $old_price,
             'hit' => $hit,
             'video' => $video,
-            'client' => $client
+            'client' => $client 
         ]);
     }
     
@@ -609,15 +629,6 @@ class SiteController extends Controller
         $this->view->title = 'Корзина';
         $this->view->params['breadcrumbs'][] = $this->view->title;
         
-        \Yii::$app->view->registerMetaTag([
-            'name' => 'keywords',
-            'content' => ''
-        ]);
-        \Yii::$app->view->registerMetaTag([
-            'name' => 'description',
-            'content' => ''
-        ]);
-        
         return $this->render('cart', $this->getOrderFromCookie());
     }
     
@@ -625,15 +636,6 @@ class SiteController extends Controller
     {
         $this->view->title = 'Оформить заказ';
         $this->view->params['breadcrumbs'][] = $this->view->title;
-        
-        \Yii::$app->view->registerMetaTag([
-            'name' => 'keywords',
-            'content' => ''
-        ]);
-        \Yii::$app->view->registerMetaTag([
-            'name' => 'description',
-            'content' => ''
-        ]);
         
         $orderItemsSum = 0;
         $orderItemsCount = 0; 
@@ -942,14 +944,7 @@ class SiteController extends Controller
             'currencies' => $currencies
         ]);
     }
-    
-    /**
-     * Finds the Client model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Category the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+
     protected function findClientModel($id)
     {
         if (($model = Clients::findOne($id)) !== null) {
@@ -958,16 +953,19 @@ class SiteController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-    /**
-     * Finds the Tovar model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Category the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+
     protected function findTovarModel($id)
     {
         if (($model = Tovar::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+    
+    protected function findOrderModel($id)
+    {
+        if (($model = Order::findOne($id)) !== null) {
             return $model;
         }
 

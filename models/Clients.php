@@ -86,33 +86,23 @@ class Clients extends \yii\db\ActiveRecord
         
         if ($insert) {
             // if new client
-            $order = new Order();
-            $order->client_id = $this->id;
-            $order->save();
             if( !Yii::$app->request->cookies->has('sbt24client')) {
-                //Yii::$app->response->cookies->remove('sbt24client');
+                // создаем куку с id клиента
                 $cookie = new \yii\web\Cookie([
                     'name' => 'sbt24client',
                     'value' => $this->id,
-                    'expire' => time() + 60 * 60 * 24 * 30,
+                    'expire' => time() + 60 * 60 * 24 * 365,
                 ]);
                 Yii::$app->getResponse()->getCookies()->add($cookie);
+                // создаем новый заказ для нового клиента
+                $order = new Order();
+                $order->client_id = $this->id;
+                $order->save();
             }
         } else {
             // if updates client
             $order = Order::find()->where(['client_id' => $this->id])->one();
             $order->save();
-            /*if($order->status == 0) {
-                $order->status = 1;
-                $order->save();
-                Yii::$app->response->cookies->remove('sbt24order');
-                $cookie = new \yii\web\Cookie([
-                    'name' => 'sbt24order',
-                    'value' => 0,
-                    'expire' => time() + 60 * 60 * 24 * 30,
-                ]);
-                Yii::$app->getResponse()->getCookies()->add($cookie); 
-            }*/
         }
     }
 }

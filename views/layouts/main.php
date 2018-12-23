@@ -78,19 +78,19 @@
                                             <p>EUR = <?= $currencies['EUR'] ?></p>
                                             <p>
                                                 <?php
-                                                    if(Yii::$app->request->cookies->has('sbt24client'))
-                                                    echo 'Client = '.Yii::$app->getRequest()->getCookies()->getValue('sbt24client');
+                                                    //if(Yii::$app->request->cookies->has('sbt24client'))
+                                                    //echo 'Client = '.Yii::$app->getRequest()->getCookies()->getValue('sbt24client');
                                                 ?>
                                             </p>
                                             <p>
                                                 <?php
-                                                    if(Yii::$app->request->cookies->has('sbt24order'))
-                                                    echo 'Order = '.Yii::$app->getRequest()->getCookies()->getValue('sbt24order');
+                                                    //if(Yii::$app->request->cookies->has('sbt24order'))
+                                                    //echo 'Order = '.Yii::$app->getRequest()->getCookies()->getValue('sbt24order');
                                                 ?>
                                             </p>
                                             <p>
                                                 <?php
-                                                    echo Yii::$app->controller->action->id;
+                                                    //echo Yii::$app->controller->action->id;
                                                 ?>
                                             </p>
                                         </div>
@@ -98,7 +98,7 @@
                                                 <p id="top-phone" class="text-left"><i class="fa fa-phone" aria-hidden="true"></i><?= Yii::$app->controller->getCompany('company')->phone1 ?></p>
                                                 <div id="top-user" class="text-left">
                                                     <span class="dropdown">
-                                                        <i class="fa fa-user-o" aria-hidden="true"></i>
+                                                        <i class="fa fa-user-o"></i>
                                                         <?php 
                                                             if(Yii::$app->request->cookies->has('sbt24client')) {
                                                                 $clientFromCookie = \app\models\Clients::find()->where(['id' => Yii::$app->getRequest()->getCookies()->getValue('sbt24client')])->one();
@@ -107,29 +107,33 @@
                                                                 } else {
                                                                      $username = $clientFromCookie->company;
                                                                 }
-                                                            } elseif ($order['client'] != null) {
+                                                            } /*elseif ($order['client'] != null) {
                                                                 $username = 'Гость';
-                                                            }
+                                                            }*/
                                                             else {
                                                                 $username = 'Гость';
                                                             }
                                                         ?>
                                                         <a href="#" id="user-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= $username ?></a>
                                                         <ul class="dropdown-menu" aria-labelledby="user-menu">
-                                                            <li><a href="<?= Yii::$app->urlManager->createUrl('cart') ?>"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Моя корзина</a></li>
-                                                            <li><a href="<?= Yii::$app->urlManager->createUrl('orders') ?>"><i class="fa fa-list-ol" aria-hidden="true"></i> Мои заказы</a></li>
-                                                            <li><a href="<?= Yii::$app->urlManager->createUrl('profile') ?>"><i class="fa fa-user-o" aria-hidden="true"></i> Мой профиль</a></li>
+                                                            <?php
+                                                                if(Yii::$app->request->cookies->has('sbt24client')) {
+                                                                    $myorders = \app\models\Order::find()->where(['client_id' => Yii::$app->getRequest()->getCookies()->getValue('sbt24client')])->andWhere(['status' => 1])->count();
+                                                                    if(Yii::$app->request->cookies->has('sbt24order')) {
+                                                                        echo '<li><a href="'.Yii::$app->urlManager->createUrl('cart').'"><i class="fa fa-shopping-cart"></i> Моя корзина ( '.$order['orderItemsCount'].' )</a></li>';
+                                                                    } else {
+                                                                        echo '<li><a><i class="fa fa-shopping-cart"></i> Корзина пуста</a></li>';
+                                                                    }
+                                                                    echo '<li><a href="'.Yii::$app->urlManager->createUrl('myorders').'"><i class="fa fa-list-ol"></i> Мои заказы ( '. $myorders .' )</a></li>';
+                                                                    echo '<li><a href="'.Yii::$app->urlManager->createUrl('myprofile').'"><i class="fa fa-user-o"></i> Мой профиль</a></li>';
+                                                                } else {
+                                                                    echo '<li><a><i class="fa fa-shopping-cart"></i> Корзина пуста</a></li>';
+                                                                }   
+                                                            ?>
                                                             <!--<li role="separator" class="divider"></li>
-                                                            <li><a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i> Выйти</a></li>-->
+                                                            <li><a href="#"><i class="fa fa-sign-out"></i> Выйти</a></li>-->
                                                         </ul>
                                                     </span>
-                                                    <?php 
-                                                    if($order['client'] == null){
-                                                        //echo '/ <a href="'.$_SERVER['REQUEST_URI'].'">Корзина пуста</a>';
-                                                    } else {
-                                                        echo '/ <a href="'.Yii::$app->urlManager->createUrl('cart').'">Корзина</a>';
-                                                    }
-                                                    ?>
                                                     <!--/ 
                                                     <a href="#">Корзина</a>-->
                                                 </div>
@@ -153,15 +157,17 @@
                             <?php //Pjax::begin(); ?>
                             <div id="cart" class="col-sm-2 text-right">
                                 <?php 
-                                    if($order['client'] == null){
-                                        $orderItemsSum = "0.00";
-                                        $orderItemsCount = 0;
-                                        $url = $_SERVER['REQUEST_URI'];
+                                    $orderItemsSum = "0.00";
+                                    $orderItemsCount = 0;
+                                    $url = Yii::$app->urlManager->createUrl('cart');
+                                    if($order['client'] == null){  
+                                        //$url = $_SERVER['REQUEST_URI'];
+                                    } elseif($order['orderItems'] == null){  
+                                        //$url = $_SERVER['REQUEST_URI'];
                                     }
                                     else {
                                         $orderItemsSum = $order['orderItemsSum'];
                                         $orderItemsCount = $order['orderItemsCount'];
-                                        $url = Yii::$app->urlManager->createUrl('cart');
                                     }
                                 ?>
                                 <a href="<?= $url ?>" id="cart-link">

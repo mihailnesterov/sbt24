@@ -90,13 +90,28 @@ class Order extends \yii\db\ActiveRecord
             $url=$_SERVER['REQUEST_URI'];
             $tovarId = explode('=', $url); 
             $orderItem->tovar_id = $tovarId[1];
+            /*$tovar = Tovar::find()->where(['id' => $tovarId[1]])->one();
+            $currencies = Yii::$app->controller->getCurrencies();
+            if ($tovar->price_rub != 0) { 
+                $price = round($tovar->price_rub,2);
+            } 
+            if ($tovar->price_usd != 0) {
+                $price = round(($tovar->price_usd * $currencies['USD']),2);
+            } 
+            if ($tovar->price_eur != 0) {
+                $price = round(($tovar->price_eur * $currencies['EUR']),2);
+            }
+            if ($tovar->discount != 0) {
+                $price = round(($price - $price/100*$tovar->discount),2);
+            }
+            $orderItem->sum = $price;*/
             $orderItem->count = 1;
             $orderItem->save();           
             // добавляем cookie sbt24order, где храним id заказа
             $cookie = new \yii\web\Cookie([
                 'name' => 'sbt24order',
                 'value' => $this->id,
-                'expire' => time() + 60 * 60 * 24 * 30,
+                'expire' => time() + 60 * 60 * 24 * 365,
             ]);
             Yii::$app->getResponse()->getCookies()->add($cookie);
             header("Refresh: 0");
