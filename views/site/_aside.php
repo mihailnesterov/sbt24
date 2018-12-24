@@ -7,6 +7,8 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+// получаем структуру каталога
+$category = Yii::$app->controller->getCatalog('category');
 // получаем курсы валют
 $currencies = Yii::$app->controller->getCurrencies();
 // получаем товары со скидками
@@ -40,9 +42,7 @@ $discounts = Yii::$app->controller->getAsideDiscounts('discounts');
                         <hr>
                     </li>
                     <?php
-                        // вывод меню из БД
-                        $category = \app\models\Category::find()->where(['parent' => '0'])->all();
-
+                        // вывод меню
                         foreach ($category as $cat):
                             $sub_category = \app\models\Category::find()->where(['parent' => $cat->id])->all();
                             if ($sub_category == NULL) {

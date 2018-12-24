@@ -305,6 +305,24 @@ class SiteController extends Controller
         return $this->view->params['discounts'] = $discounts;
     }
     
+    /*
+     * вывод каталога товаров
+     */
+    public function getCatalog()
+    {
+        $category = Category::find()->where(['parent' => '0'])->all();
+        return $this->view->params['category'] = $category;
+    }
+    
+    /*
+     * вывод каталога товаров с лимитом выводимых категорий (в подвал...)
+     */
+    public function getCatalogLimit($limit)
+    {
+        $category = Category::find()->where(['parent' => '0'])->limit($limit)->all();
+        return $this->view->params['category'] = $category;
+    }
+    
     public function actionIndex()
     {
         $newTovar = Tovar::find()->orderby(['created'=>SORT_ASC])->limit(3)->all();

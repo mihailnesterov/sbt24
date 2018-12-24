@@ -1060,15 +1060,43 @@ footer
 	padding: 2em;
 }
 
+footer .footer-block {
+	padding: 1em;
+}
+footer .footer-block h4 {
+	color: #5BE112;
+        font-size: 1.4em;
+        margin-bottom: 0.5em;
+}
+footer .footer-block ul {
+	line-height: 2.4;
+}
+
+footer .footer-block ul li a {
+	color: #B2B2B2;
+}
+footer .footer-block ul li a:hover {
+	color: #5BB112;
+        /*text-decoration: none;*/
+}
+footer .footer-block ul li i {
+	font-size: 1.4em;
+        color: #5BB112;
+	text-align: center;
+	width: 20px;
+	margin-right: 1em;
+}
+
 #copyright
 {
 	text-align: center;
 	margin-top: 1.5em;
-	font-size: 0.8em;
+	font-size: 0.9em;
 }
 #copyright a
 {
 	color: #B2B2B2;
+        color: #5BB112;
 	text-decoration: underline;
 }
 #copyright a:hover
@@ -1076,6 +1104,7 @@ footer
 	opacity: 0.8;
 	text-decoration: none;
 }
+
 
 /*Кнопка Наверх*/
 #toTop 

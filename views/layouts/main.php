@@ -9,6 +9,7 @@
     $metrika = Yii::$app->controller->getYandexMetrika('metrika');
     $currencies = Yii::$app->controller->getCurrencies();
     $order = Yii::$app->controller->getOrderFromCookie();
+    $category = Yii::$app->controller->getCatalogLimit('category', 5);
     
     $this->beginPage();
 ?>
@@ -188,10 +189,42 @@
             <footer class="container-fluid">
                 <div class="row">
                     <div class="container">
-                        1232
                         <div class="row">
-                                <p id="copyright" class="col-12 text-center"> <?= date('Y') ?> &copy <?= Html::a($company->name.' | Интернет-магазин', ['/']) ?> <?= $company->phone1 ?> Красноярск</p>
-                        </div>      <!-- end row -->
+                            <div class="footer-block col-sm-4">
+                                    <h4>Информация</h4>
+                                    <ul>
+                                        <li><a href="<?= Yii::$app->urlManager->createUrl(['about']) ?>">О компании</a></li>
+                                        <li><a href="<?= Yii::$app->urlManager->createUrl(['services']) ?>">Услуги</a></li>
+                                        <li><a href="<?= Yii::$app->urlManager->createUrl(['dostavka']) ?>">Условия доставки</a></li>
+                                        <li><a href="<?= Yii::$app->urlManager->createUrl(['payment']) ?>">Оплата</a></li>
+                                        <li><a href="<?= Yii::$app->urlManager->createUrl(['site-map']) ?>">Карта сайта</a></li>
+                                    </ul>
+                            </div> <!-- end col -->
+                            <div class="footer-block col-sm-4">
+                                    <h4>Каталог</h4>
+                                    <ul>
+                                        <?php foreach ($category as $key => $cat): ?>
+                                            <li><a href="<?= Yii::$app->urlManager->createUrl(['catalog/'.$cat->id]) ?>"><?= $cat->name ?></a></li>
+                                        <?php endforeach ?>
+                                        <li><a href="<?= Yii::$app->urlManager->createUrl(['catalog']) ?>">Все категории...</a></li>
+                                    </ul>
+                            </div> <!-- end col -->
+                            <div class="footer-block col-sm-4">
+                                    <h4>Контакты</h4>
+                                    <ul>
+                                        <li><i class="fa fa-address-card"></i> <strong><?= $company->company_name ?></strong></li>
+                                        <li><i class="fa fa-phone"></i> <?= $company->phone1 ?></li>
+                                        <li><i class="fa fa-fax"></i> <?= $company->phone1 ?></li>
+                                        <li><i class="fa fa-envelope-o"></i> <a href="mailto: <?= $company->email ?>"><?= $company->email ?></a></li>
+                                        <li><i class="fa fa-map-marker"></i> <?= $company->address ?></li>
+                                        <li><i class="fa fa-clock-o"></i> пн-пт 09:00 - 19:00</li>
+                                    </ul>
+                            </div> <!-- end col -->
+                            <div class="footer-block col-xs-12 text-center">
+                                <p id="copyright"> <?= date('Y') ?> <span>&copy</span> <?= Html::a($company->name.' | Интернет-магазин', ['/']) ?> <?= $company->phone1 ?></p>
+                            </div> <!-- end col -->
+                        </div> <!-- end row -->
+                        
                     </div>      <!-- end container -->
                 </div>      <!-- end row -->
             </footer>   <!-- end footer-->
