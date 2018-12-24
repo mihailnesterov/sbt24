@@ -1,3 +1,18 @@
+<?php
+
+/* 
+ * aside
+ */
+
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+
+// получаем курсы валют
+$currencies = Yii::$app->controller->getCurrencies();
+// получаем товары со скидками
+$discounts = Yii::$app->controller->getAsideDiscounts('discounts');
+
+?>
 <aside class="col-sm-5 col-md-4">
     <div class="aside-block default">
         <nav id="catalog-menu" class="navbar navbar-default">
@@ -69,25 +84,34 @@
                             <br>
                     </header>
                     <div class="goods-container">
-
+                        <?php foreach ($discounts as $key => $tovar): ?>
+                            <?php
+                                if ($tovar->price_rub != 0) { 
+                                    $price = round($tovar->price_rub,2);
+                                } 
+                                if ($tovar->price_usd != 0) {
+                                    $price = round(($tovar->price_usd * $currencies['USD']),2);
+                                } 
+                                if ($tovar->price_eur != 0) {
+                                    $price = round(($tovar->price_eur * $currencies['EUR']),2);
+                                }
+                                if ($tovar->discount != 0) {
+                                    $old_price = round($price,2);
+                                    $price = round(($price - $price/100*$tovar->discount),2);
+                                }
+                            ?>
                             <div class="goods-block">
-                                    <a href="#"><img src="images/tovar2.jpg" alt="" class="img-responsive"></a>
-                                    <h4>Двухкарманный счетчик банкнот банковского класса DORS 800</h4>
-                                    <p class="goods-price"><span>15236</span> &#8381;</p>
-                                    <button class="goods-buy buy-from-preview"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
-                                    <a href="#" class="label">
-                                            <span>15%</span>
-                                    </a>
-                            </div>
-                            <div class="goods-block">
-                                    <a href="#"><img src="images/tovar1.jpg" alt="" class="img-responsive"></a>
-                                    <h4>Двухкарманная счетно-сортировальная машина с функцией ветхования GLORY USF-51</h4>
-                                    <p class="goods-price"><span>28963.56</span> &#8381;</p>
-                                    <button class="goods-buy buy-from-preview"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>
-                                    <a href="#" class="label">
-                                            <span>9%</span>
-                                    </a>
-                            </div>
+                                    <?= Html::a('<img src="images/tovar2.jpg" alt="'.$tovar->name.'" class="img-responsive">', [Yii::$app->homeUrl.'../view?id='.$tovar->id]) ?>
+                                    <h4><?= $tovar->name ?></h4>
+                                    <p class="goods-price"><s><?= $old_price ?></s> <span><?= $price ?></span> &#8381;</p>
+                                    <?= Html::a('Купить со скидкой '.$tovar->discount.'%', [Yii::$app->homeUrl.'../view?id='.$tovar->id], ['class' => 'goods-buy']) ?>
+                                    <!--<button class="goods-buy buy-from-preview"><i class="fa fa-shopping-cart"></i> В корзину</button>-->
+                                    <?= Html::a('<span class="flash animated">'.$tovar->discount.'%</span>', [Yii::$app->homeUrl.'../view?id='.$tovar->id], ['class' => 'label']) ?>
+                                    <!--<a href="#" class="label">
+                                       <span><?= $tovar->discount ?>%</span>
+                                    </a>-->
+                            </div>                               
+                        <?php endforeach ?>
 
                     </div>	<!-- end col -->
             </div>

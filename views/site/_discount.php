@@ -16,7 +16,7 @@ $currencies = Yii::$app->controller->getCurrencies();
         <div class="row">
 
             <?php
-            // вывод 3-х последних новинок
+            // вывод 3-х товаров со скидками
             $newTovar = app\models\Tovar::find()->where((['>', 'discount', 0]))->orderby(['created'=>SORT_ASC])->limit(3)->all();
                 foreach ($newTovar as $new):
                     if ($new->price_rub != 0) { 

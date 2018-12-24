@@ -4,10 +4,10 @@
     use yii\widgets\Pjax;
     
     $directoryAsset = Yii::$app->assetManager->getPublishedUrl(Yii::$app->homeUrl.'web');   
-    $metrika = Yii::$app->controller->getYandexMetrika('metrika');
     
+    $company = Yii::$app->controller->getCompany('company');
+    $metrika = Yii::$app->controller->getYandexMetrika('metrika');
     $currencies = Yii::$app->controller->getCurrencies();
-
     $order = Yii::$app->controller->getOrderFromCookie();
     
     $this->beginPage();
@@ -68,8 +68,8 @@
                                                                 <a href="<?= Yii::$app->urlManager->createUrl('/') ?>"><img src="images/image.png" alt="logo" class="img-responsive"></a>
                                                         </div>
                                                         <div class="col-sm-9">
-                                                                <p id="site-name"><a href="/"><?= Yii::$app->controller->getCompany('company')->name ?></a></p>
-                                                                <p id="slogan"><?= Yii::$app->controller->getCompany('company')->description ?></p>
+                                                                <p id="site-name"><a href="/"><?= $company->name ?></a></p>
+                                                                <p id="slogan"><?= $company->description ?></p>
                                                         </div>
                                                 </div>
                                         </div>
@@ -95,7 +95,7 @@
                                             </p>
                                         </div>
                                         <div id="top-phone-block" class="col-md-3">
-                                                <p id="top-phone" class="text-left"><i class="fa fa-phone" aria-hidden="true"></i><?= Yii::$app->controller->getCompany('company')->phone1 ?></p>
+                                                <p id="top-phone" class="text-left"><i class="fa fa-phone" aria-hidden="true"></i><?= $company->phone1 ?></p>
                                                 <div id="top-user" class="text-left">
                                                     <span class="dropdown">
                                                         <i class="fa fa-user-o"></i>
@@ -190,7 +190,7 @@
                     <div class="container">
                         1232
                         <div class="row">
-                                <p id="copyright" class="col-12 text-center"> <?= date('Y') ?> &copy <?= Html::a(Yii::$app->controller->getCompany('company')->name.' | Интернет-магазин', ['/']) ?> <?= Yii::$app->controller->getCompany('company')->phone1 ?> Красноярск</p>
+                                <p id="copyright" class="col-12 text-center"> <?= date('Y') ?> &copy <?= Html::a($company->name.' | Интернет-магазин', ['/']) ?> <?= $company->phone1 ?> Красноярск</p>
                         </div>      <!-- end row -->
                     </div>      <!-- end container -->
                 </div>      <!-- end row -->

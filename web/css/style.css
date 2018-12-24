@@ -702,6 +702,11 @@ a:hover {
 	cursor: pointer;
 	
 }
+.goods-container .goods-block .goods-price s {
+	margin-right: 0.2em;
+	font-size: 0.9em;
+	color: #a5a5a5;
+}
 
 .goods-container .label {
 	position: absolute;

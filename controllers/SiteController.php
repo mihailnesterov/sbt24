@@ -294,7 +294,16 @@ class SiteController extends Controller
         if ($n1>1 && $n1<5) return $f2;
         if ($n1==1) return $f1;
         return $f5;
-   }
+    }
+    
+    /*
+     * вывод товаров со скидками в aside, рандом, лимит 2
+     */
+    public function getAsideDiscounts()
+    {
+        $discounts = Tovar::find()->where((['>', 'discount', 0]))->orderby(['rand()'=>SORT_ASC])->limit(2)->all();
+        return $this->view->params['discounts'] = $discounts;
+    }
     
     public function actionIndex()
     {
