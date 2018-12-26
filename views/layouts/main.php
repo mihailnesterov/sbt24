@@ -10,7 +10,7 @@
     $currencies = Yii::$app->controller->getCurrencies();
     $order = Yii::$app->controller->getOrderFromCookie();
     $category = Yii::$app->controller->getCatalogLimit('category', 5);
-    
+        
     $this->beginPage();
 ?>
 
@@ -119,14 +119,14 @@
                                                         <ul class="dropdown-menu" aria-labelledby="user-menu">
                                                             <?php
                                                                 if(Yii::$app->request->cookies->has('sbt24client')) {
-                                                                    $myorders = \app\models\Order::find()->where(['client_id' => Yii::$app->getRequest()->getCookies()->getValue('sbt24client')])->andWhere(['status' => 1])->count();
+                                                                    //$myorders = \app\models\Order::find()->where(['client_id' => Yii::$app->getRequest()->getCookies()->getValue('sbt24client')])->andWhere(['status' => 1])->count();
                                                                     if(Yii::$app->request->cookies->has('sbt24order')) {
                                                                         echo '<li><a href="'.Yii::$app->urlManager->createUrl('cart').'"><i class="fa fa-shopping-cart"></i> Моя корзина ( '.$order['orderItemsCount'].' )</a></li>';
                                                                     } else {
                                                                         echo '<li><a><i class="fa fa-shopping-cart"></i> Корзина пуста</a></li>';
                                                                     }
-                                                                    echo '<li><a href="'.Yii::$app->urlManager->createUrl('myorders').'"><i class="fa fa-list-ol"></i> Мои заказы ( '. $myorders .' )</a></li>';
-                                                                    echo '<li><a href="'.Yii::$app->urlManager->createUrl('myprofile').'"><i class="fa fa-user-o"></i> Мой профиль</a></li>';
+                                                                    echo '<li><a href="'.Yii::$app->urlManager->createUrl('orders').'"><i class="fa fa-list-ol"></i> Мои заказы ( '. Yii::$app->controller->getMyOrdersCount() .' )</a></li>';
+                                                                    echo '<li><a href="'.Yii::$app->urlManager->createUrl('profile').'"><i class="fa fa-user-o"></i> Мой профиль</a></li>';
                                                                 } else {
                                                                     echo '<li><a><i class="fa fa-shopping-cart"></i> Корзина пуста</a></li>';
                                                                 }   

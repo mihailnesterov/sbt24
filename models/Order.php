@@ -118,7 +118,8 @@ class Order extends \yii\db\ActiveRecord
         } else {
             // если order уже существует
             // если запрос пришел не из action = order, то:
-            if ( Yii::$app->controller->action->id != 'order') {  
+            if ( Yii::$app->controller->action->id != 'order'
+                    && Yii::$app->controller->action->id != 'profile') {  
                 $orderItem = new OrderItems();
                 // получаем order_id из куки
                 $orderItem->order_id = Yii::$app->getRequest()->getCookies()->getValue('sbt24order');

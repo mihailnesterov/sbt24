@@ -323,6 +323,24 @@ class SiteController extends Controller
         return $this->view->params['category'] = $category;
     }
     
+    /*
+     * вывод заказов клиента
+     */
+    public function getMyOrders()
+    {
+        $myOrders = Order::find()->where(['client_id' => Yii::$app->getRequest()->getCookies()->getValue('sbt24client')])->andWhere(['status' => 1])->all();
+        return $this->view->params['myorders'] = $myOrders;
+    }
+    
+    /*
+     * вывод кол-ва заказов клиента
+     */
+    public function getMyOrdersCount()
+    {
+        $myOrdersCount = Order::find()->where(['client_id' => Yii::$app->getRequest()->getCookies()->getValue('sbt24client')])->andWhere(['status' => 1])->count();
+        return $this->view->params['count'] = $myOrdersCount;
+    }
+    
     public function actionIndex()
     {
         $newTovar = Tovar::find()->orderby(['created'=>SORT_ASC])->limit(3)->all();
@@ -734,22 +752,7 @@ class SiteController extends Controller
     }
     
     public function actionInvoice($id)
-    {
-        $months = array( 1 => 'января' , 'февраля' , 'марта' , 'апреля' , 'мая' , 'июня' , 'июля' , 'августа' , 'сентября' , 'октября' , 'ноября' , 'декабря' );
-        
-        $this->view->title = 'Счет на оплату № sbt24-'.$id.' от '.date( 'd ' . $months[date( 'n' )] . ' Y' ).' г.';
-        $this->view->params['breadcrumbs'][] = ['label' => 'Мои счета', 'url' => ['/orders']];
-        $this->view->params['breadcrumbs'][] = $this->view->title;
-        
-        \Yii::$app->view->registerMetaTag([
-            'name' => 'keywords',
-            'content' => ''
-        ]);
-        \Yii::$app->view->registerMetaTag([
-            'name' => 'description',
-            'content' => ''
-        ]);
-        
+    {        
         $orderItemsSum = 0;
         $orderItemsCount = 0; 
         
@@ -780,6 +783,14 @@ class SiteController extends Controller
                 $orderItemsCount += $item->count;
             endforeach;
         }
+        
+        $months = array( 1 => 'января' , 'февраля' , 'марта' , 'апреля' , 'мая' , 'июня' , 'июля' , 'августа' , 'сентября' , 'октября' , 'ноября' , 'декабря' );
+        date_default_timezone_set('Asia/Krasnoyarsk');
+        $created = new \DateTime($order->created);
+        //$created->format('d.m.Y (h:i)');
+        $this->view->title = 'Счет на оплату № sbt24-'.$id.' от '.$created->format( 'd ' . $months[date( 'n' )] . ' Y' ).' г.';
+        $this->view->params['breadcrumbs'][] = ['label' => 'Мои заказы', 'url' => [Yii::$app->urlManager->createUrl(['../orders'])]];
+        $this->view->params['breadcrumbs'][] = $this->view->title;
        
 
         return $this->render('invoice', [
@@ -886,8 +897,6 @@ class SiteController extends Controller
     
     public function actionInvoicePdf($id)
     {
-
-        $months = array( 1 => 'января' , 'февраля' , 'марта' , 'апреля' , 'мая' , 'июня' , 'июля' , 'августа' , 'сентября' , 'октября' , 'ноября' , 'декабря' );
         $orderItemsSum = 0;
         $orderItemsCount = 0; 
         
@@ -919,7 +928,11 @@ class SiteController extends Controller
             endforeach;
         }
         
-        $this->view->title = 'Счет на оплату № sbt24-'.$id.' от '.date( 'd ' . $months[date( 'n' )] . ' Y' ).' г.';
+        $months = array( 1 => 'января' , 'февраля' , 'марта' , 'апреля' , 'мая' , 'июня' , 'июля' , 'августа' , 'сентября' , 'октября' , 'ноября' , 'декабря' );
+        date_default_timezone_set('Asia/Krasnoyarsk');
+        $created = new \DateTime($order->created);
+        
+        $this->view->title = 'Счет на оплату № sbt24-'.$id.' от '.$created->format( 'd ' . $months[date( 'n' )] . ' Y' ).' г.';
         
         Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
         $pdf = new Pdf([
@@ -969,6 +982,69 @@ class SiteController extends Controller
             'client' => $client,
             'company' => $company,
             'currencies' => $currencies
+        ]);
+    }
+    
+    /**
+     * My orders page model.
+     * If view is successful, the browser will be redirected to the 'orders' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionOrders()
+    {
+        if(Yii::$app->request->cookies->has('sbt24client')) {
+            // if cookie is available
+            $client_id = Yii::$app->getRequest()->getCookies()->getValue('sbt24client');
+            $client = $this->findClientModel($client_id);
+            $myorders = Order::find()->where(['client_id' => $client_id])->all();
+        } else {
+            return $this->goBack();
+        }
+        
+        if($client->company == '') {
+            $this->view->title = 'Мои заказы (Гость)';
+        }
+        else {
+            $this->view->title = 'Мои заказы ('.$client->company.')';
+        }
+        $this->view->params['breadcrumbs'][] = $this->view->title;
+        date_default_timezone_set('Asia/Krasnoyarsk');
+        
+        return $this->render('orders', [
+            'client' => $client,
+            'myorders' => $myorders
+        ]);
+    }
+    
+    /**
+     * My profile page model.
+     * If view is successful, the browser will be redirected to the 'profile' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionProfile()
+    {
+        $this->view->title = 'Мой профиль';
+        $this->view->params['breadcrumbs'][] = $this->view->title;
+        
+        if(Yii::$app->request->cookies->has('sbt24client')) {
+            // if cookie is available
+            $client_id = Yii::$app->getRequest()->getCookies()->getValue('sbt24client');
+            $client = $this->findClientModel($client_id);
+            
+            if ($client->load(Yii::$app->request->post()) && $client->save()) {
+                header("Refresh: 0");
+            }
+            
+        } else {
+            return $this->goBack();
+        }
+        
+        return $this->render('profile', [
+            'client' => $client
         ]);
     }
 
