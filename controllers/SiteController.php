@@ -998,7 +998,7 @@ class SiteController extends Controller
             // if cookie is available
             $client_id = Yii::$app->getRequest()->getCookies()->getValue('sbt24client');
             $client = $this->findClientModel($client_id);
-            $myorders = Order::find()->where(['client_id' => $client_id])->all();
+            $myorders = Order::find()->where(['client_id' => $client_id])->andWhere(['status' => 1])->all();
         } else {
             return $this->goBack();
         }

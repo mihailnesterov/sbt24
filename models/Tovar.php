@@ -20,6 +20,9 @@ use Yii;
  * @property string $type тип
  * @property string $model модель
  * @property int $garantee гарантия (мес)
+ * @property string $properties харакеристики товара
+ * @property string $abilities возможности товара
+ * @property string $advantages преимущества товара
  * @property string $photo1 фото 1
  * @property string $photo2 фото 2
  * @property string $photo3 фото 3
@@ -50,7 +53,7 @@ class Tovar extends \yii\db\ActiveRecord
         return [
             [['category_id', 'name','text'], 'required'],
             [['category_id', 'garantee'], 'integer'],
-            [['text', 'video'], 'string'],
+            [['text', 'video', 'properties', 'abililies', 'advantages'], 'string'],
             [['created'], 'safe'],
             [['name', 'keywords', 'description', 'brand', 'type', 'model', 'photo1', 'photo2', 'photo3', 'photo4', 'video', 'file1', 'file2', 'file3'], 'string', 'max' => 255],
             [['price_rub', 'price_usd', 'price_eur'], 'string', 'max' => 20],
@@ -77,6 +80,9 @@ class Tovar extends \yii\db\ActiveRecord
             'type' => 'Тип',
             'model' => 'Модель',
             'garantee' => 'Гарантия (мес)',
+            'properties' => 'Характеристики',
+            'abilities' => 'Возможности',
+            'advantages' => 'Преимущества',
             'photo1' => 'Фото 1',
             'photo2' => 'Фото 2',
             'photo3' => 'Фото 3',

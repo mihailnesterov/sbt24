@@ -109,9 +109,9 @@ use yii\widgets\Breadcrumbs;
                                                             <!-- Tabs content -->  
                                                             <div class="tab-content">
                                                                 <div role="tabpanel" class="tab-pane active" id="description"><?= $video ?><?= $model->text ?></div>
-                                                                <div role="tabpanel" class="tab-pane" id="feature">...</div>
-                                                                <div role="tabpanel" class="tab-pane" id="ability">...</div>
-                                                                <div role="tabpanel" class="tab-pane" id="advantage">...</div>
+                                                                <div role="tabpanel" class="tab-pane" id="feature"><?= $model->properties ?></div>
+                                                                <div role="tabpanel" class="tab-pane" id="ability"><?= $model->abilities ?></div>
+                                                                <div role="tabpanel" class="tab-pane" id="advantage"><?= $model->advantages ?></div>
                                                             </div>
 
                                                         </div>  <!-- end goods-view-tabs --> 
