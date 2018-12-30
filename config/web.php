@@ -44,7 +44,7 @@ return [
         ],
         'db' => require(__DIR__.'/db.php'),
         'user' => [ // подключаем текущую логику аутентификации
-                'identityClass' => 'app\models\Users',
+                'identityClass' => 'app\modules\admin\models\Users',
                 'enableAutoLogin' => true,
             ],
         'errorHandler' => [

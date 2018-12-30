@@ -1,4 +1,41 @@
+<?php
+
+/* 
+ * aside для корзины, профиля и страницы заказов пользователя
+ */
+
+use yii\helpers\Html;
+
+// получаем структуру каталога
+$category = Yii::$app->controller->getCatalog('category');
+// получаем данные о клиенте
+$client = Yii::$app->controller->getClient();
+// получаем данные о заказе
+$order = Yii::$app->controller->getOrderFromCookie();
+?>
 <aside class="col-sm-5 col-md-4">
+    
+    <div class="aside-block">
+        <nav id="client-menu" class="navbar navbar-default">
+            <ul class="nav navbar-nav">
+                <h3><i class="fa fa-user-o"></i> 
+                    <?php if ( $client['client']->company != ''): ?>
+                        <?= $client['client']->company ?>
+                    <?php else: ?>
+                        Гость
+                    <?php endif ?>
+                </h3>
+                <?php if (Yii::$app->request->cookies->has('sbt24order')): ?>
+                <li><?= Html::a('<i class="fa fa-shopping-cart"></i> Моя корзина ( '. $order['orderItemsCount'] .' )', Yii::$app->urlManager->createUrl(['cart'])) ?></li>
+                <?php else: ?>
+                <li><?= Html::a('<i class="fa fa-shopping-cart"></i> Моя корзина ( 0 )', Yii::$app->urlManager->createUrl(['cart'])) ?></li>
+                <?php endif ?>
+                <li><?= Html::a('<i class="fa fa-list-ol"></i> Мои заказы ( '. Yii::$app->controller->getMyOrdersCount() .' )', Yii::$app->urlManager->createUrl(['orders'])) ?></li>
+                <li><?= Html::a('<i class="fa fa-user-o"></i> Мой профиль', Yii::$app->urlManager->createUrl(['profile'])) ?></li>
+            </ul>
+       </nav>
+    </div>
+    
     <div class="aside-block default">
         <nav id="catalog-menu" class="navbar navbar-default">
             <div class="navbar-header">
@@ -8,7 +45,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand visible-xs" href="#"><?= Yii::$app->name ?></a>
+                    <a class="navbar-brand visible-xs" href="<?= Yii::$app->urlManager->createUrl(['/']) ?>"><?= Yii::$app->name ?></a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -24,27 +61,34 @@
                         </form>
                         <hr>
                     </li>
-                    <?php
-                        // вывод меню из БД
-                        $category = \app\models\Category::find()->where(['parent' => '0'])->all();
-
-                        foreach ($category as $cat):
-                            $sub_category = \app\models\Category::find()->where(['parent' => $cat->id])->all();
-                            if ($sub_category == NULL) {
-                                echo '<li><a href="'.Yii::$app->urlManager->createUrl(['catalog/'.$cat->id]).'"><i class="fa fa-arrow-right"></i>'.$cat->name.'</a></li>';
-                            } else {
-                                echo '<li role="presentation" class="dropdown">'
-                                . '<a href="'.Yii::$app->urlManager->createUrl(['catalog/'.$cat->id]).'" data-target="'.Yii::$app->urlManager->createUrl(['catalog/'.$cat->link]).'" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-arrow-right"></i>'.$cat->name.'  <i class="fa fa-caret-right" aria-hidden="true"></i></a>';
-                                    echo '<ul class="dropdown-menu">';
-                                        foreach ($sub_category as $sub_cat):
-                                            echo '<li><a href="'.Yii::$app->urlManager->createUrl(['catalog/'.$sub_cat->id]).'">'.$sub_cat->name.'</a></li>';
-                                        endforeach;
-                                    echo '</ul>';
-                                echo '</li>';
-                            }
-
-                        endforeach;
-                    ?>
+                    
+                    <?php // вывод меню ?>
+                    <?php foreach ($category as $key => $cat): ?>
+                        <?php $sub_category = \app\models\Category::find()->where(['parent' => $cat->id])->all(); ?>
+                        <?php if ( $sub_category == NULL): ?>
+                            <?php $tovar_count = \app\models\Tovar::find()->where(['category_id' => $cat->id])->count(); ?>
+                                <?php if ( $tovar_count != 0): ?>
+                                    <li>
+                                        <a href="<?= Yii::$app->urlManager->createUrl(['catalog/'.$cat->id]) ?>"><i class="fa fa-arrow-right"></i><?= $cat->name ?></a>
+                                    </li>
+                                <?php endif ?>
+                        <?php else : ?>
+                            <li role="presentation" class="dropdown">
+                                <a href="<?= Yii::$app->urlManager->createUrl(['catalog/'.$cat->id]) ?>" data-target="<?= Yii::$app->urlManager->createUrl(['catalog/'.$cat->link]) ?>" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-arrow-right"></i><?= $cat->name ?>  <i class="fa fa-caret-right"></i></a>
+                                <ul class="dropdown-menu">
+                                    <?php foreach ($sub_category as $key => $sub_cat): ?>
+                                        <?php $tovar_count = \app\models\Tovar::find()->where(['category_id' => $sub_cat->id])->count(); ?>
+                                        <?php if ( $tovar_count != 0): ?>
+                                            <li>
+                                                <a href="<?= Yii::$app->urlManager->createUrl(['catalog/'.$sub_cat->id]) ?>"><?= $sub_cat->name ?></a>
+                                            </li>
+                                        <?php endif ?>
+                                    <?php endforeach ?>
+                                </ul>    
+                            </li>
+                        <?php endif ?>
+                    <?php endforeach ?>
+                            
                     <div class="visible-xs">
                         <hr>
                         <ul class="nav navbar-nav">

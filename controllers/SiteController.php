@@ -140,8 +140,8 @@ class SiteController extends Controller
         $orderItemsSum = 0;
         $orderItemsCount = 0;     
         
-        /*Yii::$app->response->cookies->remove('sbt24order');
-        Yii::$app->response->cookies->remove('sbt24client');*/
+        Yii::$app->response->cookies->remove('sbt24order');
+        Yii::$app->response->cookies->remove('sbt24client');
         
         if(Yii::$app->request->cookies->has('sbt24order')) {
             // if cookie is available
@@ -321,6 +321,26 @@ class SiteController extends Controller
     {
         $category = Category::find()->where(['parent' => '0'])->limit($limit)->all();
         return $this->view->params['category'] = $category;
+    }
+    
+    /*
+     * вывод всех данных клиента
+     */
+    public function getClient()
+    {
+        if( Yii::$app->request->cookies->has('sbt24client') ) {
+            $client = Clients::find()->where(['id' => Yii::$app->getRequest()->getCookies()->getValue('sbt24client')])->one();
+            $orders = Order::find()->where(['client_id' => $client->id])->andWhere(['status' => 1])->all();
+        } else {
+            $client = 0;
+            $orders = 0;
+        }
+        
+        $params = [
+                'client' => $client,
+                'orders' => $orders,
+            ];
+        return $params;
     }
     
     /*
@@ -571,6 +591,9 @@ class SiteController extends Controller
         $parent_category_url = '..'.Yii::$app->homeUrl.'catalog/'.$parent_category->id;
         $catalog_url = '..'.Yii::$app->homeUrl.'catalog';
         
+        // выбираем другие товары из той-же категории
+        $other = Tovar::find()->where(['category_id' => $category->id])->andWhere(['!=','id',$id])->all();
+        
         $this->view->title = $model->name;
         $this->view->params['breadcrumbs'][] = ['label' => 'Каталог', 'url' => [$catalog_url]];
         $this->view->params['breadcrumbs'][] = ['label' => $parent_category->name, 'url' => [$parent_category_url]];
@@ -659,7 +682,9 @@ class SiteController extends Controller
             'old_price' => $old_price,
             'hit' => $hit,
             'video' => $video,
-            'client' => $client 
+            'client' => $client,
+            'category' => $category,
+            'other' => $other
         ]);
     }
     
@@ -1027,9 +1052,6 @@ class SiteController extends Controller
      */
     public function actionProfile()
     {
-        $this->view->title = 'Мой профиль';
-        $this->view->params['breadcrumbs'][] = $this->view->title;
-        
         if(Yii::$app->request->cookies->has('sbt24client')) {
             // if cookie is available
             $client_id = Yii::$app->getRequest()->getCookies()->getValue('sbt24client');
@@ -1042,6 +1064,14 @@ class SiteController extends Controller
         } else {
             return $this->goBack();
         }
+        
+        if($client->company == '') {
+            $this->view->title = 'Мой профиль (Гость)';
+        }
+        else {
+            $this->view->title = 'Мой профиль ('.$client->company.')';
+        }
+        $this->view->params['breadcrumbs'][] = $this->view->title;
         
         return $this->render('profile', [
             'client' => $client

@@ -36,10 +36,60 @@ use yii\widgets\Breadcrumbs;
                                                 </header>
 
                                                 <div class="goods-container">	
-                                                        <div class="row">
-
-                                                                
-
+                                                        <div class="dashboard row">
+                                                            <div class="col-xs-12 col-md-6 text-center">
+                                                                <div class="dashboard-block">
+                                                                    <?= Html::a('<i class="fa fa-plus"></i> Добавить товар', Yii::$app->urlManager->createUrl(['/admin/goods-add']), ['class' => 'btn btn-success']) ?>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xs-12 col-md-6 text-center">
+                                                                <div class="dashboard-block">
+                                                                    <?= Html::a('<i class="fa fa-plus"></i> Добавить категорию', Yii::$app->urlManager->createUrl(['/admin/goods-add']), ['class' => 'btn btn-success']) ?>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6 col-md-4 text-center">
+                                                                <div class="dashboard-block">
+                                                                    <h3>Товары</h3>
+                                                                    <h4><?= $tovarCount ?></h4>
+                                                                    <p><?= Html::a('Подробнее', Yii::$app->urlManager->createUrl(['/admin/goods']), ['class' => 'btn btn-link btn-lg']) ?></p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6 col-md-4 text-center">
+                                                                <div class="dashboard-block">
+                                                                    <h3>Клиенты</h3>
+                                                                    <h4><?= $clientCount ?></h4>
+                                                                    <p><?= Html::a('Подробнее', Yii::$app->urlManager->createUrl(['/admin/clients']), ['class' => 'btn btn-link btn-lg']) ?></p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6 col-md-4 text-center">
+                                                                <div class="dashboard-block">
+                                                                    <h3>Заказы</h3>
+                                                                    <h4><?= $orderCount ?></h4>
+                                                                    <p><?= Html::a('Подробнее', Yii::$app->urlManager->createUrl(['/admin/orders']), ['class' => 'btn btn-link btn-lg']) ?></p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6 col-md-4 text-center">
+                                                                <div class="dashboard-block">
+                                                                    <h3>Баннеры</h3>
+                                                                    <h4><i class="fa fa-image"></i></h4>
+                                                                    <p><?= Html::a('Подробнее', Yii::$app->urlManager->createUrl(['/admin/banners']), ['class' => 'btn btn-link btn-lg']) ?></p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6 col-md-4 text-center">
+                                                                <div class="dashboard-block">
+                                                                    <h3>Компания</h3>
+                                                                    <h4><i class="fa fa-building-o"></i></h4>
+                                                                    <p><?= Html::a('Подробнее', Yii::$app->urlManager->createUrl(['/admin/company']), ['class' => 'btn btn-link btn-lg']) ?></p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6 col-md-4 text-center">
+                                                                <div class="dashboard-block">
+                                                                    <h3>Мой профиль</h3>
+                                                                    <h4><i class="fa fa-user-o"></i></h4>
+                                                                    <p><?= Html::a('Подробнее', Yii::$app->urlManager->createUrl(['/admin/profile']), ['class' => 'btn btn-link btn-lg']) ?></p>
+                                                                </div>
+                                                            </div>
+                                                            
                                                         </div>	<!-- end row -->
                                                 </div>	<!-- end goods-container -->
                                         </div>	<!-- end content-block -->

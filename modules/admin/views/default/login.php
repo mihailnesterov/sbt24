@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Users */
+/* @var $model app\modules\admin\models\Users */
 /* @var $form ActiveForm */
 
 ?>
@@ -59,9 +59,9 @@ use yii\widgets\ActiveForm;
                             У меня нет аккаунта <a href="<?=Yii::$app->urlManager->createUrl(['/admin/signup'])?>" >Регистрация</a>
                         </div>
 
-                        <div class="login-links  text-center">
+                        <!--<div class="login-links  text-center">
                             <a href="<?=Yii::$app->urlManager->createUrl(['/admin/password-restore'])?>" >Забыли пароль?</a>
-                        </div>
+                        </div>-->
 
                     </div>	<!-- end row -->
             </div>	<!-- end goods-container -->

@@ -4,6 +4,9 @@
     use yii\widgets\Pjax;
     
     $directoryAsset = Yii::$app->assetManager->getPublishedUrl(Yii::$app->homeUrl.'web');   
+    
+    $user = \Yii::$app->controller->getUserIdentity();
+    
     $metrika = \Yii::$app->controller->getYandexMetrika('metrika');
     
     $currencies = \Yii::$app->controller->getCurrencies();
@@ -65,7 +68,7 @@
                                         </div>
                                         <div id="top-phone-block" class="col-md-3">
                                                 <div id="top-user" class="text-right">
-                                                    <i class="fa fa-user-o" aria-hidden="true"></i><a href="<?= Yii::$app->urlManager->createUrl('/admin/login') ?>" id="user-menu">userlogin</a>
+                                                    <i class="fa fa-user-o" aria-hidden="true"></i><a href="<?= Yii::$app->urlManager->createUrl('/admin/login') ?>" id="user-menu"><?= Yii::$app->user->identity->login ?></a>
                                                     / 
                                                     <a href="<?= Yii::$app->urlManager->createUrl('/admin/logout') ?>">Выйти</a>
                                                 </div>
@@ -80,9 +83,8 @@
             <footer class="container-fluid">
                 <div class="row">
                     <div class="container">
-                        1232
                         <div class="row">
-                                <p id="copyright" class="col-12 text-center"> <?= date('Y') ?> &copy <?= Html::a(Yii::$app->controller->getCompany('company')->name.' | Интернет-магазин', ['/']) ?> <?= Yii::$app->controller->getCompany('company')->phone1 ?> Красноярск</p>
+                                <p id="copyright" class="col-12 text-center"> <?= date('Y') ?> &copy <?= Html::a(Yii::$app->controller->getCompany('company')->name.' | Кабинет', ['/admin']) ?></p>
                         </div>      <!-- end row -->
                     </div>      <!-- end container -->
                 </div>      <!-- end row -->

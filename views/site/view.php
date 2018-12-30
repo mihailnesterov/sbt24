@@ -133,7 +133,76 @@ use yii\widgets\Breadcrumbs;
                                                 </div>	<!-- end row -->
                                             </div>  <!-- end goods-container -->
                                         </div>	<!-- end content-block -->
-
+                                        
+                                        <div class="content-block">
+                                            <header>
+                                                <h2>Другие <?= $category->name ?></h2>
+                                            </header>
+                                            <!-- Swiper slider main container -->
+                                            <div class="swiper-container">
+                                                <!-- Swiper slider wrapper -->
+                                                <div class="swiper-wrapper">
+                                                        <!-- Slides -->
+                                                        <?php foreach ($other as $key => $tovar): ?>
+                                                            <?php
+                                                                if ($tovar->price_rub != 0) { 
+                                                                    $price_other = round($tovar->price_rub,2);
+                                                                } 
+                                                                if ($tovar->price_usd != 0) {
+                                                                    $price_other = round(($tovar->price_usd * $currencies['USD']),2);
+                                                                } 
+                                                                if ($tovar->price_eur != 0) {
+                                                                    $price_other = round(($tovar->price_eur * $currencies['EUR']),2);
+                                                                }
+                                                                if ($tovar->discount != 0) {
+                                                                    $discount_other = '<div class="label discount"><span class="flash animated">'.$tovar->discount.'%</span></div>';
+                                                                    $old_price_other = round($price_other,2);
+                                                                    $price_other = round(($price_other - $price_other/100*$tovar->discount),2);
+                                                                } else {
+                                                                    $discount_other = '';
+                                                                    $old_price_other = '';
+                                                                }
+                                                            ?>
+                                                        <div class="swiper-slide" data-swiper-autoplay="5000">
+                                                            <div class="goods-container">
+                                                                <div class="goods-view-block row">
+                                                                    
+                                                                    <div class="col-sm-8">
+                                                                            <h3><?= $tovar->name ?></h3>
+                                                                            <br>
+                                                                            <div class="text-left" style="text-overflow: ellipsis; word-wrap: break-word; overflow: hidden; max-height: 84px;">
+                                                                                <?= $tovar->text ?>
+                                                                            </div>
+                                                                            <hr>
+                                                                            <div class="row">
+                                                                            <div class="goods-price col-lg-9">
+                                                                                <s><?= $old_price_other ?></s><span><?= $price_other ?></span> &#8381;
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <?= Html::a('Подробнее', Yii::$app->urlManager->createUrl(['view?id='.$tovar->id]), ['class' => 'goods-buy']) ?>
+                                                                            </div>
+                                                                            </div>
+                                                                    </div>  <!-- end col -->
+                                                                    <div class="goods-view-img-block col-sm-4">
+                                                                        
+                                                                        <?= Html::a('<img src="images/tovar1.jpg" alt="" class="img-responsive">', Yii::$app->urlManager->createUrl(['view?id='.$tovar->id])) ?>
+                                                                        <?= $discount_other ?>
+                                                                    </div>  <!-- end col -->
+                                                                </div> 
+                                                            </div>
+                                                        </div>
+                                                        <?php endforeach ?>
+                                                </div>
+                                                <!-- Swiper slider navigation -->
+                                                <div class="swiper-button-prev">
+                                                        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                                                </div>
+                                                <div class="swiper-button-next">
+                                                        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                                </div>
+                                            </div> <!-- end swiper -->
+                                            
+                                        </div>	<!-- end content-block -->
                                 </div>	<!-- end content-container -->
                         </div>	<!-- end col -->
 

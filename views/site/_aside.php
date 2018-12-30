@@ -41,25 +41,33 @@ $discounts = Yii::$app->controller->getAsideDiscounts('discounts');
                         </form>
                         <hr>
                     </li>
-                    <?php
-                        // вывод меню
-                        foreach ($category as $cat):
-                            $sub_category = \app\models\Category::find()->where(['parent' => $cat->id])->all();
-                            if ($sub_category == NULL) {
-                                echo '<li><a href="'.Yii::$app->urlManager->createUrl(['catalog/'.$cat->id]).'"><i class="fa fa-arrow-right"></i>'.$cat->name.'</a></li>';
-                            } else {
-                                echo '<li role="presentation" class="dropdown">'
-                                . '<a href="'.Yii::$app->urlManager->createUrl(['catalog/'.$cat->id]).'" data-target="'.Yii::$app->urlManager->createUrl(['catalog/'.$cat->link]).'" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-arrow-right"></i>'.$cat->name.'  <i class="fa fa-caret-right" aria-hidden="true"></i></a>';
-                                    echo '<ul class="dropdown-menu">';
-                                        foreach ($sub_category as $sub_cat):
-                                            echo '<li><a href="'.Yii::$app->urlManager->createUrl(['catalog/'.$sub_cat->id]).'">'.$sub_cat->name.'</a></li>';
-                                        endforeach;
-                                    echo '</ul>';
-                                echo '</li>';
-                            }
-
-                        endforeach;
-                    ?>
+                    <?php // вывод меню ?>
+                    <?php foreach ($category as $key => $cat): ?>
+                        <?php $sub_category = \app\models\Category::find()->where(['parent' => $cat->id])->all(); ?>
+                        <?php if ( $sub_category == NULL): ?>
+                            <?php $tovar_count = \app\models\Tovar::find()->where(['category_id' => $cat->id])->count(); ?>
+                                <?php if ( $tovar_count != 0): ?>
+                                    <li>
+                                        <a href="<?= Yii::$app->urlManager->createUrl(['catalog/'.$cat->id]) ?>"><i class="fa fa-arrow-right"></i><?= $cat->name ?></a>
+                                    </li>
+                                <?php endif ?>
+                        <?php else : ?>
+                            <li role="presentation" class="dropdown">
+                                <a href="<?= Yii::$app->urlManager->createUrl(['catalog/'.$cat->id]) ?>" data-target="<?= Yii::$app->urlManager->createUrl(['catalog/'.$cat->link]) ?>" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-arrow-right"></i><?= $cat->name ?>  <i class="fa fa-caret-right"></i></a>
+                                <ul class="dropdown-menu">
+                                    <?php foreach ($sub_category as $key => $sub_cat): ?>
+                                        <?php $tovar_count = \app\models\Tovar::find()->where(['category_id' => $sub_cat->id])->count(); ?>
+                                        <?php if ( $tovar_count != 0): ?>
+                                            <li>
+                                                <a href="<?= Yii::$app->urlManager->createUrl(['catalog/'.$sub_cat->id]) ?>"><?= $sub_cat->name ?></a>
+                                            </li>
+                                        <?php endif ?>
+                                    <?php endforeach ?>
+                                </ul>    
+                            </li>
+                        <?php endif ?>
+                    <?php endforeach ?>
+                    
                     <div class="visible-xs">
                         <hr>
                         <ul class="nav navbar-nav">
@@ -105,11 +113,7 @@ $discounts = Yii::$app->controller->getAsideDiscounts('discounts');
                                     <h4><?= $tovar->name ?></h4>
                                     <p class="goods-price"><s><?= $old_price ?></s> <span><?= $price ?></span> &#8381;</p>
                                     <?= Html::a('Купить со скидкой '.$tovar->discount.'%', [Yii::$app->homeUrl.'../view?id='.$tovar->id], ['class' => 'goods-buy']) ?>
-                                    <!--<button class="goods-buy buy-from-preview"><i class="fa fa-shopping-cart"></i> В корзину</button>-->
                                     <?= Html::a('<span class="flash animated">'.$tovar->discount.'%</span>', [Yii::$app->homeUrl.'../view?id='.$tovar->id], ['class' => 'label']) ?>
-                                    <!--<a href="#" class="label">
-                                       <span><?= $tovar->discount ?>%</span>
-                                    </a>-->
                             </div>                               
                         <?php endforeach ?>
 

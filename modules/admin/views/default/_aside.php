@@ -12,16 +12,19 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <h3><i class="fa fa-bars" aria-hidden="true"></i>Меню</h3>
-                    <li><a href="<?= Yii::$app->urlManager->createUrl('/admin/goods') ?>"><i class="fa fa-shopping-cart"></i>Каталог товаров</a></li>
+                    <h3><i class="fa fa-bars" aria-hidden="true"></i>Меню кабинета</h3>
+                    <li><a href="<?= Yii::$app->urlManager->createUrl('/admin') ?>"><i class="fa fa-home"></i>Кабинет</a></li>
+                    <li><a href="<?= Yii::$app->urlManager->createUrl('/admin/goods') ?>"><i class="fa fa-shopping-cart"></i>Товары</a></li>
                     <li><a href="<?= Yii::$app->urlManager->createUrl('/admin/categories') ?>"><i class="fa fa-folder-open-o"></i>Категории товаров</a></li>
+                    <li><a href="<?= Yii::$app->urlManager->createUrl('/admin/clients') ?>"><i class="fa fa-users"></i>Клиенты</a></li>
                     <li><a href="<?= Yii::$app->urlManager->createUrl('/admin/orders') ?>"><i class="fa fa-rub"></i>Заказы</a></li>
-                    <li><a href="<?= Yii::$app->urlManager->createUrl('/admin/users') ?>"><i class="fa fa-user-o"></i>Пользователи</a></li>
+                    <li><a href="<?= Yii::$app->urlManager->createUrl('/admin/banners') ?>"><i class="fa fa-picture-o"></i>Баннеры</a></li>
                     <li><a href="<?= Yii::$app->urlManager->createUrl('/admin/company') ?>"><i class="fa fa-building-o"></i>Компания</a></li>
-                    <li><a href="<?= Yii::$app->urlManager->createUrl('/admin/settings') ?>"><i class="fa fa-gears"></i>Настройки</a></li>
+                    <li><a href="<?= Yii::$app->urlManager->createUrl('/admin/profile') ?>"><i class="fa fa-user-o"></i>Мой профиль</a></li>
+                    <!--<li><a href="<?= Yii::$app->urlManager->createUrl('/admin/settings') ?>"><i class="fa fa-gears"></i>Настройки</a></li>-->
                     <li><hr></li>
                     <li><a href="<?= Yii::$app->urlManager->createUrl('/') ?>"><i class="fa fa-link"></i>Перейти на сайт</a></li>
-                    <li><a href="<?= Yii::$app->urlManager->createUrl('logout') ?>"><i class="fa fa-sign-out"></i>Выйти</a></li>
+                    <li><a href="<?= Yii::$app->urlManager->createUrl('/admin/logout') ?>"><i class="fa fa-sign-out"></i>Выйти</a></li>
                 </ul>   <!-- nav navbar-nav -->
             </div>  <!-- end #navbar -->
         </nav>  <!-- end catalog-menu -->

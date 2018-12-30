@@ -4,7 +4,7 @@
 * users model
  * 
  */
-namespace app\models;
+namespace app\modules\admin\models;
 
 use Yii;
 
@@ -54,9 +54,7 @@ class Users extends \yii\db\ActiveRecord  implements \yii\web\IdentityInterface
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
             ['auth_key', 'string', 'max' => 255],
-            [[ 'avatar', 'created'], 'safe'],
             ['role', 'string', 'max' => 50],
-            ['avatar', 'string', 'max' => 255],
             ['phone', 'string', 'max' => 255],
             ['status', 'boolean'],
             ['rememberMe', 'boolean'],

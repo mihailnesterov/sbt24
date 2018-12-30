@@ -129,7 +129,6 @@ a:hover {
 	color: #fff;
 }
 #header #top #logo-block {
-	border: 0px red solid;
 	padding: 0.5em 0.7em;
 }
 #header #top #schedule-block {
@@ -445,33 +444,32 @@ a:hover {
 	width: 100%;
 }
 
-#catalog-menu .navbar-nav {
-	/*background-color: #17324F;*/
-	/*background-color: #fff;*/
+#catalog-menu .navbar-nav,
+#client-menu .navbar-nav {
 	display: inline-block;
 	padding: 0;
 	margin: 0;
 	width: 100%;
 	margin-bottom: 1.5em;
-	/*padding: 3em 2em 2em 3em;*/
 }
 
-#catalog-menu ul li {
+#catalog-menu ul li,
+#client-menu  ul li {
 	padding: 0 1.2em;
 	margin: 0.5em 0;
 	line-height: 3.5;
         width: 100%;
-        /*border: 1px red solid;*/
 }
 
-#catalog-menu ul li a {
+#catalog-menu ul li a,
+#client-menu  ul li a {
 	font-size: 1.2em;
-	/*color: #bbb;*/
 	color: #444;
 	padding: 0.3em 0;
 }
 
-#catalog-menu ul li a i {
+#catalog-menu ul li a i,
+#client-menu  ul li a i {
 	width: 20px;
         margin-right: 0.8em;
 	color: #5BB112;
@@ -483,26 +481,27 @@ a:hover {
 }
 
 #catalog-menu a:hover,
-#catalog-menu .active_menu {
+#catalog-menu .active_menu,
+#client-menu a:hover,
+#client-menu .active_menu{
 	color: #5BB112;
 	text-decoration: underline;
 	margin-left: 0.3em;
 }
 
-#catalog-menu .navbar-nav h3 {
+#catalog-menu .navbar-nav h3,
+#client-menu .navbar-nav h3 {
 	background-color: #5BB112;
 	padding: 1em;
 	margin-bottom: 0.5em;
 	color: #fff;
 	font-weight: normal;
 }
-#catalog-menu .navbar-nav h3 i {
+#catalog-menu .navbar-nav h3 i,
+#client-menu .navbar-nav h3 i {
 	padding-right: 0.3em;
 	color: #fff;
-}
-
-#catalog-menu .navbar-nav h3 i {
-	margin-right: 0.3em;
+        margin-right: 0.3em;
 }
 
 #catalog-menu .dropdown:hover > .dropdown-menu { 
@@ -972,7 +971,6 @@ a:hover {
 	margin: 1em 2em;
 }
 
-
 /* contacts --------------------------*/
 
 .company-contacts {
@@ -1137,6 +1135,41 @@ footer .footer-block ul li i {
 }
 
 /* admin */
+
+.dashboard .dashboard-block {
+    border: 1px #e9e9e9 solid;
+    padding: 1em;
+    margin-bottom: 2em;
+}
+.dashboard .dashboard-block h3 {
+    border-bottom: 1px #e9e9e9 solid;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+}
+.dashboard .dashboard-block h4 {
+    padding: 0.5em 1em;
+    border: 1px #e9e9e9 solid;
+    display: inline-block;
+    background-color: #5BB112;
+    color: #fff;
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-bottom: 0.3em;
+}
+
+.dashboard .dashboard-block .btn-success {
+    color: #fff;
+    background-color: #5BB112;
+    border: 0;
+}
+.dashboard .dashboard-block .btn-success:hover {
+    background-color: #555;
+}
+
+.dashboard .dashboard-block .btn-success .fa {
+    margin-right: 0.5em;
+    font-size: 1.1em;
+}
 
 .admin-categories-list {
     
