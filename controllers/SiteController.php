@@ -140,8 +140,8 @@ class SiteController extends Controller
         $orderItemsSum = 0;
         $orderItemsCount = 0;     
         
-        Yii::$app->response->cookies->remove('sbt24order');
-        Yii::$app->response->cookies->remove('sbt24client');
+        /*Yii::$app->response->cookies->remove('sbt24order');
+        Yii::$app->response->cookies->remove('sbt24client');*/
         
         if(Yii::$app->request->cookies->has('sbt24order')) {
             // if cookie is available
