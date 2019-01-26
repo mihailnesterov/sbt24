@@ -31,7 +31,7 @@ use yii\widgets\Breadcrumbs;
                                 <div id="content-container">
 
                                         <!-- Swiper slider main container -->
-                                        <div class="swiper-container" style="margin-bottom: 2em;">
+                                        <div class="swiper-container">
                                                 <!-- Swiper slider wrapper -->
                                                 <div class="swiper-wrapper">
                                                         <!-- Slides -->
