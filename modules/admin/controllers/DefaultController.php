@@ -264,6 +264,7 @@ class DefaultController extends Controller
         $model = $this->findBannerModel($id);
 
         $this->view->title = $model->name;
+        $this->view->params['breadcrumbs'][] = ['label' => 'Баннеры', 'url' => '@web/admin/banners'];
         $this->view->params['breadcrumbs'][] = $this->view->title;
         
         return $this->render('banner-view', [

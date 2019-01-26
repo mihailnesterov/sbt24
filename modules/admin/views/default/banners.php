@@ -46,10 +46,10 @@ use yii\widgets\Breadcrumbs;
 
                                                 <div class="goods-container">	
                                                         <div class="row">
-                                                                
+
                                                                 <div class="col-xs-12 col-md-6 text-left">
                                                                         <div class="dashboard-block" style="min-height: 70px;">
-                                                                                <?= Html::a('<i class="fa fa-plus"></i> Добавить баннер', Yii::$app->urlManager->createUrl(['/admin/banners/add']), ['class' => 'btn btn-success']) ?>
+                                                                                <?= Html::a('<i class="fa fa-plus"></i> Добавить баннер', Yii::$app->urlManager->createUrl(['/admin/banner-add']), ['class' => 'btn btn-success']) ?>
                                                                         </div>
                                                                 </div>
 
@@ -70,11 +70,11 @@ use yii\widgets\Breadcrumbs;
                                                                                                         <div class="btn-block">
                                                                                                                 <div class="row">
                                                                                                                         <div class="col-xs-6 col-sm-8 text-left">
-                                                                                                                                <?= Html::a($banner->name, ['../goods-view', 'id' => $banner->id]) ?>
+                                                                                                                                <?= Html::a($banner->name, ['/admin/banner-view', 'id' => $banner->id]) ?>
                                                                                                                         </div>
                                                                                                                         <div class="col-xs-6 col-sm-4 text-right">
-                                                                                                                                <?= Html::a('<i class="fa fa-edit"></i>', ['../goods-view', 'id' => $banner->id], ['class' => 'btn btn-success', 'title' => 'Редактировать '.$banner->name]) ?>
-                                                                                                                                <?= Html::a('<i class="fa fa-close"></i>', ['../goods-view', 'id' => $banner->id], ['class' => 'btn btn-danger', 'title' => 'Удалить '.$banner->name]) ?>
+                                                                                                                                <?= Html::a('<i class="fa fa-edit"></i>', ['/admin/banner-view', 'id' => $banner->id], ['class' => 'btn btn-success', 'title' => 'Редактировать '.$banner->name]) ?>
+                                                                                                                                <?= Html::a('<i class="fa fa-close"></i>', ['/admin/banner-view', 'id' => $banner->id], ['class' => 'btn btn-danger', 'title' => 'Удалить '.$banner->name]) ?>
                                                                                                                         </div>
                                                                                                                 </div>
                                                                                                         </div>
