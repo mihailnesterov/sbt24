@@ -35,15 +35,11 @@ use yii\widgets\Breadcrumbs;
                                                 <!-- Swiper slider wrapper -->
                                                 <div class="swiper-wrapper">
                                                         <!-- Slides -->
+                                                        <?php foreach ($bannersPos1 as $banner): ?>
                                                         <section class="swiper-slide" data-swiper-autoplay="3000">
-                                                                <a href="#"><img src="images/slider1.jpg" alt="" class="img-responsive"></a>
+                                                                <?= Html::a('<img src="images/banners/'.$banner->image.'" alt="'.$banner->name.'" class="img-responsive">', $banner->link) ?>
                                                         </section>
-                                                        <section class="swiper-slide" data-swiper-autoplay="3000">
-                                                                <a href="#"><img src="images/slider2.jpg" alt="" class="img-responsive"></a>
-                                                        </section>
-                                                        <section class="swiper-slide" data-swiper-autoplay="3000">
-                                                                <a href="#"><img src="images/slider3.jpg" alt="" class="img-responsive"></a>
-                                                        </section>
+                                                        <?php endforeach; ?>
                                                 </div>
                                                 <!-- Swiper slider pagination -->
                                                 <div class="swiper-pagination"></div>
@@ -100,8 +96,10 @@ use yii\widgets\Breadcrumbs;
                                                 </div>	<!-- end goods-container -->
                                         </div>	<!-- end content-block -->
 
-                                        <div style="margin-bottom: 2em;">
-                                                <a href="#"><img src="images/slider3.jpg" alt="" class="img-responsive"></a>
+                                        <div id="banner-pos-2">
+                                                <?php foreach ($bannersPos2 as $banner): ?>
+                                                        <?= Html::a('<img src="images/banners/'.$banner->image.'" alt="'.$banner->name.'" class="img-responsive">', $banner->link) ?>
+                                                <?php endforeach; ?>
                                         </div>
 
                                         <div class="content-block">

@@ -14,6 +14,7 @@ use app\models\Tovar;
 use app\models\Clients;
 use app\models\Order;
 use app\models\OrderItems;
+use app\models\Banners;
 use app\modules\admin\models\Users;
 use app\modules\admin\models\Login;
 use app\modules\admin\models\Signup;
@@ -239,9 +240,43 @@ class DefaultController extends Controller
         {
             return $this->redirect(Yii::$app->urlManager->createUrl('/admin/login'));
         }
+
+        $banners = Banners::find()->orderby(['created'=>SORT_ASC])->all();
+
         $this->view->title = 'Баннеры';
         $this->view->params['breadcrumbs'][] = $this->view->title;
-        return $this->render('banners');
+        return $this->render('banners', [
+            'banners' => $banners,
+        ]);
+    }
+
+    /**
+     * Renders the banner id view for the module
+     * @return string
+     */
+    public function actionBannerView($id)
+    {
+        if (Yii::$app->user->isGuest) 
+        {
+            return $this->redirect(Yii::$app->urlManager->createUrl('/admin/login'));
+        }
+
+        $model = $this->findBannerModel($id);
+
+        $this->view->title = $model->name;
+        $this->view->params['breadcrumbs'][] = $this->view->title;
+        
+        return $this->render('banner-view', [
+            'model' => $model,
+        ]);
+    }
+
+    protected function findBannerModel($id)
+    {
+        if (($model = Banners::findOne($id)) !== null) {
+            return $model;
+        }
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
     
     /**

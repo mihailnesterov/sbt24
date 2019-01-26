@@ -12,6 +12,7 @@ use app\models\Tovar;
 use app\models\Clients;
 use app\models\Order;
 use app\models\OrderItems;
+use app\models\Banners;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use yii\base\Event;
@@ -366,6 +367,8 @@ class SiteController extends Controller
         $newTovar = Tovar::find()->orderby(['created'=>SORT_ASC])->limit(3)->all();
         $hitTovar = Tovar::find()->where((['hit' => 1]))->orderby(['created'=>SORT_ASC])->limit(3)->all();
         $brands = Tovar::find()->select('brand')->orderby(['brand'=>SORT_ASC])->distinct()->all();
+        $bannersPos1 = Banners::find()->where((['position' => 1]))->orderby(['created'=>SORT_ASC])->all();
+        $bannersPos2 = Banners::find()->where((['position' => 2]))->orderby(['created'=>SORT_ASC])->all();
         $currencies = $this->getCurrencies();
         
         $this->view->title = 'Главная';
@@ -382,6 +385,8 @@ class SiteController extends Controller
             'newTovar' => $newTovar,
             'hitTovar' => $hitTovar,
             'brands' => $brands,
+            'bannersPos1' => $bannersPos1,
+            'bannersPos2' => $bannersPos2,
             'currencies' => $currencies
         ]);
     }

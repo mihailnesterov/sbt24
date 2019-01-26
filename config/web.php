@@ -24,6 +24,7 @@ return [
                     
                     //'loginUrl' => 'admin/login',
                 
+                    '<module:admin/banners?id=<id:\d+>' => 'admin/default/banner-view',
                     '<module:admin>' => 'admin/default/index',
                     '<module:admin>/<action>' => 'admin/default/<action>',
                 

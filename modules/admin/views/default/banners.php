@@ -41,12 +41,50 @@ use yii\widgets\Breadcrumbs;
                                         <div class="content-block">
                                                 <header>
                                                         <h1><?= Html::encode($this->title) ?></h1>
+                                                        <p class="bg-warning">Баннеры выводятся на страницах сайта - на главной, в каталоге, в боковом меню. В данном разделе вы можете добавляять, редактировать и удалять баннеры</p>
                                                 </header>
 
                                                 <div class="goods-container">	
                                                         <div class="row">
-
                                                                 
+                                                                <div class="col-xs-12 col-md-6 text-left">
+                                                                        <div class="dashboard-block" style="min-height: 70px;">
+                                                                                <?= Html::a('<i class="fa fa-plus"></i> Добавить баннер', Yii::$app->urlManager->createUrl(['/admin/banners/add']), ['class' => 'btn btn-success']) ?>
+                                                                        </div>
+                                                                </div>
+
+                                                                <div class="col-sm-12">
+                                                                        <table class="table table-bordered table-responsive">
+                                                                        <tbody>
+                                                                        <?php foreach ($banners as $key => $banner): ?>
+                                                                                <tr>
+                                                                                        <td class="text-center">
+                                                                                                <div class="banner-image-block">
+                                                                                                        <?= Html::img(
+                                                                                                                '@web/images/banners/'.$banner->image, 
+                                                                                                                [
+                                                                                                                        'alt' => $banner->name, 
+                                                                                                                        'class' => 'img-responsive'
+                                                                                                                ]
+                                                                                                        ) ?>
+                                                                                                        <div class="btn-block">
+                                                                                                                <div class="row">
+                                                                                                                        <div class="col-xs-6 col-sm-8 text-left">
+                                                                                                                                <?= Html::a($banner->name, ['../goods-view', 'id' => $banner->id]) ?>
+                                                                                                                        </div>
+                                                                                                                        <div class="col-xs-6 col-sm-4 text-right">
+                                                                                                                                <?= Html::a('<i class="fa fa-edit"></i>', ['../goods-view', 'id' => $banner->id], ['class' => 'btn btn-success', 'title' => 'Редактировать '.$banner->name]) ?>
+                                                                                                                                <?= Html::a('<i class="fa fa-close"></i>', ['../goods-view', 'id' => $banner->id], ['class' => 'btn btn-danger', 'title' => 'Удалить '.$banner->name]) ?>
+                                                                                                                        </div>
+                                                                                                                </div>
+                                                                                                        </div>
+                                                                                                </div>
+                                                                                        </td>
+                                                                                </tr>
+                                                                        <?php endforeach ?>
+                                                                        </tbody>
+                                                                        </table>
+                                                                </div>	<!-- end col -->
 
                                                         </div>	<!-- end row -->
                                                 </div>	<!-- end goods-container -->
