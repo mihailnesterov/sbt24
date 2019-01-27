@@ -297,8 +297,97 @@
             alert($(this.parentNode).text());
             
         });
+
+        // admin: image click delegation on id
+        function imgLoad(id){
+            document.getElementById(id).click();
+        }
+
+        // admin: download image function
+        function previewImage(imgId, fileId, fileNameId) {  
+            // создаем переменные для картинки и файла из input
+            var preview = document.getElementById(imgId);
+            var file    = document.getElementById(fileId).files[0];
+            var reader  = new FileReader();
+            reader.onload = function () {
+                preview.src = reader.result;
+                // file name generetion
+                function RandomString(length) {    
+                    var str = '';
+                    for ( ; str.length < length; 
+                        str += Math.random().toString(36).substr(2) );
+                    return str.substr(0, length);
+                }(20);
+                // get file extantion
+                var ext = file.name.substring(file.name.lastIndexOf('.'));
+                document.getElementById(fileNameId).value = RandomString(20) + ext;
+            }
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = "images/image.png";
+            }
+        }
         
+        // admin: load image on button '#btn-load-image' click
+        $(function () {
+            $('#btn-load-image').click(function() {
+                imgLoad('input-load-image');
+            });
+        });
+
+        // admin: load image on banner '#banner-image' click
+        $(function () {
+            $('#banner-image').click(function() {
+                imgLoad('input-load-image');
+            });
+        });
+
+        // admin: load image on banner '#banner-image' click
+        $(function () {
+            $('#input-load-image').change(function() {
+                previewImage('banner-image','input-load-image','input-image');
+            });
+        });
+
+        $('#select-banner-position').change(function() {
+            
+            var key = $(this).val();
+            var text = '';
+            
+            switch (key) {
+                case '0':
+                    text = 'Выберите позицию из списка';
+                    break;
+
+                case '1':
+                    text = 'Слайдер на главной странице состоит из одного или нескольких слайдов.<br> Размер всех картинок для слайдера должен быть одинаковым, оптимально: 900х380px';
+                    break;
+            
+                case '2':
+                    text = 'Баннер на главной странице между блоками Новые товары и Хиты продаж. Баннер должен быть горизонтальным, оптимальный размер 900х380px';
+                    break;
+                
+                case '3':
+                    text = 'Баннер в каталоге выводится в разделах каталога. Баннер должен быть горизонтальным, оптимальный размер 900х240px';
+                    break;
+
+                case '4':
+                    text = 'Баннер в левом меню, можно добавлять несколько баннеров  в позицию, выводятся в случайном порядке по  2 шт. Оптимальный размер 400х300px';
+                    break;
+
+                default:
+                    text = 'Выберите позицию из списка';
+                    break;
+            }
+
+            $('#position-comment').html( text );
+        });
+
         
+        $(function () {
+            $('#select-banner-position').change();
+        });
 
         /*$('.goods-view-block').find('form').on('beforeValidate', function(event) {
             alert('beforeValidate');

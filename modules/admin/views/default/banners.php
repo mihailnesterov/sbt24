@@ -69,12 +69,20 @@ use yii\widgets\Breadcrumbs;
                                                                                                         ) ?>
                                                                                                         <div class="btn-block">
                                                                                                                 <div class="row">
-                                                                                                                        <div class="col-xs-6 col-sm-8 text-left">
+                                                                                                                        <div class="col-xs-6 col-md-8 text-left">
                                                                                                                                 <?= Html::a($banner->name, ['/admin/banner-view', 'id' => $banner->id]) ?>
                                                                                                                         </div>
-                                                                                                                        <div class="col-xs-6 col-sm-4 text-right">
+                                                                                                                        <div class="col-xs-6 col-md-4 text-right">
                                                                                                                                 <?= Html::a('<i class="fa fa-edit"></i>', ['/admin/banner-view', 'id' => $banner->id], ['class' => 'btn btn-success', 'title' => 'Редактировать '.$banner->name]) ?>
-                                                                                                                                <?= Html::a('<i class="fa fa-close"></i>', ['/admin/banner-view', 'id' => $banner->id], ['class' => 'btn btn-danger', 'title' => 'Удалить '.$banner->name]) ?>
+                                                                                                                                <?= Html::a('<i class="fa fa-close"></i>', ['/admin/delete-banner', 'id' => $banner->id], [
+                                                                                                                                        'class' => 'btn btn-danger',
+                                                                                                                                        'title' => 'Удалить "'.$banner->name.'"',
+                                                                                                                                        'data' => [
+                                                                                                                                                        'confirm' => 'Удалить баннер "'.$banner->name.'"?',
+                                                                                                                                                        'method' => 'post',
+                                                                                                                                                ],
+                                                                                                                                        ]
+                                                                                                                                ) ?>
                                                                                                                         </div>
                                                                                                                 </div>
                                                                                                         </div>

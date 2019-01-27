@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "sbt_banners".
@@ -25,6 +26,12 @@ class Banners extends \yii\db\ActiveRecord
     }
 
     /**
+     * @var UploadedImage
+     */
+    public $imageFile;
+    
+
+    /**
      * {@inheritdoc}
      */
     public function rules()
@@ -35,6 +42,7 @@ class Banners extends \yii\db\ActiveRecord
             [['created'], 'safe'],
             [['name', 'image'], 'string', 'max' => 255],
             [['link'], 'string', 'max' => 50],
+            [['imageFile'], 'file', 'extensions' => 'png, jpg', 'skipOnEmpty' => true, 'maxSize' => 2048 * 1024, 'tooBig' => 'Размер файла не должен превышать 2 MB'],
         ];
     }
 
@@ -45,11 +53,26 @@ class Banners extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'image' => 'Image',
-            'position' => 'Position',
-            'link' => 'Link',
+            'name' => 'Название баннера',
+            'image' => 'Картинка баннера',
+            'position' => 'Позиция',
+            'link' => 'Ссылка на товар',
             'created' => 'Created',
         ];
     }
+
+        
+    /**
+     * @return uploaded image file
+     */
+    public function upload($file, $image){
+        if($this->validate()){            
+            $filename = 'images/banners/'.$image;
+            $file->saveAs($filename);
+            return false;
+        } else {
+            return false;
+        }
+    }
+
 }

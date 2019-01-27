@@ -19,6 +19,7 @@ use app\modules\admin\models\Users;
 use app\modules\admin\models\Login;
 use app\modules\admin\models\Signup;
 use yii\data\Pagination;
+use yii\web\UploadedFile;
 
 /**
  * Default controller for the `admin` module
@@ -266,6 +267,29 @@ class DefaultController extends Controller
         $this->view->title = $model->name;
         $this->view->params['breadcrumbs'][] = ['label' => 'Баннеры', 'url' => '@web/admin/banners'];
         $this->view->params['breadcrumbs'][] = $this->view->title;
+
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {            
+            
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+
+            if ($model->imageFile != null) {
+                $model->upload($model->imageFile, $model->image);
+                Yii::$app->view->registerJs(
+                    "
+                        $.gritter.add({
+                                title: 'Информация о компании:',
+                                text: '".$filename."',
+                                image: 'images/image.png',
+                                sticky: false,
+                                time: '3000'
+                            });
+                        "
+                    );
+            }
+            //return $this->redirect(Yii::$app->urlManager->createUrl('/admin/banners'));
+        }
+
         
         return $this->render('banner-view', [
             'model' => $model,
@@ -278,6 +302,19 @@ class DefaultController extends Controller
             return $model;
         }
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+    /**
+     * Deletes an existing banner model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionDeleteBanner($id)
+    {
+        $this->findBannerModel($id)->delete();
+
+        return $this->redirect(['/admin/banners']);
     }
     
     /**

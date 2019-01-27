@@ -875,28 +875,6 @@ a:hover {
         line-height: 2;
         border: 1px #E5E5E5 solid;
 }
-.goods-container table tr td {
-	vertical-align: middle;
-}
-.goods-container table tr td .banner-image-block {
-	position: relative;
-	margin: 0.5em;
-}
-.goods-container table tr td .btn-block {
-	position: absolute;
-	top: 0;
-	left: 0;
-	background-color:#555;
-	padding: 1em;
-}
-.goods-container table tr td .btn-block a {
-	color: #fff;
-	font-weight: 600;
-	vertical-align: middle;
-}
-.goods-container table tr td .btn-block .btn-success {
-	margin-right: 0.2em;
-}
 
 /* Swiper-cлайдер --------------------------*/
 
@@ -929,7 +907,7 @@ a:hover {
 	padding: 0.5em 1.1em;
 	margin: 0 0.5em;
 	font-size: 0.5em;
-	transitiom: 0.3s;
+	transition: 0.3s;
 	cursor: pointer;
 }
 .swiper-pagination-bullet-active	/* активная кнопка */
@@ -1246,6 +1224,72 @@ footer .footer-block ul li i {
 }
 .admin-categories-list .category-level-0 li .fa-close {
     color: #e38d13;
+}
+
+/* admin: banners */
+.goods-container table tr td {
+	vertical-align: middle;
+}
+.goods-container table tr td .banner-image-block {
+	position: relative;
+	margin: 0.5em 0.5em 1.5em 0.5em;
+}
+.goods-container table tr td .btn-block {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color:#555;
+	padding: 1em;
+	opacity: 0.9;
+}
+.goods-container table tr td .btn-block a {
+	color: #fff;
+	font-weight: 600;
+	vertical-align: middle;
+}
+.goods-container table tr td .btn-block .btn-success {
+	margin-right: 0.2em;
+}
+.goods-container #banner-image-block {
+	position: relative;
+	border: 1px #e9e9e9 solid;
+	margin-bottom: 1em;
+}
+.goods-container #banner-image-block img {
+	border-bottom: 1px #e9e9e9 solid;
+}
+.goods-container #banner-image-block #btn-block {
+	/*position: absolute;
+	bottom: 5px;
+	left: 5px;*/
+	padding: 0 0.5em 0.5em 0.5em;
+	margin-top: -0.5em;
+}
+.goods-container .bg-warning {
+	padding: 0.5em;
+	margin: 1em 0;
+}
+.go-back-link {
+	display: inline-block;
+	border: 1px #5BB112 solid;
+	border-radius: 3px;
+	color: #5BB112;
+	background-color: #fff;
+	padding: 0.3em 0.7em;
+	margin-bottom: 1em;
+	opacity: 1;
+}
+.go-back-link:hover {
+	text-decoration: none;
+	color: #5BB112;
+	opacity: 0.8;
+	padding: 0.3em 0.9em;
+}
+
+.btn-success {
+	color: #fff;
+	background-color: #5BB112;
+	border: 1px #5BB112 solid;
 }
 
 /* media */
