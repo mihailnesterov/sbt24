@@ -48,10 +48,16 @@ use yii\widgets\Breadcrumbs;
                                                     <li><i class="fa fa-phone" aria-hidden="true"></i> <?= Yii::$app->controller->getCompany('company')->phone1 ?></li>
                                                     <li><i class="fa fa-envelope" aria-hidden="true"></i> <a href="mailto:<?= Yii::$app->controller->getCompany('company')->email ?>"><?= Yii::$app->controller->getCompany('company')->email ?></a></li>
                                                 </ul>
-                                            
+
                                                 <div class="company-map">
                                                     <?= Yii::$app->controller->getCompany('company')->map ?>
                                                 </div>
+
+                                                <?php foreach ($bannersPos10 as $key => $banner): ?>
+                                                        <div class="banner-block">
+                                                                <a href="<?= Yii::$app->urlManager->createUrl($banner->link) ?>"><img src="images/banners/<?= $banner->image ?>" alt="<?= $banner->name ?>" class="img-responsive"></a>
+                                                        </div><!-- end banner-block -->
+                                                <?php endforeach ?>
                                                 
                                         </div>	<!-- end content-block -->
 

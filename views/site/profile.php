@@ -49,6 +49,7 @@ use yii\widgets\ActiveForm;
                                                 <tbody>
                                                     <tr>
                                                         <td width="50%">
+                                                            <p>Название компании</p>
                                                             <div class="form-group">
                                                                 <?= $form->field($client, 'company', [
                                                                     'template' => '{input}{error}',
@@ -62,6 +63,7 @@ use yii\widgets\ActiveForm;
                                                             </div>
                                                         </td>
                                                         <td colspan="2">
+                                                        <p>Контактное лицо</p>
                                                             <div class="form-group">
                                                                 <?= $form->field($client, 'contact', [
                                                                     'template' => '{input}{error}',
@@ -77,6 +79,7 @@ use yii\widgets\ActiveForm;
                                                     </tr>
                                                     <tr>
                                                         <td>
+                                                        <p>Телефон</p>
                                                             <div class="form-group">
                                                                 <?= $form->field($client, 'phone', [
                                                                     'template' => '{input}{error}',
@@ -91,6 +94,7 @@ use yii\widgets\ActiveForm;
                                                             </div>
                                                         </td>
                                                         <td colspan="2">
+                                                        <p>Email</p>
                                                             <div class="form-group">
                                                                 <?= $form->field($client, 'email', [
                                                                     'template' => '{input}{error}',
@@ -106,6 +110,7 @@ use yii\widgets\ActiveForm;
                                                     </tr>
                                                     <tr>
                                                         <td>
+                                                        <p>Юр. адрес</p>
                                                             <div class="form-group">
                                                                 <?= $form->field($client, 'address', [
                                                                     'template' => '{input}{error}',
@@ -119,6 +124,7 @@ use yii\widgets\ActiveForm;
                                                             </div>
                                                         </td>
                                                         <td>
+                                                        <p>ИНН</p>
                                                             <div class="form-group">
                                                                 <?= $form->field($client, 'inn', [
                                                                     'template' => '{input}{error}',
@@ -132,6 +138,7 @@ use yii\widgets\ActiveForm;
                                                             </div>
                                                         </td>
                                                         <td>
+                                                        <p>КПП</p>
                                                             <div class="form-group">
                                                                 <?= $form->field($client, 'kpp', [
                                                                     'template' => '{input}{error}',

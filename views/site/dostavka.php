@@ -42,7 +42,11 @@ use yii\widgets\Breadcrumbs;
                                                     <h1><?= Html::encode($this->title) ?></h1>
                                                 </header>
                                             
-                                            
+                                                <?php foreach ($bannersPos7 as $key => $banner): ?>
+                                                        <div class="banner-block">
+                                                                <a href="<?= Yii::$app->urlManager->createUrl($banner->link) ?>"><img src="images/banners/<?= $banner->image ?>" alt="<?= $banner->name ?>" class="img-responsive"></a>
+                                                        </div><!-- end banner-block -->
+                                                <?php endforeach ?>
                                                 
                                         </div>	<!-- end content-block -->
 

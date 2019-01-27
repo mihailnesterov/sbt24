@@ -13,6 +13,8 @@ $category = Yii::$app->controller->getCatalog('category');
 $currencies = Yii::$app->controller->getCurrencies();
 // получаем товары со скидками
 $discounts = Yii::$app->controller->getAsideDiscounts('discounts');
+// получаем баннеры
+$bannersPos4 = Yii::$app->controller->getAsideBanners('bannersPos4');
 
 ?>
 <aside class="col-sm-5 col-md-4">
@@ -120,17 +122,11 @@ $discounts = Yii::$app->controller->getAsideDiscounts('discounts');
                     </div>	<!-- end col -->
             </div>
     </div><!-- end aside-block -->
-
-    <div class="aside-block">
-            <div class="banner-block">
-                    <a href="#"><img src="images/image.png" alt="" class="img-responsive"></a>
-            </div>
-    </div><!-- end aside-block -->
-
-    <div class="aside-block">
-            <div class="banner-block">
-                    <a href="#"><img src="images/image.png" alt="" class="img-responsive"></a>
-            </div>
-    </div><!-- end aside-block -->
+    
+    <?php foreach ($bannersPos4 as $key => $banner): ?>
+        <div class="aside-block">
+            <a href="<?= Yii::$app->urlManager->createUrl($banner->link) ?>"><img src="images/banners/<?= $banner->image ?>" alt="<?= $banner->name ?>" class="img-responsive"></a>
+        </div><!-- end aside-block -->
+    <?php endforeach ?>
 
 </aside><!-- end aside -->

@@ -133,6 +133,12 @@ use yii\widgets\Breadcrumbs;
                                                 </div>	<!-- end row -->
                                             </div>  <!-- end goods-container -->
                                         </div>	<!-- end content-block -->
+
+                                        <?php foreach ($bannersPos5 as $key => $banner): ?>
+                                            <div class="banner-block">
+                                                <a href="<?= Yii::$app->urlManager->createUrl($banner->link) ?>"><img src="images/banners/<?= $banner->image ?>" alt="<?= $banner->name ?>" class="img-responsive"></a>
+                                            </div><!-- end banner-block -->
+                                        <?php endforeach ?>
                                         
                                         <div class="content-block">
                                             <header>

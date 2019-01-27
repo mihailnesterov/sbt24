@@ -47,7 +47,7 @@ use yii\widgets\Breadcrumbs;
                                                         <div class="row">
                                                             <div class="col-sm-12">
                                                                 <?php $clientsCounter = 1; ?>
-                                                                <table class="table table-bordered table-responsive">
+                                                                <table class="table table-bordered table-responsive table-striped">
                                                                     <thead>
                                                                         <tr>
                                                                             <th class="text-center">

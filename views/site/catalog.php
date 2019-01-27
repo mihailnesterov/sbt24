@@ -36,10 +36,12 @@ use yii\widgets\Breadcrumbs;
 
                         <div class="col-sm-7 col-md-8">
                                 <div id="content-container">
-                                    
-                                    <div class="banner-block">
-                                        <a href="#"><img src="images/category-banner-889x200.jpg" alt="" class="img-responsive"></a>
-                                    </div>  <!-- end banner-block -->
+
+                                    <?php foreach ($bannersPos3 as $key => $banner): ?>
+                                        <div class="banner-block">
+                                            <a href="<?= Yii::$app->urlManager->createUrl($banner->link) ?>"><img src="images/banners/<?= $banner->image ?>" alt="<?= $banner->name ?>" class="img-responsive"></a>
+                                        </div><!-- end banner-block -->
+                                    <?php endforeach ?>
                                     
                                     <div class="filter-block btn-toolbar" role="group" aria-label="...">
                                         <button type="button" class="btn btn-default"><i class="fa fa-eye" aria-hidden="true"></i> Новинки</button>

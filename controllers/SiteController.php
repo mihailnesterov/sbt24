@@ -361,6 +361,15 @@ class SiteController extends Controller
         $myOrdersCount = Order::find()->where(['client_id' => Yii::$app->getRequest()->getCookies()->getValue('sbt24client')])->andWhere(['status' => 1])->count();
         return $this->view->params['count'] = $myOrdersCount;
     }
+
+    /*
+     * вывод баннеров в aside
+     */
+    public function getAsideBanners()
+    {
+        $bannersPos4 = Banners::find()->where((['position' => 4]))->orderby(['rand()'=>SORT_ASC])->limit(2)->all();
+        return $this->view->params['bannersPos4'] = $bannersPos4;
+    }
     
     public function actionIndex()
     {
@@ -405,7 +414,11 @@ class SiteController extends Controller
             'content' => 'Услуги по сопровождению, обслуживанию, ремонту, аренде банковского, офисного оборудования, банкоматов в Красноярске'
         ]);
 
-        return $this->render('services');
+        $bannersPos6 = Banners::find()->where((['position' => 6]))->orderby(['rand()'=>SORT_ASC])->limit(1)->all();
+
+        return $this->render('services', [
+            'bannersPos6' => $bannersPos6,
+        ]);
     }
     
     public function actionDostavka()
@@ -422,7 +435,11 @@ class SiteController extends Controller
             'content' => ''
         ]);
 
-        return $this->render('dostavka');
+        $bannersPos7 = Banners::find()->where((['position' => 7]))->orderby(['rand()'=>SORT_ASC])->limit(1)->all();
+
+        return $this->render('dostavka', [
+            'bannersPos7' => $bannersPos7,
+        ]);
     }
     
     public function actionPayment()
@@ -439,7 +456,11 @@ class SiteController extends Controller
             'content' => ''
         ]);
 
-        return $this->render('payment');
+        $bannersPos8 = Banners::find()->where((['position' => 8]))->orderby(['rand()'=>SORT_ASC])->limit(1)->all();
+
+        return $this->render('payment', [
+            'bannersPos8' => $bannersPos8,
+        ]);
     }
     
     public function actionAbout()
@@ -456,7 +477,11 @@ class SiteController extends Controller
             'content' => ''
         ]);
 
-        return $this->render('about');
+        $bannersPos9 = Banners::find()->where((['position' => 9]))->orderby(['rand()'=>SORT_ASC])->limit(1)->all();
+
+        return $this->render('about', [
+            'bannersPos9' => $bannersPos9,
+        ]);
     }
     
     public function actionContacts()
@@ -473,7 +498,11 @@ class SiteController extends Controller
             'content' => ''
         ]);
 
-        return $this->render('contacts');
+        $bannersPos10 = Banners::find()->where((['position' => 10]))->orderby(['rand()'=>SORT_ASC])->limit(1)->all();
+
+        return $this->render('contacts', [
+            'bannersPos10' => $bannersPos10,
+        ]);
     }
     
     /*
@@ -513,9 +542,11 @@ class SiteController extends Controller
         ]);
         
         $model = Category::find()->where(['parent' => 0])->all();
+        $bannersPos3 = Banners::find()->where((['position' => 3]))->orderby(['rand()'=>SORT_ASC])->limit(1)->all();
 
         return $this->render('catalog', [
             'model' => $model,
+            'bannersPos3' => $bannersPos3,
         ]);
     }
     
@@ -531,6 +562,7 @@ class SiteController extends Controller
         $tovar = Tovar::find()->where(['category_id' => $model->id])->all();  
         $sub_category = Category::find()->where(['parent' => $model->id])->all();
         $brands = Tovar::find()->select('brand')->where(['category_id' => $model->id])->orderby(['brand'=>SORT_ASC])->distinct()->all();
+        $bannersPos3 = Banners::find()->where((['position' => 3]))->orderby(['rand()'=>SORT_ASC])->limit(1)->all();
         $currencies = $this->getCurrencies();
         
         $catalog_url = '..'.Yii::$app->homeUrl.'catalog';
@@ -559,6 +591,7 @@ class SiteController extends Controller
             'sub_category' => $sub_category,
             'tovar' => $tovar,
             'brands' => $brands,
+            'bannersPos3' => $bannersPos3,
             'currencies' => $currencies
         ]);
     }
@@ -589,6 +622,7 @@ class SiteController extends Controller
         $model = $this->findTovarModel($id);
         $category = Category::find()->where(['id' => $model->category_id])->one();
         $parent_category = Category::find()->where(['id' => $category->parent])->one();
+        $bannersPos5 = Banners::find()->where((['position' => 5]))->orderby(['rand()'=>SORT_ASC])->limit(1)->all();
         
         $currencies = $this->getCurrencies();
         
@@ -689,7 +723,8 @@ class SiteController extends Controller
             'video' => $video,
             'client' => $client,
             'category' => $category,
-            'other' => $other
+            'other' => $other,
+            'bannersPos5' => $bannersPos5,
         ]);
     }
     
