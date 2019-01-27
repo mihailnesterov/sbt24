@@ -252,6 +252,51 @@ class DefaultController extends Controller
     }
 
     /**
+     * Renders the new banner view for the module
+     * @return string
+     */
+    public function actionBannerAdd()
+    {
+        if (Yii::$app->user->isGuest) 
+        {
+            return $this->redirect(Yii::$app->urlManager->createUrl('/admin/login'));
+        }
+
+        $model = new Banners();
+
+        $this->view->title = 'Добавить баннер';
+        $parentName = 'Баннеры';
+        $parentURL = '@web/admin/banners';
+        $this->view->params['breadcrumbs'][] = ['label' => $parentName, 'url' => $parentURL];
+        $this->view->params['breadcrumbs'][] = $this->view->title;
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            if ($model->imageFile != null) {
+                $model->upload($model->imageFile, $model->image);
+            }
+
+            Yii::$app->view->registerJs(
+            "
+                $.gritter.add({
+                        title: 'Баннер добавлен:',
+                        text: '".$model->name."',
+                        image: 'images/image.png',
+                        sticky: false,
+                        time: '3000'
+                    });
+                "
+            );
+        }
+        
+        return $this->render('banner-add', [
+            'model' => $model,
+            'parentName' => $parentName,
+            'parentURL' => $parentURL,
+        ]);
+    }
+
+    /**
      * Renders the banner id view for the module
      * @return string
      */
@@ -265,34 +310,38 @@ class DefaultController extends Controller
         $model = $this->findBannerModel($id);
 
         $this->view->title = $model->name;
-        $this->view->params['breadcrumbs'][] = ['label' => 'Баннеры', 'url' => '@web/admin/banners'];
+        $parentName = 'Баннеры';
+        $parentURL = '@web/admin/banners';
+        $this->view->params['breadcrumbs'][] = ['label' => $parentName, 'url' => $parentURL];
         $this->view->params['breadcrumbs'][] = $this->view->title;
 
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {            
             
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-
             if ($model->imageFile != null) {
                 $model->upload($model->imageFile, $model->image);
-                Yii::$app->view->registerJs(
-                    "
-                        $.gritter.add({
-                                title: 'Информация о компании:',
-                                text: '".$filename."',
-                                image: 'images/image.png',
-                                sticky: false,
-                                time: '3000'
-                            });
-                        "
-                    );
             }
+
+            Yii::$app->view->registerJs(
+            "
+                $.gritter.add({
+                        title: 'Изменения сохранены:',
+                        text: '".$model->name."',
+                        image: 'images/image.png',
+                        sticky: false,
+                        time: '3000'
+                    });
+                "
+            );
             //return $this->redirect(Yii::$app->urlManager->createUrl('/admin/banners'));
         }
 
         
         return $this->render('banner-view', [
             'model' => $model,
+            'parentName' => $parentName,
+            'parentURL' => $parentURL,
         ]);
     }
 

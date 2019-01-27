@@ -65,10 +65,10 @@ class Banners extends \yii\db\ActiveRecord
     /**
      * @return uploaded image file
      */
-    public function upload($file, $image){
+    public function upload($imageFile, $image){
         if($this->validate()){            
             $filename = 'images/banners/'.$image;
-            $file->saveAs($filename);
+            $imageFile->saveAs($filename);
             return false;
         } else {
             return false;

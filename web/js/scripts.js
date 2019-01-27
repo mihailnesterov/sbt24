@@ -309,7 +309,7 @@
             var preview = document.getElementById(imgId);
             var file    = document.getElementById(fileId).files[0];
             var reader  = new FileReader();
-            reader.onload = function () {
+            reader.onloadend = function () {
                 preview.src = reader.result;
                 // file name generetion
                 function RandomString(length) {    
@@ -329,58 +329,51 @@
             }
         }
         
-        // admin: load image on button '#btn-load-image' click
+        // admin/banners: load image on button '#btn-load-image' click
         $(function () {
             $('#btn-load-image').click(function() {
                 imgLoad('input-load-image');
             });
         });
 
-        // admin: load image on banner '#banner-image' click
+        // admin/banners: load image on banner '#banner-image' click
         $(function () {
             $('#banner-image').click(function() {
                 imgLoad('input-load-image');
             });
         });
 
-        // admin: load image on banner '#banner-image' click
+        // admin/banners: load image on banner '#banner-image' click
         $(function () {
             $('#input-load-image').change(function() {
-                previewImage('banner-image','input-load-image','input-image');
+                previewImage('banner-image','input-load-image','input-image-file');
             });
         });
 
-        $('#select-banner-position').change(function() {
-            
+        // admin/banners: select help text on change
+        $('#select-banner-position').change(function() {          
             var key = $(this).val();
-            var text = '';
-            
+            var text = '';            
             switch (key) {
                 case '0':
                     text = 'Выберите позицию из списка';
                     break;
-
                 case '1':
                     text = 'Слайдер на главной странице состоит из одного или нескольких слайдов.<br> Размер всех картинок для слайдера должен быть одинаковым, оптимально: 900х380px';
-                    break;
-            
+                    break;           
                 case '2':
                     text = 'Баннер на главной странице между блоками Новые товары и Хиты продаж. Баннер должен быть горизонтальным, оптимальный размер 900х380px';
-                    break;
-                
+                    break;             
                 case '3':
                     text = 'Баннер в каталоге выводится в разделах каталога. Баннер должен быть горизонтальным, оптимальный размер 900х240px';
                     break;
-
                 case '4':
                     text = 'Баннер в левом меню, можно добавлять несколько баннеров  в позицию, выводятся в случайном порядке по  2 шт. Оптимальный размер 400х300px';
                     break;
-
                 default:
                     text = 'Выберите позицию из списка';
                     break;
             }
-
             $('#position-comment').html( text );
         });
 

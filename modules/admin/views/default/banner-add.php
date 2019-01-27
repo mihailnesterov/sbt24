@@ -126,15 +126,6 @@ use yii\widgets\Breadcrumbs;
                                                                 <div class="col-xs-12 btn-block">
                                                                         <hr>
                                                                         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
-                                                                        <?= Html::a('Удалить', ['/admin/delete-banner', 'id' => $model->id], [
-                                                                                'class' => 'btn btn-danger',
-                                                                                'title' => 'Удалить',
-                                                                                'data' => [
-                                                                                        'confirm' => 'Удалить баннер "'.$model->name.'"?',
-                                                                                        'method' => 'post',
-                                                                                        ],
-                                                                                ]
-                                                                        ) ?>
                                                                 </div>  <!-- end col -->
                                                                 <?php ActiveForm::end(); ?>
 
