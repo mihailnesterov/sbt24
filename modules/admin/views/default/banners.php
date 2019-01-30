@@ -40,7 +40,10 @@ use yii\widgets\Breadcrumbs;
    
                                         <div class="content-block">
                                                 <header>
-                                                        <h1><?= Html::encode($this->title) ?></h1>
+                                                        <h1>
+                                                                <?= Html::a('<i class="fa fa-arrow-left"></i>', '@web/admin', ['class' => 'go-back-link', 'title' => 'Кабинет']) ?>
+                                                                <?= Html::encode($this->title) ?>
+                                                        </h1>
                                                         <p class="bg-warning">Баннеры выводятся на страницах сайта - на главной, в каталоге, в боковом меню. В данном разделе вы можете добавляять, редактировать и удалять баннеры</p>
                                                 </header>
 

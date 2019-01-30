@@ -38,7 +38,11 @@ use yii\widgets\Breadcrumbs;
                             <div id="content-container">
                                 <div class="content-block">
                                     <header>
-                                            <h1><?= Html::encode($this->title) ?></h1>
+                                        <h1>
+                                            <?= Html::a('<i class="fa fa-arrow-left"></i>', '@web/admin', ['class' => 'go-back-link', 'title' => 'Кабинет']) ?>
+                                            <?= Html::encode($this->title) ?>
+                                        </h1>
+                                        <p class="bg-warning">Информация о пользователе</p>
                                     </header>
 
                                     <div class="goods-container">	

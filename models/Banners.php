@@ -74,5 +74,4 @@ class Banners extends \yii\db\ActiveRecord
             return false;
         }
     }
-
 }

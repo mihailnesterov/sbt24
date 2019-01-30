@@ -291,6 +291,30 @@
             return str.substr(0, length);
         }(20);
         
+        // admin: toggle category
+        $('.category-level-0').find('li').on('click', 'a', function (e) {
+            e.preventDefault();
+            $(this.parentNode.parentNode.parentNode).find('.category-level-1').toggle();
+            var folder = $(this.parentNode).find('i');
+            if(folder.hasClass('fa-folder-open')) {
+                folder.removeClass('fa-folder-open').addClass('fa-folder');
+            } else {
+                
+                folder.removeClass('fa-folder').addClass('fa-folder-open');
+            }
+            /*if(folder.hasClass('fa-folder-o')) {
+                folder.removeClass('fa-folder-o').addClass('fa-folder-open-o');
+            } else {
+                folder.removeClass('fa-folder-open-o').addClass('fa-folder-o');
+            }*/
+        });
+
+        // admin:  toggle category on DOM load
+        $(function () {
+            $('.category-level-1').toggle();
+        });
+
+
         // admin: edit category
         $('.admin-categories-list').on('click', '.fa-close', function () {
             

@@ -1196,25 +1196,35 @@ footer .footer-block ul li i {
 }
 .admin-categories-list .category-level-0 li {
     font-size: 1.1em;
-    border: 1px #eee solid;
+    border-bottom: 1px #eee solid;
     margin-bottom: 0.5em;
     padding: 0.4em 0.4em 0.4em 1.5em;
     background-color: #f9f9f9;
 }
 .admin-categories-list .category-level-1 {
-    margin-left: 2em;
+    margin-left: 0em;
+    border: 1px #eee solid;
 }
 .admin-categories-list .category-level-1 li {
     font-size: 1.1em;
     background-color: #fff;
+    padding-left: 3em;
 }
+.admin-categories-list .category-level-0 li .i-block {
+	display: inline-block;
+	vertical-align: middle;
+	width: 25%;
+}
+.admin-categories-list .category-level-0 li .name-block {
+	display: inline-block;
+	vertical-align: middle;
+	width: 73%;
+    }
 .admin-categories-list .category-level-0 li i {
     margin-right: 0.5em;
-    color: red;
-    float: right;
-    font-size: 1.5em;
-    margin-top: 0.2em;
+    color: #5BB112;
     cursor: pointer;
+    font-size: 1.5em;
 }
 .admin-categories-list .category-level-0 li i:hover {
     opacity: 0.6;

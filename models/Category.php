@@ -74,4 +74,19 @@ class Category extends \yii\db\ActiveRecord
         return $subcategory = Category::find()->where(['parent' => $id])->all();
     }
 
+    /**
+     * @return subTovarCount
+     */
+    public function getSubTovarCount($id)
+    {
+        $childCat = Category::find()->where(['parent' => $id])->all();
+        $subTovarCount = 0;
+        
+        foreach ($childCat as $cat):
+            $subTovarCount += Tovar::find()->where(['category_id' => $cat->id])->count();
+        endforeach;
+        
+        return $subTovarCount;
+    }
+
 }
