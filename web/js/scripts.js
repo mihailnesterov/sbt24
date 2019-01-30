@@ -213,15 +213,15 @@
 		}) ;
         
         /* read cart from cookies https://itchief.ru/lessons/javascript/javascript-working-with-cookies */
-                $(document).ready(function () {
-                    /*if (Cookies.get('cart-quantity')) {
+                /*$(document).ready(function () {
+                    if (Cookies.get('cart-quantity')) {
                         $('#cart-price').html(parseInt(Cookies.get('cart-price')));
                         $('#cart-quantity').html(parseInt(Cookies.get('cart-quantity')));
                     } else {
                         $('#cart-price').html('0.00');
                         $('#cart-quantity').html(parseInt(0));
-                    }*/
-                });
+                    }
+                });*/
 	
 	/* swiper slider on main page */
 	$(document).ready(function () {

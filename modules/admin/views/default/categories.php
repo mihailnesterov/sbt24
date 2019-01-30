@@ -49,14 +49,13 @@ use yii\widgets\Breadcrumbs;
                                                             <?php
                                                             // вывод каталога из БД
                                                             foreach ($model as $cat):
-                                                                $count = \app\models\Tovar::find()->where(['category_id' => $cat->id])->count();
-                                                                $subcategory = \app\models\Category::find()->where(['parent' => $cat->id])->all();
-                                                                
+                                                                $count = $cat->getTovarCount($cat->id);
+                                                                $subcategory = $cat->getSubcategory($cat->id);
                                                                 if($subcategory) {
-                                                                    echo '<li>'. $cat->name.' ('.$count.') <i class="fa fa-close hidden" title="Удалить"></i> <i class="fa fa-pencil-square" title="Редактировать"></i></li>';
+                                                                    echo '<li><a href="#">'. $cat->name.' ('.$count.')</a> <i class="fa fa-close hidden" title="Удалить"></i> <i class="fa fa-pencil-square" title="Редактировать"></i></li>';
                                                                     echo '<ul class="category-level-1">';
                                                                         foreach ($subcategory as $sub):
-                                                                            $count = \app\models\Tovar::find()->where(['category_id' => $sub->id])->count();
+                                                                            $count = $cat->getTovarCount($sub->id);
                                                                             if($count == 0) {
                                                                                 echo '<li>'. $sub->name.' ('.$count.') <i class="fa fa-close" title="Удалить"></i> <i class="fa fa-pencil-square" title="Редактировать"></i></li>';
                                                                             } else {

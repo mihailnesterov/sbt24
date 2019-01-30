@@ -57,4 +57,21 @@ class Category extends \yii\db\ActiveRecord
             'description' => 'Описание',
         ];
     }
+
+    /**
+     * @return tovarCount
+     */
+    public function getTovarCount($id)
+    {
+        return $tovarCount = Tovar::find()->where(['category_id' => $id])->count();
+    }
+
+    /**
+     * @return subcategory
+     */
+    public function getSubcategory($id)
+    {
+        return $subcategory = Category::find()->where(['parent' => $id])->all();
+    }
+
 }
