@@ -20,6 +20,7 @@ use app\modules\admin\models\Login;
 use app\modules\admin\models\Signup;
 use yii\data\Pagination;
 use yii\web\UploadedFile;
+use yii\helpers\ArrayHelper;
 
 /**
  * Default controller for the `admin` module
@@ -178,6 +179,74 @@ class DefaultController extends Controller
         return $this->render('categories', [
             'model' => $model,
         ]);
+    }
+
+    /**
+     * Renders the edit category view for the module
+     * @return string
+     */
+    public function actionEditCategory($id)
+    {
+        if (Yii::$app->user->isGuest) 
+        {
+            return $this->redirect(Yii::$app->urlManager->createUrl('/admin/login'));
+        }
+
+        $model = $this->findCategoryModel($id);
+
+        $this->view->title = $model->name;
+        $this->view->params['breadcrumbs'][] = ['label' => 'Категории товаров', 'url' => '@web/admin/categories'];
+        $this->view->params['breadcrumbs'][] = $this->view->title;
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {            
+            
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            if ($model->imageFile != null) {
+                $model->upload($model->imageFile, $model->image);
+            }
+
+            Yii::$app->view->registerJs(
+            "
+                $.gritter.add({
+                        title: 'Изменения сохранены:',
+                        text: 'Категория: ".$model->name."',
+                        image: 'images/image.png',
+                        sticky: false,
+                        time: '3000'
+                    });
+                "
+            );
+            //return $this->redirect(Yii::$app->urlManager->createUrl('/admin/categories'));
+        }
+
+        $categories = Category::find()->where(['parent' => 0])->asArray()->all();
+        $subCategories = Category::find()->where(['>','parent', 0])->asArray()->all();
+
+        $items = [
+            //0 => 'Нет',
+            //ArrayHelper::getColumn($categories, 'name'),
+            //ArrayHelper::index($categories, 'name'),
+            'Категории верхнего уровня' => ArrayHelper::map($categories, 'id', 'name'),
+            'Вложенные категории' => ArrayHelper::map($subCategories, 'id', 'name'),
+        ];
+
+        $tovarCount = $model->getTovarCount($model->id);
+        
+        return $this->render('edit-category', [
+            'model' => $model,
+            'items' => $items,
+            'tovarCount' => $tovarCount,
+        ]);
+    }
+    /**
+     * find Category model
+     */
+    protected function findCategoryModel($id)
+    {
+        if (($model = Category::findOne($id)) !== null) {
+            return $model;
+        }
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
     
     /**

@@ -30,6 +30,11 @@ class Category extends \yii\db\ActiveRecord
     }
 
     /**
+     * @var UploadedImage
+     */
+    public $imageFile;
+
+    /**
      * {@inheritdoc}
      */
     public function rules()
@@ -39,6 +44,7 @@ class Category extends \yii\db\ActiveRecord
             [['name', 'link'], 'required'],
             [['name', 'link', 'title', 'keywords'], 'string', 'max' => 255],
             [['description'], 'string', 'max' => 500],
+            [['imageFile'], 'file', 'extensions' => 'png, jpg', 'skipOnEmpty' => true, 'maxSize' => 2048 * 1024, 'tooBig' => 'Размер файла не должен превышать 2 MB'],
         ];
     }
 
@@ -50,11 +56,11 @@ class Category extends \yii\db\ActiveRecord
         return [
             'id' => 'id категории',
             'parent' => 'id родительской категории',
-            'name' => 'Название',
-            'link' => 'Ссылка',
-            'title' => 'Заголовок',
-            'keywords' => 'Ключевые слова',
-            'description' => 'Описание',
+            'name' => 'Название категории',
+            'link' => 'Ссылка  в адресной строке',
+            'title' => 'Заголовок (title)',
+            'keywords' => 'Ключевые слова (keywords)',
+            'description' => 'Описание (description)',
         ];
     }
 
@@ -87,6 +93,19 @@ class Category extends \yii\db\ActiveRecord
         endforeach;
         
         return $subTovarCount;
+    }
+
+    /**
+     * @return uploaded image file
+     */
+    public function upload($imageFile, $image){
+        if($this->validate()){            
+            $filename = 'images/catalog/'.$image;
+            $imageFile->saveAs($filename);
+            return false;
+        } else {
+            return false;
+        }
     }
 
 }

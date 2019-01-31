@@ -223,44 +223,44 @@
                     }
                 });*/
 	
-	/* swiper slider on main page */
-	$(document).ready(function () {
-        //initialize swiper when document ready
-        var mySwiper = new Swiper ('.swiper-container', {
-		// Optional parameters
-		autoplay: {
-			delay: 5000,
-			},
-		pagination: {
-				el: '.swiper-pagination',
-				type: 'bullets',
-				//type: 'progressbar',
-				bulletElement: 'span',
-				bulletClass: 'swiper-pagination-bullets',
-				bulletActiveClass: 'swiper-pagination-bullet-active',
-				clickable: true
-			},
-		navigation: {
-				nextEl: '.swiper-button-next',
-				prevEl: '.swiper-button-prev',
-			},
-		mousewheel: {
-			invert: true,
-			},
-		effect: 'fade',
-		fadeEffect: {
-			crossFade: true
-			},
-		coverflowEffect: {
-			rotate: 30,
-			slideShadows: false,
-			},
-		loop: true
-		})
-	});
+        /* swiper slider on main page */
+        $(document).ready(function () {
+            //initialize swiper when document ready
+            var mySwiper = new Swiper ('.swiper-container', {
+            // Optional parameters
+            autoplay: {
+                delay: 5000,
+                },
+            pagination: {
+                    el: '.swiper-pagination',
+                    type: 'bullets',
+                    //type: 'progressbar',
+                    bulletElement: 'span',
+                    bulletClass: 'swiper-pagination-bullets',
+                    bulletActiveClass: 'swiper-pagination-bullet-active',
+                    clickable: true
+                },
+            navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+            mousewheel: {
+                invert: true,
+                },
+            effect: 'fade',
+            fadeEffect: {
+                crossFade: true
+                },
+            coverflowEffect: {
+                rotate: 30,
+                slideShadows: false,
+                },
+            loop: true
+            })
+        });
 	
         /* active menu */
-	$(function () {
+	    $(function () {
             var location = window.location.href;
             var cur_url = '/sbt24/' + location.split('/').pop();    // !!!убрать '/sbt24/' заменить на '/'
 
@@ -274,7 +274,7 @@
         });
         
         /* preview i chevron change */
-	$(function () {
+	    $(function () {
             $('.preview').on('click', function(){
                 if ($(this).find('i').hasClass('fa-chevron-down')) {
                     $(this).find('i').removeClass('fa-chevron-down').addClass('fa-chevron-up');
@@ -291,8 +291,8 @@
             return str.substr(0, length);
         }(20);
         
-        // admin: toggle category
-        $('.category-level-0').find('li').on('click', 'a', function (e) {
+        // admin/category: toggle category
+        $('.category-level-0').find('li').on('click', '.has-subcat', function (e) {
             e.preventDefault();
             $(this.parentNode.parentNode.parentNode).find('.category-level-1').toggle();
             var folder = $(this.parentNode).find('i');
@@ -302,20 +302,15 @@
                 
                 folder.removeClass('fa-folder').addClass('fa-folder-open');
             }
-            /*if(folder.hasClass('fa-folder-o')) {
-                folder.removeClass('fa-folder-o').addClass('fa-folder-open-o');
-            } else {
-                folder.removeClass('fa-folder-open-o').addClass('fa-folder-o');
-            }*/
         });
 
-        // admin:  toggle category on DOM load
+        // admin/category:  toggle category on DOM load
         $(function () {
             $('.category-level-1').toggle();
         });
 
 
-        // admin: edit category
+        // admin/category: delete category
         $('.admin-categories-list').on('click', '.fa-close', function () {
             
             alert($(this.parentNode).text());
@@ -367,12 +362,12 @@
             });
         });
 
-        // admin/banners: load image on banner '#banner-image' click
-        $(function () {
+        // admin/banners/category: load image on banner '#banner-image' click
+        //$(function () {
             $('#input-load-image').change(function() {
                 previewImage('banner-image','input-load-image','input-image-file');
             });
-        });
+        //});
 
         // admin/banners: select help text on change
         $('#select-banner-position').change(function() {          

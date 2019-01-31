@@ -3,7 +3,6 @@
 namespace app\models;
 
 use Yii;
-use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "sbt_banners".
@@ -37,7 +36,7 @@ class Banners extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'image', 'position'], 'required'],
+            [['name', 'position'], 'required'],
             [['position'], 'integer'],
             [['created'], 'safe'],
             [['name', 'image'], 'string', 'max' => 255],

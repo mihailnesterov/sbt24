@@ -51,18 +51,22 @@ use yii\widgets\Breadcrumbs;
                                                     <div class="admin-categories-list">    
                                                         <ul class="category-level-0">
                                                         <?php foreach ($model as $key => $cat): 
-                                                            $count = $cat->getSubTovarCount($cat->id);
+                                                            $count = $cat->getTovarCount($cat->id);
+                                                            $subCount = $cat->getSubTovarCount($cat->id);
+                                                            if($count == 0) {
+                                                                $count = $subCount;
+                                                            }
                                                             $subcategory = $cat->getSubcategory($cat->id);
                                                         ?>
                                                             <?php if($subcategory): ?>
                                                             <li>
                                                                 <span class="name-block text-left">
                                                                     <i class="fa fa-folder"></i>
-                                                                    <a href="#"><?= $cat->name ?> (<?= $count ?>)</a>
+                                                                    <a href="#" class="has-subcat"><?= $cat->name ?> (<?= $count ?>)</a>
                                                                 </span>
                                                                 <span class="i-block text-right">
-                                                                    <i class="fa fa-close hidden" title="Удалить"></i> 
-                                                                    <i class="fa fa-pencil" title="Редактировать"></i>
+                                                                    <!--<i class="fa fa-close hidden" title="Удалить"></i> -->
+                                                                    <?= Html::a('<i class="fa fa-pencil" title="Редактировать"></i>', ['/admin/edit-category?id='.$cat->id]) ?>
                                                                 </span>
                                                             </li>
                                                                 <ul class="category-level-1">
@@ -77,7 +81,7 @@ use yii\widgets\Breadcrumbs;
                                                                                 </span>
                                                                                 <span class="i-block text-right">
                                                                                     <i class="fa fa-close" title="Удалить"></i>
-                                                                                    <i class="fa fa-pencil" title="Редактировать"></i>
+                                                                                    <?= Html::a('<i class="fa fa-pencil" title="Редактировать"></i>', ['/admin/edit-category?id='.$sub->id]) ?>
                                                                                 </span>
                                                                             </li>
                                                                         <?php else: ?>
@@ -87,8 +91,8 @@ use yii\widgets\Breadcrumbs;
                                                                                     <?= $sub->name ?> (<?= $count ?>) 
                                                                                 </span>
                                                                                 <span class="i-block text-right">
-                                                                                    <i class="fa fa-close hidden" title="Удалить"></i> 
-                                                                                    <i class="fa fa-pencil" title="Редактировать"></i>
+                                                                                    <!--<i class="fa fa-close hidden" title="Удалить"></i>-->
+                                                                                    <?= Html::a('<i class="fa fa-pencil" title="Редактировать"></i>', ['/admin/edit-category?id='.$sub->id]) ?>
                                                                                 </span>
                                                                             </li>
                                                                         <?php endif; ?>
@@ -101,9 +105,8 @@ use yii\widgets\Breadcrumbs;
                                                                         <?= $cat->name ?> (<?= $count ?>) 
                                                                     </span>
                                                                     <span class="i-block text-right">
-                                                                        
                                                                         <i class="fa fa-close" title="Удалить"></i> 
-                                                                        <i class="fa fa-pencil" title="Редактировать"></i>
+                                                                        <?= Html::a('<i class="fa fa-pencil" title="Редактировать"></i>', ['/admin/edit-category?id='.$cat->id]) ?>
                                                                     </span>
                                                                 </li>
                                                             <?php endif; ?>

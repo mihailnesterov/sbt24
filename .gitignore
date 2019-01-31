@@ -3,4 +3,5 @@ nbproject
 runtime
 web/assets
 web/images/banners
+web/images/catalog
 sbt24.code-workspace

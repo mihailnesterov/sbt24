@@ -75,7 +75,7 @@ use yii\widgets\Breadcrumbs;
                                                                                 <?= $form->field($model, 'image', [
                                                                                         'template' => '{label}{input}{error}',
                                                                                         'inputOptions' => [
-                                                                                        'type' => 'hidden',
+                                                                                        'type' => 'hidden1',
                                                                                         'id' => 'input-image-file',
                                                                                         'autofocus' => 'autofocus',
                                                                                         'tabindex' => '2',
@@ -86,7 +86,7 @@ use yii\widgets\Breadcrumbs;
 
                                                                                 <?= $form->field($model, 'imageFile')->fileInput([
                                                                                         'id' => 'input-load-image', 
-                                                                                        'class'=>'form-control hidden',
+                                                                                        'class'=>'form-control hidden1',
                                                                                 ])->label(false); ?>
                                                                                 
                                                                                 <div id="btn-block">

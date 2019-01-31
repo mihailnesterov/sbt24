@@ -1,7 +1,7 @@
 <?php
 
 /*
- * service page
+ * catalog page
  */
 
 use yii\helpers\Html;
