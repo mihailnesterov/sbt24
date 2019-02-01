@@ -42,19 +42,18 @@ use yii\widgets\Breadcrumbs;
                                                         <?= Html::a('<i class="fa fa-arrow-left"></i>', '@web/admin', ['class' => 'go-back-link', 'title' => 'Кабинет']) ?>
                                                         <?= Html::encode($this->title) ?>
                                                 </h1>
-                                                <p class="bg-warning">Добавление, редактирование, удаление, товаров</p>
+                                                <p class="bg-warning">Добавление, редактирование, удаление товаров</p>
                                         </header>
 
                                         <div class="goods-container">	
                                                 <div class="dashboard row">
                                                     
-                                                    <div class="col-xs-12 col-md-6 text-left">
-                                                        <div class="dashboard-block" style="min-height: 70px;">
+                                                    <div class="col-xs-12 col-md-5 col-lg-4 text-left">
+                                                        <div class="dashboard-block"  style="min-height: 70px;">
                                                             <?= Html::a('<i class="fa fa-plus"></i> Добавить товар', Yii::$app->urlManager->createUrl(['/admin/goods-add']), ['class' => 'btn btn-success']) ?>
-                                                        
                                                         </div>
-                                                    </div>
-                                                    <div class="col-xs-12 col-md-6 text-left">
+                                                    </div> <!-- end-col -->
+                                                    <div class="col-xs-12 col-md-7 col-lg-8 text-left">
                                                         <div class="dashboard-block" style="min-height: 70px;">
                                                             <form id="search" class="form-inline">
                                                                 <div class="input-group col-sm-12">
@@ -64,11 +63,23 @@ use yii\widgets\Breadcrumbs;
                                                                     </span>
                                                                 </div>
                                                             </form>
-                                                        
                                                         </div>
-                                                    </div>
-                                                    
-                                                    
+                                                    </div> <!-- end-col -->
+
+                                                    <div class="col-xs-12">
+                                                        <div class="dashboard-block">
+                                                        <p>Категории: </p>
+                                                            <div class="btn-group" data-toggle="buttons">
+                                                                <?php $catCounter = 1; ?>
+                                                                <?= Html::a('Все', ['/admin/goods'], ['class' => 'btn btn-default active']) ?>
+                                                                <?php foreach ($categories as $key => $cat): ?>
+                                                                    <?= Html::a($cat->getCategoryName($cat->category_id), ['/admin/goods?cat='.$cat->category_id], ['class' => 'btn btn-default', 'cat' => $cat->category_id]) ?>
+                                                                    <?php $catCounter++; ?>
+                                                                <?php endforeach ?>
+                                                            </div>
+                                                            <?= Html::a('<i class="fa fa-plus"></i>Добавить категорию', Yii::$app->urlManager->createUrl(['/admin/add-category']), ['class' => 'btn btn-success']) ?>
+                                                        </div>
+                                                    </div> <!-- end-col -->
                                                         
                                                     <div class="col-sm-12">
                                                         <?php $tovarCounter = 1; ?>

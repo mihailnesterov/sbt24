@@ -156,9 +156,12 @@ class DefaultController extends Controller
         $pages->pageSizeParam = false;
         $tovar = $query->offset($pages->offset)->limit($pages->limit)->all();
 
+        $categories = Tovar::find()->select('category_id')->distinct()->orderby(['id'=>SORT_ASC])->all();
+
         return $this->render('goods', [
             'tovar' => $tovar,
             'pages' => $pages,
+            'categories' => $categories,
         ]);
     }
     

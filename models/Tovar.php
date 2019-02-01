@@ -102,4 +102,13 @@ class Tovar extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Category::className(), ['id' => 'category_id']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCategoryName($id)
+    {
+        $cat = Category::find()->where(['id' => $id])->one();
+        return $cat->name;
+    }
 }
