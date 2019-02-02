@@ -1188,6 +1188,31 @@ footer .footer-block ul li i {
     margin-right: 0.5em;
     font-size: 1.1em;
 }
+.dashboard .dashboard-block .tovar-block {
+	border-bottom: 1px #e9e9e9 solid;
+	padding: 0.8em 0.2em 0.1em 0.2em;
+	
+}
+.dashboard .dashboard-block .tovar-block:last-child {
+	border-bottom: 0;
+}
+.dashboard .dashboard-block .tovar-block div {
+	padding: 0.1em;
+}
+.dashboard .dashboard-block .tovar-block .tovar-name-block img {
+	display: inline-block; 
+	vertical-align: middle; 
+	width: 12%;
+	padding: 0 0.5em 0.2em 0;
+}
+.dashboard .dashboard-block .tovar-block .tovar-name-block a {
+	display: inline-block; 
+	vertical-align: middle; 
+	width: 77%;
+}
+.dashboard .dashboard-block .tovar-block .tovar-counter {
+	padding-top: 1em;
+}
 
 .admin-categories-list {
     
