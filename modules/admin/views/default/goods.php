@@ -48,16 +48,17 @@ use yii\widgets\Breadcrumbs;
                                         <div class="goods-container">	
                                             <div class="dashboard row">
                                                 
-                                                <div class="col-xs-12 col-md-5 col-lg-4 text-left">
+                                                <div class="col-xs-12 col-md-6 col-lg-7 text-left">
                                                     <div class="dashboard-block"  style="min-height: 70px;">
                                                         <?= Html::a('<i class="fa fa-plus"></i> Добавить товар', Yii::$app->urlManager->createUrl(['/admin/goods-add']), ['class' => 'btn btn-success']) ?>
+                                                        <?= Html::a('<i class="fa fa-plus"></i>Добавить категорию', Yii::$app->urlManager->createUrl(['/admin/add-category']), ['class' => 'btn btn-success']) ?>
                                                     </div>
                                                 </div> <!-- end-col -->
-                                                <div class="col-xs-12 col-md-7 col-lg-8 text-left">
+                                                <div class="col-xs-12 col-md-6 col-lg-5 text-left">
                                                     <div class="dashboard-block" style="min-height: 70px;">
                                                         <form id="search" class="form-inline">
                                                             <div class="input-group col-sm-12">
-                                                                <input class="form-control" type="text" placeholder="Найти товар..." aria-label="Поиск...">
+                                                                <input id="search-goods-input" class="form-control" type="text" placeholder="Найти товар..." aria-label="Поиск...">
                                                                 <span class="input-group-btn">
                                                                     <button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                                                                 </span>
@@ -68,29 +69,43 @@ use yii\widgets\Breadcrumbs;
 
                                                 <div class="col-xs-12">
                                                     <div class="dashboard-block">
-                                                    <p>Категории: </p>
-                                                        <div class="btn-group" data-toggle="buttons">
-                                                            <?php $catCounter = 1; ?>
-                                                            <?= Html::a('Все', ['/admin/goods'], ['class' => 'btn btn-default active']) ?>
-                                                            <?php foreach ($categories as $key => $cat): ?>
-                                                                <?= Html::a($cat->getCategoryName($cat->category_id), ['/admin/goods?cat='.$cat->category_id], ['class' => 'btn btn-default', 'cat' => $cat->category_id]) ?>
-                                                                <?php $catCounter++; ?>
-                                                            <?php endforeach ?>
-                                                        </div>
-                                                        <?= Html::a('<i class="fa fa-plus"></i>Добавить категорию', Yii::$app->urlManager->createUrl(['/admin/add-category']), ['class' => 'btn btn-success']) ?>
-                                                    </div>
+                                                        <div class="category-filter-block">
+                                                            <div class="btn-group" data-toggle="buttons">
+                                                                <?php $catCounter = 1; ?>
+                                                                <?= Html::a(
+                                                                    'Все', 
+                                                                    ['/admin/goods'], 
+                                                                    [
+                                                                        'class' => 'btn btn-default active',
+                                                                        'category' => 0 // default category id
+                                                                    ]
+                                                                )?>
+                                                                <?php foreach ($categories as $key => $cat): ?>
+                                                                    <?= Html::a(
+                                                                        $cat->getCategoryName($cat->category_id), 
+                                                                        ['/admin/goods?cat='.$cat->category_id], 
+                                                                        [
+                                                                            'class' => 'btn btn-default', 
+                                                                            'category' => $cat->category_id // category id
+                                                                        ]
+                                                                    )?>
+                                                                    <?php $catCounter++; ?>
+                                                                <?php endforeach ?>
+                                                            </div>
+                                                        </div> <!-- end-category-filter-block -->
+                                                    </div> <!-- end-dashboard-block -->
                                                 </div> <!-- end-col -->
 
                                                 <div class="col-xs-12">
                                                     <div class="dashboard-block">
-                                                        <div class="tovar-block row">
+                                                        <div class="tovar-head row">
                                                             <div class="col-xs-1 text-center">
                                                                 <h5>№</h5>
                                                             </div>
-                                                            <div class="col-xs-8 text-center">
+                                                            <div class="col-xs-7 text-center">
                                                                 <h5>Наименование</h5>
                                                             </div>
-                                                            <div class="col-xs-1 text-center">
+                                                            <div class="col-xs-2 text-center">
                                                                 <h5>Руб.</h5>
                                                             </div>
                                                             <div class="col-xs-1 text-center">
@@ -104,11 +119,11 @@ use yii\widgets\Breadcrumbs;
                                                         <?php $tovarCounter = 1; ?>
 
                                                         <?php foreach ($tovar as $key => $good): ?>
-                                                            <div class="tovar-block row">
+                                                            <div class="tovar-block row" category="<?= $good->category_id ?>">
                                                                 <div class="tovar-counter col-xs-1 text-center">
                                                                     <?= $tovarCounter ?>
                                                                 </div>
-                                                                <div class="tovar-name-block col-xs-8 text-left">
+                                                                <div class="tovar-name-block col-xs-7 text-left">
                                                                     <?= Html::img(
                                                                         '@web/images/goods/'.$good->photo1, 
                                                                         [
@@ -121,7 +136,7 @@ use yii\widgets\Breadcrumbs;
                                                                         ['../goods-view', 'id' => $good->id,]
                                                                     ) ?>
                                                                 </div>
-                                                                <div class="tovar-price-rub col-xs-1 text-center">
+                                                                <div class="tovar-price-rub col-xs-2 text-center">
                                                                     <?= $good->price_rub ?>
                                                                 </div>
                                                                 <div class="tovar-price-usd col-xs-1 text-center">

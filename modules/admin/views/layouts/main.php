@@ -63,8 +63,8 @@
                                                 </div>
                                         </div>
                                         <div id="schedule-block-admin" class="col-md-4 text-center">
-                                                <p>Курс USD = <?= $currencies['USD'] ?></p>
-                                                <p>Курс EUR = <?= $currencies['EUR'] ?></p>
+                                                <p>Курс USD = <span id="curs-usd"><?= $currencies['USD'] ?></span></p>
+                                                <p>Курс EUR = <span id="curs-eur"><?= $currencies['EUR'] ?></span></p>
                                         </div>
                                         <div id="top-phone-block" class="col-md-3">
                                                 <div id="top-user" class="text-right">

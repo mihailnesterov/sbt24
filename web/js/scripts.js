@@ -311,11 +311,58 @@
 
 
         // admin/category: delete category
-        $('.admin-categories-list').on('click', '.fa-close', function () {
-            
+        $('.admin-categories-list').on('click', '.fa-close', function () { 
             alert($(this.parentNode).text());
-            
         });
+
+        // admin/goods: category filter block
+        $('.category-filter-block').find('.btn-group a').click(function () {
+            $('.category-filter-block').find('.btn-group a').each(function () {
+                $(this).removeClass('active');
+            });
+                var filterCat = $(this).attr('category');
+                $(this).addClass('active');
+                var counter = 1;
+            $('.tovar-block').each(function () {
+                var cat = $(this).attr('category');
+                $(this).addClass('hidden');
+                if(cat){
+                    if(filterCat == 0){
+                        $(this).removeClass('hidden');
+                    } else {
+                        if (filterCat == cat) {
+                            $(this).removeClass('hidden');
+                        }
+                    }
+                    if(!$(this).hasClass('hidden')) {
+                        $(this).find('.tovar-counter').html(counter);
+                        counter++;
+                    }
+                }
+                var cursUsd = $('#curs-usd').html();
+                var cursEur = $('#curs-eur').html();
+                var rub = $(this).find('.tovar-price-rub').html();
+                var usd = parseFloat($(this).find('.tovar-price-usd').html()) * parseFloat(cursUsd);
+                var eur = parseFloat($(this).find('.tovar-price-eur').html()) * parseFloat(cursEur);
+                
+                if(rub == 0) {
+                    $(this).find('.tovar-price-rub').html(parseFloat(rub) + parseFloat(usd) + parseFloat(eur));
+                }
+            });
+        });
+        
+        // admin/goods: category filter block on DOM load
+        $(function () {
+            $('.category-filter-block').find('.btn-group .active').click();
+        });
+
+        // admin/goods: search goods
+        /*$('#search-goods-input').on('keyup', function() {
+            var input = $(this).val();
+            $('.tovar-block').each(function () {
+                $(this).find('.tovar-name-block a').filter(input);
+            });
+        });*/
 
         // admin: image click delegation on id
         function imgLoad(id){
