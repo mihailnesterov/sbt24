@@ -51,7 +51,7 @@ use yii\widgets\Breadcrumbs;
                                                 <div class="col-xs-12 col-md-6 col-lg-7 text-left">
                                                     <div class="dashboard-block"  style="min-height: 70px;">
                                                         <?= Html::a('<i class="fa fa-plus"></i> Добавить товар', Yii::$app->urlManager->createUrl(['/admin/goods-add']), ['class' => 'btn btn-success']) ?>
-                                                        <?= Html::a('<i class="fa fa-plus"></i>Добавить категорию', Yii::$app->urlManager->createUrl(['/admin/add-category']), ['class' => 'btn btn-success']) ?>
+                                                        <?= Html::a('<i class="fa fa-plus"></i>Добавить категорию', Yii::$app->urlManager->createUrl(['/admin/-category-add']), ['class' => 'btn btn-success']) ?>
                                                     </div>
                                                 </div> <!-- end-col -->
                                                 <div class="col-xs-12 col-md-6 col-lg-5 text-left">
@@ -67,7 +67,7 @@ use yii\widgets\Breadcrumbs;
                                                     </div>
                                                 </div> <!-- end-col -->
 
-                                                <div class="col-xs-12">
+                                                <div class="col-xs-12 col-sm-8 col-md-10">
                                                     <div class="dashboard-block">
                                                         <div class="category-filter-block">
                                                             <div class="btn-group" data-toggle="buttons">
@@ -96,6 +96,17 @@ use yii\widgets\Breadcrumbs;
                                                     </div> <!-- end-dashboard-block -->
                                                 </div> <!-- end-col -->
 
+                                                <div class="col-xs-12 col-sm-4 col-md-2">
+                                                    <div class="dashboard-block">                                                            
+                                                            <select id="select-pages-count" class="form-control">
+                                                                <option value="5">5</option>
+                                                                <option value="10">10</option>
+                                                                <option value="20" selected>20</option>
+                                                                <option value="50">50</option>
+                                                            </select>
+                                                    </div> <!-- end-dashboard-block -->
+                                                </div> <!-- end-col -->
+
                                                 <div class="col-xs-12">
                                                     <div class="dashboard-block">
                                                         <div class="tovar-head row">
@@ -119,7 +130,7 @@ use yii\widgets\Breadcrumbs;
                                                         <?php $tovarCounter = 1; ?>
 
                                                         <?php foreach ($tovar as $key => $good): ?>
-                                                            <div class="tovar-block row" category="<?= $good->category_id ?>">
+                                                            <div class="tovar-block row" category="<?= $good->category_id ?>" page="1">
                                                                 <div class="tovar-counter col-xs-1 text-center">
                                                                     <?= $tovarCounter ?>
                                                                 </div>
@@ -150,6 +161,34 @@ use yii\widgets\Breadcrumbs;
                                                         <?php endforeach ?>
                                                     </div> <!-- end-dashboard-block -->
                                                 </div> <!-- end-col -->
+
+                                                <div class="col-xs-12">
+                                                    <div class="dashboard-block">
+                                                        <div class="category-pagination-block">
+                                                            <div class="btn-group" data-toggle="buttons">
+                                                                <!--<?php $pageCounter = 2; ?>
+                                                                <?= Html::a(
+                                                                    '1', 
+                                                                    ['/admin/goods?page=1'], 
+                                                                    [
+                                                                        'class' => 'btn btn-default active'
+                                                                    ]
+                                                                )?>
+                                                                <?php foreach ($categories as $key => $cat): ?>
+                                                                    <?= Html::a(
+                                                                        $pageCounter, 
+                                                                        ['/admin/goods?page='.$pageCounter], 
+                                                                        [
+                                                                            'class' => 'btn btn-default'
+                                                                        ]
+                                                                    )?>
+                                                                    <?php $pageCounter++; ?>
+                                                                <?php endforeach ?>-->
+                                                            </div>
+                                                        </div> <!-- end-category-filter-block -->
+                                                    </div> <!-- end-dashboard-block -->
+                                                </div> <!-- end-col -->
+
                                             </div>	<!-- end dashboard row -->                                                        
                                         </div>	<!-- end goods-container -->
 

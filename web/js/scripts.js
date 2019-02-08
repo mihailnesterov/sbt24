@@ -356,6 +356,109 @@
             $('.category-filter-block').find('.btn-group .active').click();
         });
 
+        // admin/goods: build category-pagination-block and page attr for .tovar-block
+        function buildPagination(pageSize) {
+            $('.category-pagination-block .btn-group').find('button').each(function() {
+                $(this).remove();
+            });
+            $('<button>', {
+                html: '1',
+                id: 'btn-pagination-block-1',
+                class: 'btn btn-default active',
+                click: function() {
+                    var page = $(this).html();
+                    
+                    $('.category-pagination-block').find('.btn-group button').each(function () {
+                        $(this).removeClass('active');
+                    });
+
+                    $(this).addClass('active');
+
+                    $('.tovar-block').each(function () {
+                        $(this).hide();
+                        if($(this).attr('page') == page) {
+                            $(this).show();
+                        }
+                    });
+                }
+            }).appendTo('.category-pagination-block .btn-group');
+
+            //var pageSize = $('#select-pages-count').val();       // change pagination page size here!
+            var page = 1;           // current page number
+            var goodsCounter = 0;   // counter for all goods
+            var first = 1;          // first good number in range
+            var last = (Number(first) + Number(pageSize) - 1);    // last good number in range
+            
+            $('.tovar-block').each(function () {
+                if (goodsCounter == last) {
+                    first = last;
+                    last = (Number(first) + Number(pageSize)); 
+                    page++;
+                }
+                $(this).attr('page', page);
+                goodsCounter++;
+            });
+
+            for(var i=1; i<page; i++) {
+                $('<button>', {
+                    html: (i+1),
+                    class: 'btn btn-default',
+                    click: function() {    
+                        var page = $(this).html();
+                        
+                        $('.category-pagination-block').find('.btn-group button').each(function () {
+                            $(this).removeClass('active');
+                        });
+    
+                        $(this).addClass('active');
+                        
+    
+                        $('.tovar-block').each(function () {
+                            $(this).hide();
+                            if($(this).attr('page') == page) {
+                                $(this).show();
+                            }
+                        });
+                    }
+                }).appendTo('.category-pagination-block .btn-group');
+            }
+        }
+        // admin/goods: show category-pagination-block
+        $(function () {
+            buildPagination($('#select-pages-count').val());
+        });
+        
+        $('#select-pages-count').change(function () {
+            buildPagination($(this).val());
+            $('.category-pagination-block').find('.btn-group .active').click();
+        });
+
+
+        // admin/goods: category-pagination-block click on button
+        /*$('.category-pagination-block1').find('.btn-group button').click(function () {
+            
+            var page = $(this).html();
+            alert( $(this).attr('page'));
+            $('.category-pagination-block').find('.btn-group button').each(function () {
+                $(this).removeClass('active');
+            });
+
+            $(this).addClass('active');
+            
+
+            $('.tovar-block').each(function () {
+                $(this).hide();
+                if($(this).attr('page') == page) {
+                    $(this).show();
+                }
+            });
+
+        });*/
+
+        $(function () {
+            $('#btn-pagination-block-1').click();
+        });
+
         // admin/goods: search goods
         /*$('#search-goods-input').on('keyup', function() {
             var input = $(this).val();
