@@ -99,6 +99,9 @@ use yii\widgets\Breadcrumbs;
                                                 <div class="col-xs-12 col-sm-4 col-md-2">
                                                     <div class="dashboard-block">                                                            
                                                             <select id="select-pages-count" class="form-control">
+                                                                <option value="1">1</option>
+                                                                <option value="2">2</option>
+                                                                <option value="3">3</option>
                                                                 <option value="5">5</option>
                                                                 <option value="10">10</option>
                                                                 <option value="20" selected>20</option>

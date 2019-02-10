@@ -164,6 +164,77 @@ class DefaultController extends Controller
             'categories' => $categories,
         ]);
     }
+
+    /**
+     * find Goods model
+     */
+    protected function findGoodsModel($id)
+    {
+        if (($model = Tovar::findOne($id)) !== null) {
+            return $model;
+        }
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    /**
+     * Renders the goods-add view for the module
+     * @return string
+     */
+    public function actionGoodsAdd()
+    {
+        if (Yii::$app->user->isGuest) 
+        {
+            return $this->redirect(Yii::$app->urlManager->createUrl('/admin/login'));
+        }
+
+        $model = new Tovar();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {            
+            
+            if ($model->save()) {
+                Yii::$app->view->registerJs(
+                "
+                    $.gritter.add({
+                            title: 'Товар добавлен:',
+                            text: '".$model->name."',
+                            image: 'images/image.png',
+                            sticky: false,
+                            time: '3000'
+                        });
+                    "
+                );
+                //return $this->redirect(Yii::$app->urlManager->createUrl('/admin/goods'));
+            }
+        }
+
+        $categories = Category::find()->where(['parent' => 0])->asArray()->all();
+        $subCategories = Category::find()->where(['>','parent', 0])->asArray()->all();
+
+        $catItems = [
+            /*'Категории верхнего уровня' => ArrayHelper::map($categories, 'id', 'name'),*/
+            'Категории:' => ArrayHelper::map($subCategories, 'id', 'name'),
+        ];
+
+        /*foreach ($categories as $cat) {
+            
+            $catItems[] = ArrayHelper::map($cat, 'id', 'name');
+            foreach ($subCategories as $subCat) {
+                if($cat->id == $subCat->parent) {
+                    $catItems[] = ArrayHelper::map($subCat, 'id', 'name');
+                }
+                
+            }
+        }*/
+
+        $this->view->title = 'Добавить товар';
+        $this->view->params['breadcrumbs'][] = $this->view->title;
+        
+
+        return $this->render('goods-add', [
+            'model' => $model,
+            'catItems' => $catItems,
+        ]);
+    }
     
     /**
      * Renders the categories view for the module

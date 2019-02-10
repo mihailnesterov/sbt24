@@ -317,12 +317,14 @@
 
         // admin/goods: category filter block
         $('.category-filter-block').find('.btn-group a').click(function () {
+            
             $('.category-filter-block').find('.btn-group a').each(function () {
                 $(this).removeClass('active');
             });
-                var filterCat = $(this).attr('category');
-                $(this).addClass('active');
-                var counter = 1;
+
+            var filterCat = $(this).attr('category');
+            $(this).addClass('active');
+            var counter = 1;
             $('.tovar-block').each(function () {
                 var cat = $(this).attr('category');
                 $(this).addClass('hidden');
@@ -390,6 +392,24 @@
             var last = (Number(first) + Number(pageSize) - 1);    // last good number in range
             
             $('.tovar-block').each(function () {
+
+                /*
+                    Object.keys(obj)    //получить свойства объекта
+                    var user = {
+                        name: "Петя",
+                        age: 30
+                    }
+                    var keys = Object.keys(user);
+                    alert( keys ); // name, age
+                */
+                
+                
+                /*var obj = document.getElementsByClassName('tovar-block');
+                Object.keys(obj).forEach(function(key) {
+                    console.log(key, ':', this[key].getAttribute('category'));
+                  }, obj);*/
+                  
+
                 if (goodsCounter == last) {
                     first = last;
                     last = (Number(first) + Number(pageSize)); 
@@ -433,39 +453,43 @@
             $('.category-pagination-block').find('.btn-group .active').click();
         });
 
-
-        // admin/goods: category-pagination-block click on button
-        /*$('.category-pagination-block1').find('.btn-group button').click(function () {
-            
-            var page = $(this).html();
-            alert( $(this).attr('page'));
-            $('.category-pagination-block').find('.btn-group button').each(function () {
-                $(this).removeClass('active');
-            });
-
-            $(this).addClass('active');
-            
-
-            $('.tovar-block').each(function () {
-                $(this).hide();
-                if($(this).attr('page') == page) {
-                    $(this).show();
-                }
-            });
-
-        });*/
-
+        // admin/goods: click on first button
         $(function () {
             $('#btn-pagination-block-1').click();
         });
 
-        // admin/goods: search goods
-        /*$('#search-goods-input').on('keyup', function() {
-            var input = $(this).val();
-            $('.tovar-block').each(function () {
-                $(this).find('.tovar-name-block a').filter(input);
+        // admin/goods-add: goods-pagination-block on button click
+        $('.goods-pagination-block').find('.btn-group button').click(function() {
+            $('.goods-pagination-block').find('.btn-group button').each(function() {
+                $(this).removeClass('active');
             });
-        });*/
+            $(this).addClass('active');
+            var tab = $(this).attr('tab');
+            if(tab) {
+                if(tab == 0) {
+                    $('.dashboard-block').each(function() {
+                        $(this).show();
+                    });
+                } else {
+                    $('.dashboard-block').each(function() {
+                        if($(this).attr('tab')) {
+                            $(this).hide();
+                            if($(this).attr('tab') == tab) {
+                                $(this).show();
+                            }
+                        }
+                    });
+                }   
+            }  
+        });
+
+        // admin/goods-add: goods-pagination-block click on first button
+        $(function () {
+            $('.dashboard-block').each(function() {
+                $('.goods-pagination-block').find('.btn-group .active').click();
+            });
+        });
+        
 
         // admin: image click delegation on id
         function imgLoad(id){
