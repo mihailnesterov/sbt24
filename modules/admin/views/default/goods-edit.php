@@ -43,7 +43,7 @@ use yii\widgets\Breadcrumbs;
                                     <?= Html::a('<i class="fa fa-arrow-left"></i>', '@web/admin/goods', ['class' => 'go-back-link', 'title' => 'Товары']) ?>
                                     <?= Html::encode($this->title) ?>
                                 </h1>
-                                <p class="bg-warning">Добавление товара. Обязательные поля: название товара, категория, описание товара, картинка №1.</p>
+                                <p class="bg-warning">Редактирование товара: <?= $model->name ?></p>
                             </header>
 
                             <div class="goods-container">	
@@ -152,7 +152,6 @@ use yii\widgets\Breadcrumbs;
                                                         'autofocus' => 'autofocus',
                                                         'tabindex' => '3',
                                                         'placeholder' => $model->getAttributeLabel('price_rub'),
-                                                        'value' => '0.00',
                                                         'class'=>'form-control',
                                                         ]
                                                     ])->label($model->getAttributeLabel('price_rub')) ?>
@@ -164,7 +163,6 @@ use yii\widgets\Breadcrumbs;
                                                         'autofocus' => 'autofocus',
                                                         'tabindex' => '4',
                                                         'placeholder' => $model->getAttributeLabel('price_usd'),
-                                                        'value' => '0.00',
                                                         'class'=>'form-control',
                                                         ]
                                                     ])->label($model->getAttributeLabel('price_usd')) ?>
@@ -176,7 +174,6 @@ use yii\widgets\Breadcrumbs;
                                                         'autofocus' => 'autofocus',
                                                         'tabindex' => '5',
                                                         'placeholder' => $model->getAttributeLabel('price_eur'),
-                                                        'value' => '0.00',
                                                         'class'=>'form-control',
                                                         ]
                                                     ])->label($model->getAttributeLabel('price_eur')) ?>
@@ -215,8 +212,14 @@ use yii\widgets\Breadcrumbs;
                                             <p class="bg-warning">Загрузите изображения товара - до 4-х шт. Картинка №1 должна быть загружена обязательно</p>
                                             <div class="row" style="padding: 1em;">
                                                 <div class="goods-image-block col-md-3">
+                                                    <?php 
+                                                        $photo1 = '@web/images/image.png';
+                                                        if($model->photo1){
+                                                            $photo1 = '@web/images/goods/'.$model->photo1;
+                                                        }
+                                                    ?>
                                                     <?= Html::img(
-                                                        '@web/images/image.png', 
+                                                        $photo1, 
                                                         [
                                                                 'alt' => '',
                                                                 'id' => 'goods-image-1',
@@ -243,8 +246,14 @@ use yii\widgets\Breadcrumbs;
                                                 </div> <!--  end goods-image-block -->
 
                                                 <div class="goods-image-block col-md-3">
+                                                    <?php 
+                                                        $photo2 = '@web/images/image.png';
+                                                        if($model->photo2){
+                                                            $photo2 = '@web/images/goods/'.$model->photo2;
+                                                        }
+                                                    ?>
                                                     <?= Html::img(
-                                                        '@web/images/image.png', 
+                                                        $photo2, 
                                                         [
                                                                 'alt' => '',
                                                                 'id' => 'goods-image-2',
@@ -271,8 +280,14 @@ use yii\widgets\Breadcrumbs;
                                                 </div> <!--  end goods-image-block -->
 
                                                 <div class="goods-image-block col-md-3">
+                                                    <?php 
+                                                        $photo3 = '@web/images/image.png';
+                                                        if($model->photo3){
+                                                            $photo3 = '@web/images/goods/'.$model->photo3;
+                                                        }
+                                                    ?>
                                                     <?= Html::img(
-                                                        '@web/images/image.png', 
+                                                        $photo3, 
                                                         [
                                                                 'alt' => '',
                                                                 'id' => 'goods-image-3',
@@ -299,8 +314,14 @@ use yii\widgets\Breadcrumbs;
                                                 </div> <!--  end goods-image-block -->
 
                                                 <div class="goods-image-block col-md-3">
+                                                    <?php 
+                                                        $photo4 = '@web/images/image.png';
+                                                        if($model->photo4){
+                                                            $photo4 = '@web/images/goods/'.$model->photo4;
+                                                        }
+                                                    ?>
                                                     <?= Html::img(
-                                                        '@web/images/image.png', 
+                                                        $photo4, 
                                                         [
                                                                 'alt' => '',
                                                                 'id' => 'goods-image-4',

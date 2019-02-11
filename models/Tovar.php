@@ -66,7 +66,7 @@ class Tovar extends \yii\db\ActiveRecord
         return [
             [['category_id', 'name','text','photo1'], 'required'],
             [['category_id', 'discount', 'garantee'], 'integer'],
-            [['text', 'video', 'properties', 'abililies', 'advantages'], 'string'],
+            [['text', 'video', 'properties', 'abilities', 'advantages'], 'string'],
             [['hit'], 'boolean'],
             [['created'], 'safe'],
             [['name', 'keywords', 'description', 'brand', 'type', 'model', 'photo1', 'photo2', 'photo3', 'photo4', 'video', 'file1', 'file2', 'file3'], 'string', 'max' => 255],

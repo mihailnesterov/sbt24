@@ -147,7 +147,7 @@ use yii\widgets\Breadcrumbs;
                                                                     ) ?>
                                                                     <?= Html::a(
                                                                         $good->name, 
-                                                                        ['../goods-view', 'id' => $good->id,]
+                                                                        ['../admin/goods-edit', 'id' => $good->id,]
                                                                     ) ?>
                                                                 </div>
                                                                 <div class="tovar-price-rub col-xs-2 text-center">

@@ -573,23 +573,50 @@
             $('#select-banner-position').change();
         });
 
-        // admin/goods-add: load image on button '#btn-load-photo1' click
+        // admin/goods-add: load image on button '#btn-load-photoN' click
         $(function () {
             $('#btn-load-photo1').click(function() {
                 imgLoad('input-load-photo-1');
             });
+            $('#btn-load-photo2').click(function() {
+                imgLoad('input-load-photo-2');
+            });
+            $('#btn-load-photo3').click(function() {
+                imgLoad('input-load-photo-3');
+            });
+            $('#btn-load-photo4').click(function() {
+                imgLoad('input-load-photo-4');
+            });
         });
 
-        // admin/banners: load image on '#goods-image-1' click
+        // admin/banners: load image on '#goods-image-N' click
         $(function () {
             $('#goods-image-1').click(function() {
                 imgLoad('input-load-photo-1');
             });
+            $('#goods-image-2').click(function() {
+                imgLoad('input-load-photo-2');
+            });
+            $('#goods-image-3').click(function() {
+                imgLoad('input-load-photo-3');
+            });
+            $('#goods-image-4').click(function() {
+                imgLoad('input-load-photo-4');
+            });
         });
 
-        // admin/banners/category: load photo1 on '#goods-image-1' click
+        // admin/banners/category: load photoN on '#goods-image-N' click
         $('#input-load-photo-1').change(function() {
             previewImage('goods-image-1','input-load-photo-1','input-image-photo-1');
+        });
+        $('#input-load-photo-2').change(function() {
+            previewImage('goods-image-2','input-load-photo-2','input-image-photo-2');
+        });
+        $('#input-load-photo-3').change(function() {
+            previewImage('goods-image-3','input-load-photo-3','input-image-photo-3');
+        });
+        $('#input-load-photo-4').change(function() {
+            previewImage('goods-image-4','input-load-photo-4','input-image-photo-4');
         });
 
         /*$('.goods-view-block').find('form').on('beforeValidate', function(event) {

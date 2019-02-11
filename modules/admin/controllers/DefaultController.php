@@ -251,6 +251,71 @@ class DefaultController extends Controller
             'catItems' => $catItems,
         ]);
     }
+
+    /**
+     * Renders the goods-edit view for the module (id)
+     * @return string
+     */
+    public function actionGoodsEdit($id)
+    {
+        if (Yii::$app->user->isGuest) 
+        {
+            return $this->redirect(Yii::$app->urlManager->createUrl('/admin/login'));
+        }
+
+        $model = $this->findGoodsModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->save()) {
+                // добавляем 4 картинки товара, если они не null
+                $model->photoFile1 = UploadedFile::getInstance($model, 'photoFile1');
+                if ($model->photoFile1 != null) {
+                    $model->upload($model->photoFile1, $model->photo1);
+                }
+                $model->photoFile2 = UploadedFile::getInstance($model, 'photoFile2');
+                if ($model->photoFile2 != null) {
+                    $model->upload($model->photoFile2, $model->photo2);
+                }
+                $model->photoFile3 = UploadedFile::getInstance($model, 'photoFile3');
+                if ($model->photoFile3 != null) {
+                    $model->upload($model->photoFile3, $model->photo3);
+                }
+                $model->photoFile4 = UploadedFile::getInstance($model, 'photoFile4');
+                if ($model->photoFile4 != null) {
+                    $model->upload($model->photoFile4, $model->photo4);
+                }
+
+                Yii::$app->view->registerJs(
+                    "
+                    $.gritter.add({
+                            title: 'Изменения сохранены:',
+                            text: '".$model->name."',
+                            image: 'images/goods/".$model->photo1."',
+                            sticky: false,
+                            time: '3000'
+                        });
+                    "
+                );
+                //return $this->redirect(Yii::$app->urlManager->createUrl('/admin/goods'));
+            }
+        }
+
+        $categories = Category::find()->where(['parent' => 0])->asArray()->all();
+        $subCategories = Category::find()->where(['>','parent', 0])->asArray()->all();
+
+        $catItems = [
+            /*'Категории верхнего уровня' => ArrayHelper::map($categories, 'id', 'name'),*/
+            'Категории:' => ArrayHelper::map($subCategories, 'id', 'name'),
+        ];
+
+        $this->view->title = 'Редактировать товар';
+        $this->view->params['breadcrumbs'][] = $this->view->title.': '.$model->name;
+
+        return $this->render('goods-edit', [
+            'model' => $model,
+            'catItems' => $catItems,
+        ]);
+    }
     
     /**
      * Renders the categories view for the module
