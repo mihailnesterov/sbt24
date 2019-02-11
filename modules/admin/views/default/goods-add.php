@@ -1,5 +1,6 @@
 <?php
 
+use mihaildev\ckeditor\CKEditor;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\Breadcrumbs;
@@ -42,7 +43,7 @@ use yii\widgets\Breadcrumbs;
                                     <?= Html::a('<i class="fa fa-arrow-left"></i>', '@web/admin/goods', ['class' => 'go-back-link', 'title' => 'Товары']) ?>
                                     <?= Html::encode($this->title) ?>
                                 </h1>
-                                <p class="bg-warning">Добавление товара</p>
+                                <p class="bg-warning">Добавление товара. Обязательные поля: название товара, категория, описание товара, картинка №1.</p>
                             </header>
 
                             <div class="goods-container">	
@@ -142,7 +143,7 @@ use yii\widgets\Breadcrumbs;
                                             <h5>Цены и скидки</h5>
                                             <div class="row">
                                                 <div class="col-xs-12">
-                                                    <p class="bg-warning">Цена должна быть указана только в одной валюте!</p>
+                                                    <p class="bg-warning">Цена должна быть указана только в одной из валют! Другие цены должны быть = 0. Если цена товара в рублях - она будет опубликована на сайте. Если цена указана в USD или EUR, то она будет пересчитываться в рубли по текущему курсу. Пользователь в любом случае увидит цены только в рублях</p>
                                                 </div> <!-- end-col -->
                                                 <div class="col-xs-12 col-md-4">                                        
                                                     <?= $form->field($model, 'price_rub', [
@@ -180,6 +181,9 @@ use yii\widgets\Breadcrumbs;
                                                         ]
                                                     ])->label($model->getAttributeLabel('price_eur')) ?>
                                                 </div> <!-- end-col -->
+                                                <div class="col-xs-12">
+                                                    <p class="bg-warning">Если на товар действует скидка - укажите размер скидки в %. Если влючена опция "Хит-продаж" - товар будет показан в соответствующем блоке на сайте</p>
+                                                </div> <!-- end-col -->
                                                 <div class="col-xs-12 col-md-4">                                                           
                                                     <?= $form->field($model, 'discount', [
                                                         'template' => '{label}{input}{error}',
@@ -208,6 +212,7 @@ use yii\widgets\Breadcrumbs;
                                     <div class="col-xs-12">
                                         <div class="dashboard-block" tab="2">
                                             <h5>Картинки товара</h5>
+                                            <p class="bg-warning">Загрузите изображения товара. Картинка №1 должна быть загружена обязательно</p>
                                             <div class="row" style="padding: 1em;">
                                                 <div class="goods-image-block col-sm-6 col-md-3">
                                                     <?= Html::img(
@@ -327,7 +332,14 @@ use yii\widgets\Breadcrumbs;
 
                                     <div class="col-xs-12">
                                         <div class="dashboard-block" tab="1">
-                                            <?= $form->field($model, 'text')->textArea([
+                                            <?= $form->field($model, 'text')->widget(
+                                                CKEditor::className(),
+                                                [
+                                                'editorOptions' => [
+                                                    'preset' => 'standard', // basic, standard, full
+                                                    'inline' => false,      //по умолчанию false
+                                                ],
+                                                ])->textArea([
                                                 'template' => '{label}{input}{error}',
                                                 'maxlength' => true,
                                                 'autofocus' => 'autofocus',
@@ -355,6 +367,8 @@ use yii\widgets\Breadcrumbs;
 
                                     <div class="col-xs-12">
                                         <div class="dashboard-block" tab="4">
+                                            <h5>Характеристики товара</h5>
+                                            <p class="bg-warning">Технические характеристики товара: бренд, модель, гарантия, преимущества и т.д.</p>
                                             <div class="row">
                                                 <div class="col-sm-3">
                                                     <?= $form->field($model, 'brand', [
@@ -401,7 +415,14 @@ use yii\widgets\Breadcrumbs;
                                                     ])->label($model->getAttributeLabel('garantee')) ?>
                                                 </div>
                                             </div>
-                                            <?= $form->field($model, 'properties')->textArea([
+                                            <?= $form->field($model, 'properties')->widget(
+                                                CKEditor::className(),
+                                                [
+                                                'editorOptions' => [
+                                                    'preset' => 'standard', // basic, standard, full
+                                                    'inline' => false,      //по умолчанию false
+                                                ],
+                                                ])->textArea([
                                                 'template' => '{label}{input}{error}',
                                                 'maxlength' => true,
                                                 'autofocus' => 'autofocus',
@@ -411,7 +432,14 @@ use yii\widgets\Breadcrumbs;
                                                 'class'=>'form-control',
                                             ])->label($model->getAttributeLabel('properties')) ?>
                                             
-                                            <?= $form->field($model, 'abilities')->textArea([
+                                            <?= $form->field($model, 'abilities')->widget(
+                                                CKEditor::className(),
+                                                [
+                                                'editorOptions' => [
+                                                    'preset' => 'standard', // basic, standard, full
+                                                    'inline' => false,      //по умолчанию false
+                                                ],
+                                                ])->textArea([
                                                 'template' => '{label}{input}{error}',
                                                 'maxlength' => true,
                                                 'autofocus' => 'autofocus',
@@ -421,7 +449,14 @@ use yii\widgets\Breadcrumbs;
                                                 'class'=>'form-control',
                                             ])->label($model->getAttributeLabel('abilities')) ?>
 
-                                            <?= $form->field($model, 'advantages')->textArea([
+                                            <?= $form->field($model, 'advantages')->widget(
+                                                CKEditor::className(),
+                                                [
+                                                'editorOptions' => [
+                                                    'preset' => 'standard', // basic, standard, full
+                                                    'inline' => false,      //по умолчанию false
+                                                ],
+                                                ])->textArea([
                                                 'template' => '{label}{input}{error}',
                                                 'maxlength' => true,
                                                 'autofocus' => 'autofocus',
@@ -432,10 +467,43 @@ use yii\widgets\Breadcrumbs;
                                             ])->label($model->getAttributeLabel('advantages')) ?>
                                         </div> <!-- end dashboard-block -->
                                     </div>	<!-- end col -->
+                                    
+                                    <div class="col-xs-12">
+                                        <div class="dashboard-block" tab="5">
+                                            <h5>Прикрепить файлы</h5>
+                                            <p class="bg-warning">Загрузите файлы в формате pdf (презентации, руководства и т.д.) - до 4 шт.</p>
+                                        </div> <!-- end dashboard-block -->
+                                    </div>	<!-- end col -->
+
+                                    <div class="col-xs-12">
+                                        <div class="dashboard-block" tab="6">
+                                            <h5>SEO</h5>
+                                            <p class="bg-warning">МЕТА-теги keywords и description - важная информация для поисковых систем и продвижения. Ключевые слова формируются автоматически при заполнении полей "Тип" и "Модель". Description - это краткое описание страницы, обычно оно совпадает с первым абзацем описания товара. Максимальная длина keywords и description - 255 символов</p>
+                                            <?= $form->field($model, 'keywords', [
+                                                'template' => '{label}{input}{error}',
+                                                'inputOptions' => [
+                                                'autofocus' => 'autofocus',
+                                                'tabindex' => '21',
+                                                'placeholder' => $model->getAttributeLabel('keywords'),
+                                                'class'=>'form-control',
+                                                ]
+                                            ])->label($model->getAttributeLabel('keywords')) ?>
+                                            <?= $form->field($model, 'description')->textArea([
+                                                'template' => '{label}{input}{error}',
+                                                'maxlength' => true,
+                                                'autofocus' => 'autofocus',
+                                                'tabindex' => '22',
+                                                'rows' => '5', 
+                                                'placeholder' => $model->getAttributeLabel('description'),
+                                                'class'=>'form-control',
+                                            ])->label($model->getAttributeLabel('description')) ?>
+                                        </div> <!-- end dashboard-block -->
+                                    </div>	<!-- end col -->
 
                                     <div class="col-xs-12 btn-block">
                                             <hr>
                                             <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
+                                            <?= Html::a('Отмена', '@web/admin/goods', ['class' => 'btn btn-default']) ?>
                                     </div>  <!-- end col -->
                                 <?php ActiveForm::end(); ?>
 

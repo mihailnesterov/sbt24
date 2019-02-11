@@ -537,11 +537,9 @@
         });
 
         // admin/banners/category: load image on banner '#banner-image' click
-        //$(function () {
-            $('#input-load-image').change(function() {
-                previewImage('banner-image','input-load-image','input-image-file');
-            });
-        //});
+        $('#input-load-image').change(function() {
+            previewImage('banner-image','input-load-image','input-image-file');
+        });
 
         // admin/banners: select help text on change
         $('#select-banner-position').change(function() {          
@@ -570,9 +568,28 @@
             $('#position-comment').html( text );
         });
 
-        
+        // admin/banners: select banner position on DOM load
         $(function () {
             $('#select-banner-position').change();
+        });
+
+        // admin/goods-add: load image on button '#btn-load-photo1' click
+        $(function () {
+            $('#btn-load-photo1').click(function() {
+                imgLoad('input-load-photo-1');
+            });
+        });
+
+        // admin/banners: load image on '#goods-image-1' click
+        $(function () {
+            $('#goods-image-1').click(function() {
+                imgLoad('input-load-photo-1');
+            });
+        });
+
+        // admin/banners/category: load photo1 on '#goods-image-1' click
+        $('#input-load-photo-1').change(function() {
+            previewImage('goods-image-1','input-load-photo-1','input-image-photo-1');
         });
 
         /*$('.goods-view-block').find('form').on('beforeValidate', function(event) {

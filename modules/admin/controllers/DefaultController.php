@@ -189,21 +189,38 @@ class DefaultController extends Controller
 
         $model = new Tovar();
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {            
-            
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->save()) {
+                // добавляем 4 картинки товара, если они не null
+                $model->photoFile1 = UploadedFile::getInstance($model, 'photoFile1');
+                if ($model->photoFile1 != null) {
+                    $model->upload($model->photoFile1, $model->photo1);
+                }
+                $model->photoFile2 = UploadedFile::getInstance($model, 'photoFile2');
+                if ($model->photoFile2 != null) {
+                    $model->upload($model->photoFile2, $model->photo2);
+                }
+                $model->photoFile3 = UploadedFile::getInstance($model, 'photoFile3');
+                if ($model->photoFile3 != null) {
+                    $model->upload($model->photoFile3, $model->photo3);
+                }
+                $model->photoFile4 = UploadedFile::getInstance($model, 'photoFile4');
+                if ($model->photoFile4 != null) {
+                    $model->upload($model->photoFile4, $model->photo4);
+                }
+
                 Yii::$app->view->registerJs(
                 "
                     $.gritter.add({
                             title: 'Товар добавлен:',
                             text: '".$model->name."',
-                            image: 'images/image.png',
+                            image: '".$model->photo1."',
                             sticky: false,
                             time: '3000'
                         });
                     "
                 );
-                //return $this->redirect(Yii::$app->urlManager->createUrl('/admin/goods'));
+                return $this->redirect(Yii::$app->urlManager->createUrl('/admin/goods'));
             }
         }
 
@@ -228,7 +245,6 @@ class DefaultController extends Controller
 
         $this->view->title = 'Добавить товар';
         $this->view->params['breadcrumbs'][] = $this->view->title;
-        
 
         return $this->render('goods-add', [
             'model' => $model,

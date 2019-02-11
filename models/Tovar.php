@@ -83,10 +83,10 @@ class Tovar extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'id товара',
-            'category_id' => 'id категории',
+            'category_id' => 'Категория',
             'name' => 'Название товара',
-            'keywords' => 'Ключевые слова',
-            'description' => 'Мета-описание',
+            'keywords' => 'Ключевые слова (keywords)',
+            'description' => 'Описание (description)',
             'text' => 'Описание товара',
             'price_rub' => 'Цена, РУБ',
             'price_usd' => 'Цена, USD',
