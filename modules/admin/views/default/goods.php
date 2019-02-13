@@ -151,7 +151,7 @@ use yii\widgets\Breadcrumbs;
                                                                     ) ?>
                                                                 </div>
                                                                 <div class="tovar-price-rub col-xs-2 text-center">
-                                                                    <?= $good->price_rub ?>
+                                                                    <?= $good->price_rub ?>                                      
                                                                 </div>
                                                                 <div class="tovar-price-usd col-xs-1 text-center">
                                                                     <?= $good->price_usd ?>

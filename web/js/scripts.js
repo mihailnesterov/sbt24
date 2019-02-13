@@ -348,7 +348,8 @@
                 var eur = parseFloat($(this).find('.tovar-price-eur').html()) * parseFloat(cursEur);
                 
                 if(rub == 0) {
-                    $(this).find('.tovar-price-rub').html(parseFloat(rub) + parseFloat(usd) + parseFloat(eur));
+                    var rubFixed = parseFloat(rub) + parseFloat(usd) + parseFloat(eur);
+                    $(this).find('.tovar-price-rub').html(parseFloat(rubFixed).toFixed(2));
                 }
             });
         });
