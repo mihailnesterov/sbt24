@@ -502,8 +502,8 @@ use yii\widgets\Breadcrumbs;
 
                                     <div class="col-xs-12 btn-block">
                                             <hr>
+                                            <?= Html::a('<i class="fa fa-arrow-left"></i>  Вернуться в список товаров', '@web/admin/goods', ['class' => 'btn btn-default']) ?>
                                             <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
-                                            <?= Html::a('Отмена', '@web/admin/goods', ['class' => 'btn btn-default']) ?>
                                     </div>  <!-- end col -->
                                 <?php ActiveForm::end(); ?>
 

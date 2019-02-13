@@ -316,6 +316,20 @@ class DefaultController extends Controller
             'catItems' => $catItems,
         ]);
     }
+
+    /**
+     * Deletes an existing goods model.
+     * If deletion is successful, the browser will be redirected to the '/admin/goods' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionDeleteGoods($id)
+    {
+        $this->findGoodsModel($id)->delete();
+
+        return $this->redirect(['/admin/goods']);
+    }
     
     /**
      * Renders the categories view for the module
