@@ -138,16 +138,31 @@ use yii\widgets\Breadcrumbs;
                                                                     <?= $tovarCounter ?>
                                                                 </div>
                                                                 <div class="tovar-name-block col-xs-7 text-left">
-                                                                    <?= Html::img(
-                                                                        '@web/images/goods/'.$good->photo1, 
-                                                                        [
-                                                                            'alt' => $good->name,
-                                                                            'class' => 'img-responsive',
-                                                                        ]
+                                                                    
+                                                                    <?= Html::a(
+                                                                        Html::img(
+                                                                            '@web/images/goods/'.$good->photo1, 
+                                                                            [
+                                                                                'alt' => $good->name,
+                                                                                'class' => 'img-responsive',
+                                                                            ]
+                                                                        ), 
+                                                                        ['../admin/goods-edit', 'id' => $good->id],
+                                                                        ['class' => 'tovar-img']
                                                                     ) ?>
                                                                     <?= Html::a(
                                                                         $good->name, 
-                                                                        ['../admin/goods-edit', 'id' => $good->id,]
+                                                                        ['../admin/goods-edit', 'id' => $good->id],
+                                                                        ['class' => 'tovar-link']
+                                                                    ) ?>
+                                                                    <?= Html::a('<i class="fa fa-close fa-2x" title="Удалить '.$good->name.'"></i>', ['/admin/delete-goods', 'id' => $good->id], [
+                                                                            'class' => 'tovar-delete',
+                                                                            'title' => 'Удалить "'.$good->name.'"',
+                                                                            'data' => [
+                                                                                    'confirm' => 'Удалить "'.$good->name.'"?',
+                                                                                    'method' => 'post',
+                                                                                ],
+                                                                            ]
                                                                     ) ?>
                                                                 </div>
                                                                 <div class="tovar-price-rub col-xs-2 text-center">

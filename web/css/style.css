@@ -1217,18 +1217,35 @@ footer .footer-block ul li i {
 .dashboard .dashboard-block .tovar-block div {
 	padding: 0.1em;
 }
-.dashboard .dashboard-block .tovar-head .tovar-name-block img,
-.dashboard .dashboard-block .tovar-block .tovar-name-block img {
+.dashboard .dashboard-block .tovar-head .tovar-name-block .tovar-img,
+.dashboard .dashboard-block .tovar-block .tovar-name-block .tovar-img {
 	display: inline-block; 
 	vertical-align: middle; 
 	width: 13%;
 	padding: 0 0.7em 0.2em 0;
 }
-.dashboard .dashboard-block .tovar-head .tovar-name-block a,
-.dashboard .dashboard-block .tovar-block .tovar-name-block a {
+.dashboard .dashboard-block .tovar-head .tovar-name-block .tovar-img:hover,
+.dashboard .dashboard-block .tovar-block .tovar-name-block .tovar-img:hover {
+	opacity: 0.7;
+}
+.dashboard .dashboard-block .tovar-head .tovar-name-block .tovar-link,
+.dashboard .dashboard-block .tovar-block .tovar-name-block .tovar-link {
 	display: inline-block; 
 	vertical-align: middle; 
-	width: 85%;
+	width: 77%;
+}
+.dashboard .dashboard-block .tovar-head .tovar-name-block .tovar-delete,
+.dashboard .dashboard-block .tovar-block .tovar-name-block .tovar-delete {
+	display: inline-block; 
+	vertical-align: middle; 
+	width: 7%;
+	text-align: right;
+	color: #D9534F;
+	cursor: pointer;
+}
+.dashboard .dashboard-block .tovar-head .tovar-name-block .tovar-delete:hover,
+.dashboard .dashboard-block .tovar-block .tovar-name-block .tovar-delete:hover {
+	opacity: 0.7;
 }
 .dashboard .dashboard-block .tovar-head .tovar-counter,
 .dashboard .dashboard-block .tovar-block .tovar-counter {
