@@ -625,6 +625,17 @@ a:hover {
 .goods-container .goods-view-block a img:hover{
 	opacity: 0.7;
 }
+.goods-container .goods-block .img-goods-discount {
+	object-fit: cover;
+	width: 100%;
+	max-height: 250px;
+	padding: 0.5em 1.5em;
+}
+.goods-container .goods-block a img:hover,
+.goods-container .goods-list-block a img:hover,
+.goods-container .goods-view-block a img:hover{
+	opacity: 0.7;
+}
 
 .goods-container .goods-block h4 {
 	margin: 0.8em 0;

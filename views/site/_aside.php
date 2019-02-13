@@ -111,7 +111,7 @@ $bannersPos4 = Yii::$app->controller->getAsideBanners('bannersPos4');
                                 }
                             ?>
                             <div class="goods-block">
-                                    <?= Html::a('<img src="images/tovar2.jpg" alt="'.$tovar->name.'" class="img-responsive">', [Yii::$app->homeUrl.'../view?id='.$tovar->id]) ?>
+                                    <?= Html::a('<img src="images/goods/'.$tovar->photo1.'" alt="'.$tovar->name.'" class="img-responsive img-goods-discount">', [Yii::$app->homeUrl.'../view?id='.$tovar->id]) ?>
                                     <h4><?= $tovar->name ?></h4>
                                     <p class="goods-price"><s><?= $old_price ?></s> <span><?= $price ?></span> &#8381;</p>
                                     <?= Html::a('Купить со скидкой '.$tovar->discount.'%', [Yii::$app->homeUrl.'../view?id='.$tovar->id], ['class' => 'goods-buy']) ?>

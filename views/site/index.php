@@ -83,7 +83,7 @@ use yii\widgets\Breadcrumbs;
                                                                     }
                                                                     echo '<div class="col-sm-12 col-lg-4">'
                                                                         . '<div class="goods-block">'
-                                                                        . Html::a('<img src="images/tovar2.jpg" alt="'.$new->model.'" class="img-responsive">', [Yii::$app->homeUrl.'../view?id='.$new->id])
+                                                                        . Html::a('<img src="images/goods/'.$new->photo1.'" alt="'.$new->model.'" class="img-responsive">', [Yii::$app->homeUrl.'../view?id='.$new->id])
                                                                         . '<h4>'.$new->name.'</h4>'
                                                                         . '<p class="goods-price"><span>'.$price.'</span> &#8381;</p>'
                                                                         . Html::button('<i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину', ['class' => 'goods-buy buy-from-preview'])
@@ -132,7 +132,7 @@ use yii\widgets\Breadcrumbs;
                                                                         }
                                                                         echo '<div class="col-sm-12 col-lg-4">'
                                                                             . '<div class="goods-block">'
-                                                                            . Html::a('<img src="images/tovar2.jpg" alt="'.$hit->model.'" class="img-responsive">', [Yii::$app->homeUrl.'../view?id='.$hit->id])
+                                                                            . Html::a('<img src="images/goods/'.$hit->photo1.'" alt="'.$hit->model.'" class="img-responsive">', [Yii::$app->homeUrl.'../view?id='.$hit->id])
                                                                             . '<h4>'.$hit->name.'</h4>'
                                                                             . '<p class="goods-price"><span>'.$price.'</span> &#8381;</p>'
                                                                             . Html::button('<i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину', ['class' => 'goods-buy buy-from-preview'])
