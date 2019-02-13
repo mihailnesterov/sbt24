@@ -77,7 +77,7 @@ use yii\widgets\Breadcrumbs;
                                                             .$item->id        
                                                             .'</td>'
                                                             .'<td class="text-center">'
-                                                            .Html::a('<img src="images/tovar1.jpg" alt="" class="img-responsive">', [\Yii::$app->urlManager->createUrl('../view?id='.$tovar->id)])
+                                                            .Html::a('<img src="images/goods/'.$tovar->photo1.'" alt="" class="img-responsive">', [\Yii::$app->urlManager->createUrl('../view?id='.$tovar->id)])
                                                             .'</td>'
                                                             .'<td>'
                                                             .Html::a($tovar->name, [\Yii::$app->urlManager->createUrl('../view?id='.$tovar->id)], ['class' => 'name-cart-item'])

@@ -139,7 +139,7 @@ use yii\widgets\Breadcrumbs;
                                                         echo '<div class="goods-list-block">'
                                                             .'<div class="row">'
                                                             .'<div class="col-md-4 col-lg-3">'
-                                                            .'<a href="'.Yii::$app->urlManager->createUrl(Yii::$app->homeUrl.'../view?id='.$good->id).'"><img src="images/tovar1.jpg" alt="" class="img-responsive"></a>'
+                                                            .'<a href="'.Yii::$app->urlManager->createUrl(Yii::$app->homeUrl.'../view?id='.$good->id).'"><img src="images/goods/'.$good->photo1.'" alt="" class="img-responsive"></a>'
                                                             .$hit
                                                             .$discount
                                                             .'</div>  <!-- end col -->'

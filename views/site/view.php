@@ -48,7 +48,7 @@ use yii\widgets\Breadcrumbs;
                                                 <div class="row">
                                                     <div class="goods-view-block">
                                                             <div class="goods-view-img-block col-md-4 col-lg-4">
-                                                                <img src="images/tovar1.jpg" alt="" class="img-responsive">
+                                                                <img src="images/goods/<?= $model->photo1 ?>" alt="<?= $model->name ?>" class="img-responsive">
                                                                 <?= $hit ?>
                                                                 <?= $discount ?>
                                                             </div>  <!-- end col -->
@@ -191,7 +191,7 @@ use yii\widgets\Breadcrumbs;
                                                                     </div>  <!-- end col -->
                                                                     <div class="goods-view-img-block col-sm-4">
                                                                         
-                                                                        <?= Html::a('<img src="images/tovar1.jpg" alt="" class="img-responsive">', Yii::$app->urlManager->createUrl(['view?id='.$tovar->id])) ?>
+                                                                        <?= Html::a('<img src="images/goods/'.$tovar->photo1.'" alt="" class="img-responsive">', Yii::$app->urlManager->createUrl(['view?id='.$tovar->id])) ?>
                                                                         <?= $discount_other ?>
                                                                     </div>  <!-- end col -->
                                                                 </div> 
