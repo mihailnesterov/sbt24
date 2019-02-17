@@ -399,8 +399,17 @@ use yii\widgets\Breadcrumbs;
                                                         'tabindex' => '10',
                                                         'placeholder' => $model->getAttributeLabel('brand'),
                                                         'class'=>'form-control',
+                                                        'id' => 'brand-field',
                                                         ]
                                                     ])->label($model->getAttributeLabel('brand')) ?>
+                                                    <span class="dropdown">
+                                                        <a id="brand-menu-link" class="hidden" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-arrow-down"></i></a>
+                                                        <ul id="brand-dropdown-menu" class="dropdown-menu" aria-labelledby="brand-menu-link">
+                                                            <?php foreach ($brands as $brand):?>
+                                                                <li><?= $brand->brand ?></li>
+                                                            <?php endforeach; ?>
+                                                        </ul>
+                                                    </span>
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <?= $form->field($model, 'type', [
@@ -410,8 +419,17 @@ use yii\widgets\Breadcrumbs;
                                                         'tabindex' => '11',
                                                         'placeholder' => $model->getAttributeLabel('type'),
                                                         'class'=>'form-control',
+                                                        'id' => 'type-field',
                                                         ]
                                                     ])->label($model->getAttributeLabel('type')) ?>
+                                                    <span class="dropdown">
+                                                        <a id="type-menu-link" class="hidden" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-arrow-down"></i></a>
+                                                        <ul id="type-dropdown-menu" class="dropdown-menu" aria-labelledby="type-menu-link">
+                                                            <?php foreach ($types as $type):?>
+                                                                <li><?= $type->type ?></li>
+                                                            <?php endforeach; ?>
+                                                        </ul>
+                                                    </span>
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <?= $form->field($model, 'model', [

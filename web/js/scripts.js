@@ -311,9 +311,9 @@
 
 
         // admin/category: delete category
-        $('.admin-categories-list').on('click', '.fa-close', function () { 
+        /*$('.admin-categories-list').on('click', '.fa-close', function () { 
             alert($(this.parentNode).text());
-        });
+        });*/
 
         // admin/goods: category filter block
         $('.category-filter-block').find('.btn-group a').click(function () {
@@ -490,7 +490,24 @@
                 $('.goods-pagination-block').find('.btn-group .active').click();
             });
         });
-        
+
+        // admin/goods-edit-add: dropdown menu for brands
+        $('#brand-field').click(function () {
+            $("#brand-dropdown-menu").toggle();
+        });
+        $('#brand-dropdown-menu').find('li').click(function () {
+            $('#brand-field').val($(this).html());
+            $(this.parentNode).toggle();
+        });
+
+        // admin/goods-edit-add: dropdown menu for types
+        $('#type-field').click(function () {
+            $("#type-dropdown-menu").toggle();
+        });
+        $('#type-dropdown-menu').find('li').click(function () {
+            $('#type-field').val($(this).html());
+            $(this.parentNode).toggle();
+        });
 
         // admin: image click delegation on id
         function imgLoad(id){
@@ -620,45 +637,59 @@
             previewImage('goods-image-4','input-load-photo-4','input-image-photo-4');
         });
 
-        /*$('.goods-view-block').find('form').on('beforeValidate', function(event) {
-            alert('beforeValidate');
-            event.preventDefault();
-            $('#cart-price').html(
-                            parseInt($('#cart-price').html()) + parseInt($(this.parentNode).find('span').html())
-                    );
-            $('#cart-quantity').html(parseInt($('#cart-quantity').html()) + 1);
-            Cookies.set('cart-price', parseInt($('#cart-price').html()), { expires: 10 });
-            Cookies.set('cart-quantity', parseInt($('#cart-quantity').html()), { expires: 10 });
-            $.gritter.add({
-                title: 'Товар добавлен:',
-                text: $('h1').html(),
-                image: $(this.parentNode.parentNode.parentNode).find('img').attr('src'),
-                sticky: false,
-                position: 'top-right',
-                time: '2000'
+        // translit rus-to-eng
+        function translit(input){
+            // Символ, на который будут заменяться все спецсимволы
+            var space = '-';
+            // Берем значение из нужного поля и переводим в нижний регистр
+            var text = input.val().toLowerCase();
+                
+            // Массив для транслитерации
+            var transl = {
+            'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'e', 'ж': 'zh',
+            'з': 'z', 'и': 'i', 'й': 'j', 'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n',
+            'о': 'o', 'п': 'p', 'р': 'r','с': 's', 'т': 't', 'у': 'u', 'ф': 'f', 'х': 'h',
+            'ц': 'c', 'ч': 'ch', 'ш': 'sh', 'щ': 'sh','ъ': space, 'ы': 'y', 'ь': space, 'э': 'e', 'ю': 'yu', 'я': 'ya',
+            ' ': space, '_': space, '`': space, '~': space, '!': space, '@': space,
+            '#': space, '$': space, '%': space, '^': space, '&': space, '*': space,
+            '(': space, ')': space,'-': space, '\=': space, '+': space, '[': space,
+            ']': space, '\\': space, '|': space, '/': space,'.': space, ',': space,
+            '{': space, '}': space, '\'': space, '"': space, ';': space, ':': space,
+            '?': space, '<': space, '>': space, '№':space
+            }
+                           
+            var result = '';
+            var curent_sim = '';
+                           
+            for(i=0; i < text.length; i++) {
+                // Если символ найден в массиве то меняем его
+                if(transl[text[i]] != undefined) {
+                     if(curent_sim != transl[text[i]] || curent_sim != space){
+                         result += transl[text[i]];
+                         curent_sim = transl[text[i]];
+                                                                    }                                                                            
+                }
+                // Если нет, то оставляем так как есть
+                else {
+                    result += text[i];
+                    curent_sim = text[i];
+                }                             
+            }         
+                           
+            result = TrimStr(result);              
+                           
+            // Выводим результат
+            //$('#alias').val(result);
+            return result;
+               
+            }
+            function TrimStr(s) {
+                s = s.replace(/^-/, '');
+                return s.replace(/-$/, '');
+            }
+            
+            // admin/category-add-edit translint link from name
+            $('#input-category-name').keyup( function() {
+                $('#input-category-link').val(translit($(this)));
+                $('#input-category-title').val($(this).val());
             });
-            return false;
-        });*/
-        
-        /*$('.goods-view-block').find('form').on('submit', function(event) {
-            event.preventDefault();
-            alert($(this).html());
-            $('#cart-price').html(
-                            parseInt($('#cart-price').html()) + parseInt($(this.parentNode).find('span').html())
-                    );
-            $('#cart-quantity').html(parseInt($('#cart-quantity').html()) + 1);
-            Cookies.set('cart-price', parseInt($('#cart-price').html()), { expires: 10 });
-            Cookies.set('cart-quantity', parseInt($('#cart-quantity').html()), { expires: 10 });
-            $.gritter.add({
-                title: 'Товар добавлен:',
-                text: $('h1').html(),
-                image: $(this.parentNode.parentNode.parentNode).find('img').attr('src'),
-                sticky: false,
-                position: 'top-right',
-                time: '2000'
-            });
-            $('.goods-view-block').find('form').reset();
-            $.pjax.reload({container: $(this)});
-            return true;
-        });*/
-        

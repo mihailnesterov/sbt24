@@ -47,7 +47,10 @@ use yii\widgets\Breadcrumbs;
                                                     <p class="bg-warning">Добавление, редактирование, удаление категорий. Нельзя удалить непустую категорию. Сначала удалите или перенесите из нее товары в другие категории.</p>
                                                 </header>
 
-                                                <div class="goods-container">	
+                                                <div class="goods-container">
+                                                        
+                                                    <?= Html::a('<i class="fa fa-plus"></i> Добавить категорию', Yii::$app->urlManager->createUrl(['/admin/category-add']), ['class' => 'btn btn-success']) ?>
+                                                
                                                     <div class="admin-categories-list">    
                                                         <ul class="category-level-0">
                                                         <?php foreach ($model as $key => $cat): 
@@ -65,7 +68,6 @@ use yii\widgets\Breadcrumbs;
                                                                     <a href="#" class="has-subcat"><?= $cat->name ?> (<?= $count ?>)</a>
                                                                 </span>
                                                                 <span class="i-block text-right">
-                                                                    <!--<i class="fa fa-close hidden" title="Удалить"></i> -->
                                                                     <?= Html::a('<i class="fa fa-pencil" title="Редактировать"></i>', ['/admin/edit-category?id='.$cat->id]) ?>
                                                                 </span>
                                                             </li>
@@ -80,7 +82,21 @@ use yii\widgets\Breadcrumbs;
                                                                                     <?= $sub->name ?> (<?= $count ?>) 
                                                                                 </span>
                                                                                 <span class="i-block text-right">
-                                                                                    <i class="fa fa-close" title="Удалить"></i>
+                                                                                    <!--<i class="fa fa-close" title="Удалить"></i>-->
+                                                                                    <?= Html::a(
+                                                                                        '<i class="fa fa-close"></i>', 
+                                                                                        [
+                                                                                            '/admin/delete-category', 
+                                                                                            'id' => $sub->id
+                                                                                        ], 
+                                                                                        [
+                                                                                            'title' => 'Удалить',
+                                                                                            'data' => [
+                                                                                                'confirm' => 'Удалить категорию "'.$sub->name.'"?',
+                                                                                                'method' => 'post',
+                                                                                                ],
+                                                                                        ]
+                                                                                    ) ?>
                                                                                     <?= Html::a('<i class="fa fa-pencil" title="Редактировать"></i>', ['/admin/edit-category?id='.$sub->id]) ?>
                                                                                 </span>
                                                                             </li>
@@ -91,7 +107,6 @@ use yii\widgets\Breadcrumbs;
                                                                                     <?= $sub->name ?> (<?= $count ?>) 
                                                                                 </span>
                                                                                 <span class="i-block text-right">
-                                                                                    <!--<i class="fa fa-close hidden" title="Удалить"></i>-->
                                                                                     <?= Html::a('<i class="fa fa-pencil" title="Редактировать"></i>', ['/admin/edit-category?id='.$sub->id]) ?>
                                                                                 </span>
                                                                             </li>
@@ -105,7 +120,20 @@ use yii\widgets\Breadcrumbs;
                                                                         <?= $cat->name ?> (<?= $count ?>) 
                                                                     </span>
                                                                     <span class="i-block text-right">
-                                                                        <i class="fa fa-close" title="Удалить"></i> 
+                                                                        <?= Html::a(
+                                                                            '<i class="fa fa-close"></i>', 
+                                                                            [
+                                                                                '/admin/delete-category', 
+                                                                                'id' => $cat->id
+                                                                            ], 
+                                                                            [
+                                                                                'title' => 'Удалить',
+                                                                                'data' => [
+                                                                                    'confirm' => 'Удалить категорию "'.$cat->name.'"?',
+                                                                                    'method' => 'post',
+                                                                                    ],
+                                                                            ]
+                                                                        ) ?>
                                                                         <?= Html::a('<i class="fa fa-pencil" title="Редактировать"></i>', ['/admin/edit-category?id='.$cat->id]) ?>
                                                                     </span>
                                                                 </li>

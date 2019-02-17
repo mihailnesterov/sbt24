@@ -56,6 +56,7 @@ use yii\widgets\Breadcrumbs;
                                                             'tabindex' => '1',
                                                             'placeholder' => $model->getAttributeLabel('name'),
                                                             'class'=>'form-control',
+                                                            'id' => 'input-category-name'
                                                             ]
                                                     ])->label($model->getAttributeLabel('name')) ?>
                                                     
@@ -115,6 +116,7 @@ use yii\widgets\Breadcrumbs;
                                                         'tabindex' => '3',
                                                         'placeholder' => $model->getAttributeLabel('link'),
                                                         'class'=>'form-control',
+                                                        'id' => 'input-category-link'
                                                         ]
                                                 ])->label($model->getAttributeLabel('link')) ?>
                                                 
@@ -133,6 +135,7 @@ use yii\widgets\Breadcrumbs;
                                                                 'tabindex' => '4',
                                                                 'placeholder' => $model->getAttributeLabel('title'),
                                                                 'class'=>'form-control',
+                                                                'id' => 'input-category-title'
                                                                 ]
                                                         ])->label($model->getAttributeLabel('title')) ?>
 
@@ -164,7 +167,7 @@ use yii\widgets\Breadcrumbs;
                                             <div class="col-xs-12 btn-block">
                                                     <hr>
                                                     <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
-                                                    <?php if($tovarCount == 0): ?>
+                                                    <?php if($tovarCount == 0 && $subTovarCount == 0): ?>
                                                     <?= Html::a('Удалить', ['/admin/delete-category', 'id' => $model->id], [
                                                             'class' => 'btn btn-danger',
                                                             'title' => 'Удалить',

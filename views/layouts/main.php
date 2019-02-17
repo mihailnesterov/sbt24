@@ -77,23 +77,6 @@
                                         <div id="schedule-block" class="col-md-4 text-left">
                                             <p>USD = <?= $currencies['USD'] ?></p>
                                             <p>EUR = <?= $currencies['EUR'] ?></p>
-                                            <p>
-                                                <?php
-                                                    //if(Yii::$app->request->cookies->has('sbt24client'))
-                                                    //echo 'Client = '.Yii::$app->getRequest()->getCookies()->getValue('sbt24client');
-                                                ?>
-                                            </p>
-                                            <p>
-                                                <?php
-                                                    //if(Yii::$app->request->cookies->has('sbt24order'))
-                                                    //echo 'Order = '.Yii::$app->getRequest()->getCookies()->getValue('sbt24order');
-                                                ?>
-                                            </p>
-                                            <p>
-                                                <?php
-                                                    //echo Yii::$app->controller->action->id;
-                                                ?>
-                                            </p>
                                         </div>
                                         <div id="top-phone-block" class="col-md-3">
                                                 <p id="top-phone" class="text-left"><i class="fa fa-phone" aria-hidden="true"></i><?= $company->phone1 ?></p>

@@ -243,12 +243,17 @@ class DefaultController extends Controller
             }
         }*/
 
+        $brands = Tovar::find()->select('brand')->orderby(['brand'=>SORT_ASC])->distinct()->all();
+        $types = Tovar::find()->select('type')->orderby(['type'=>SORT_ASC])->distinct()->all();
+
         $this->view->title = 'Добавить товар';
         $this->view->params['breadcrumbs'][] = $this->view->title;
 
         return $this->render('goods-add', [
             'model' => $model,
             'catItems' => $catItems,
+            'brands' => $brands,
+            'types' => $types,
         ]);
     }
 
@@ -308,12 +313,17 @@ class DefaultController extends Controller
             'Категории:' => ArrayHelper::map($subCategories, 'id', 'name'),
         ];
 
+        $brands = Tovar::find()->select('brand')->orderby(['brand'=>SORT_ASC])->distinct()->all();
+        $types = Tovar::find()->select('type')->orderby(['type'=>SORT_ASC])->distinct()->all();
+
         $this->view->title = 'Редактировать товар';
         $this->view->params['breadcrumbs'][] = $this->view->title.': '.$model->name;
 
         return $this->render('goods-edit', [
             'model' => $model,
             'catItems' => $catItems,
+            'brands' => $brands,
+            'types' => $types,
         ]);
     }
 
@@ -347,6 +357,59 @@ class DefaultController extends Controller
         $model = Category::find()->where(['parent' => 0])->all();
         return $this->render('categories', [
             'model' => $model,
+        ]);
+    }
+
+    /**
+     * Renders the new category view for the module
+     * @return string
+     */
+    public function actionCategoryAdd()
+    {
+         if (Yii::$app->user->isGuest) 
+        {
+            return $this->redirect(Yii::$app->urlManager->createUrl('/admin/login'));
+        }
+        
+        $this->view->title = 'Добавить категорию';
+        $this->view->params['breadcrumbs'][] = ['label' => 'Категории товаров', 'url' => '@web/admin/categories'];
+        $this->view->params['breadcrumbs'][] = $this->view->title;
+        
+        $model = new Category();
+        $categories = Category::find()->where(['parent' => 0])->asArray()->all();
+        $subCategories = Category::find()->where(['>','parent', 0])->asArray()->all();
+
+        $items = [
+            'Категории верхнего уровня' => ArrayHelper::map($categories, 'id', 'name'),
+            'Вложенные категории' => ArrayHelper::map($subCategories, 'id', 'name'),
+        ];
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {            
+            
+            if ($model->save()) {
+                $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+                if ($model->imageFile != null) {
+                    $model->upload($model->imageFile, $model->image);
+                }
+
+                Yii::$app->view->registerJs(
+                "
+                    $.gritter.add({
+                            title: 'Категория добавлена:',
+                            text: 'Категория: ".$model->name."',
+                            image: 'images/image.png',
+                            sticky: false,
+                            time: '3000'
+                        });
+                    "
+                );
+                return $this->redirect(Yii::$app->urlManager->createUrl('/admin/categories'));
+            } 
+        }
+        
+        return $this->render('category-add', [
+            'model' => $model,
+            'items' => $items,
         ]);
     }
 
@@ -400,13 +463,30 @@ class DefaultController extends Controller
         ];
 
         $tovarCount = $model->getTovarCount($model->id);
+        $subTovarCount = $model->getSubTovarCount($model->id);
         
         return $this->render('edit-category', [
             'model' => $model,
             'items' => $items,
             'tovarCount' => $tovarCount,
+            'subTovarCount' => $subTovarCount,
         ]);
     }
+
+    /**
+     * Deletes an existing category model.
+     * If deletion is successful, the browser will be redirected to the '/admin/categories' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionDeleteCategory($id)
+    {
+        $this->findCategoryModel($id)->delete();
+
+        return $this->redirect(['/admin/categories']);
+    }
+
     /**
      * find Category model
      */
