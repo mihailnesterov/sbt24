@@ -62,8 +62,14 @@ use yii\widgets\Breadcrumbs;
                                                                         
                                                                         <p>Картинка баннера</p>
                                                                         <div id="banner-image-block">
+                                                                                <?php
+                                                                                $image = '@web/images/image.png';
+                                                                                if ($model->image){
+                                                                                        $image = '@web/images/banners/'.$model->image;
+                                                                                }
+                                                                                ?>
                                                                                 <?= Html::img(
-                                                                                        '@web/images/banners/'.$model->image, 
+                                                                                        $image, 
                                                                                         [
                                                                                                 'alt' => $model->name,
                                                                                                 'id' => 'banner-image',
