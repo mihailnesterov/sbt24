@@ -418,6 +418,7 @@ use yii\widgets\Breadcrumbs;
                                                         'tabindex' => '12',
                                                         'placeholder' => $model->getAttributeLabel('model'),
                                                         'class'=>'form-control',
+                                                        'id' => 'model-field',
                                                         ]
                                                     ])->label($model->getAttributeLabel('model')) ?>
                                                 </div>
@@ -504,6 +505,7 @@ use yii\widgets\Breadcrumbs;
                                                 'tabindex' => '21',
                                                 'placeholder' => $model->getAttributeLabel('keywords'),
                                                 'class'=>'form-control',
+                                                'id' => 'keywords-field',
                                                 ]
                                             ])->label($model->getAttributeLabel('keywords')) ?>
                                             <?= $form->field($model, 'description')->textArea([

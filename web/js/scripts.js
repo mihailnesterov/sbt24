@@ -693,3 +693,38 @@
                 $('#input-category-link').val(translit($(this)));
                 $('#input-category-title').val($(this).val());
             });
+
+            // admin/goods-add-edit build keywords from type and model
+            $('#type-field').change( function() {
+                var type = $(this).val();
+                var model = $('#model-field').val();
+                var keywords = '';
+                if(type == '' && model == '') {
+                    keywords = '';
+                } else if (type == '' && model != '') {
+                    keywords = model;
+                } else if(type != '' && model == '') {
+                    keywords = type;
+                } else {
+                    keywords = type + ' ' + model;
+                }
+                $('#keywords-field').val(keywords);
+            });
+            $('#model-field').change( function() {
+                var model = $(this).val();
+                var type = $('#type-field').val();
+                var keywords = '';
+                if(model == '' && type == '') {
+                    keywords = '';
+                } else if (model == '' && type != '') {
+                    keywords = type;
+                } else if(model != '' && type == '') {
+                    keywords = model;
+                } else {
+                    keywords = type + ' ' + model;
+                }
+                $('#keywords-field').val(keywords);
+            });
+            $('#type-dropdown-menu').find('li').click(function() {
+                $('#type-field').change();
+            });
