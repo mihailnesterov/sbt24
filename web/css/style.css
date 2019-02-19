@@ -1216,16 +1216,22 @@ footer .footer-block ul li i {
 	border: 1px red solid;
 }*/
 .dashboard .dashboard-block .tovar-head,
-.dashboard .dashboard-block .tovar-block {
+.dashboard .dashboard-block .tovar-block,
+.dashboard .dashboard-block .client-head,
+.dashboard .dashboard-block .client-block {
 	border-bottom: 1px #e9e9e9 solid;
 	padding: 0.8em 0.2em 0.1em 0.2em;	
 }
 .dashboard .dashboard-block .tovar-head:last-child ,
-.dashboard .dashboard-block .tovar-block:last-child {
+.dashboard .dashboard-block .tovar-block:last-child,
+.dashboard .dashboard-block .client-head:last-child ,
+.dashboard .dashboard-block .client-block:last-child {
 	border-bottom: 0;
 }
 .dashboard .dashboard-block .tovar-head div,
-.dashboard .dashboard-block .tovar-block div {
+.dashboard .dashboard-block .tovar-block div,
+.dashboard .dashboard-block .client-head div,
+.dashboard .dashboard-block .client-block div {
 	padding: 0.1em;
 }
 .dashboard .dashboard-block .tovar-head .tovar-name-block .tovar-img,

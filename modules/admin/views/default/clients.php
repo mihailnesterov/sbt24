@@ -44,75 +44,116 @@ use yii\widgets\Breadcrumbs;
                                                         <?= Html::a('<i class="fa fa-arrow-left"></i>', '@web/admin', ['class' => 'go-back-link', 'title' => 'Кабинет']) ?>
                                                         <?= Html::encode($this->title) ?>
                                                     </h1>
-                                                    <p class="bg-warning">Информация о клиентах. Клиент считается тот, кто сделал заказ,. "Гость" - клиент, который добавил товар в корзину, но не сделал заказ </p>
+                                                    <p class="bg-warning">Информация о клиентах. Клиентом считается тот, кто сделал заказ,. "Гость" - клиент, который добавил товар в корзину, но не сделал заказ </p>
                                                 </header>
 
                                                 <div class="goods-container">	
-                                                        <div class="row">
-                                                            <div class="col-sm-12">
+                                                    <div class="dashboard row">
+
+                                                        <div class="col-xs-12 col-sm-4 col-md-2">
+                                                            <div class="dashboard-block">                                                            
+                                                                    <select id="select-pages-count" class="form-control">
+                                                                        <option value="1">1</option>
+                                                                        <option value="2">2</option>
+                                                                        <option value="3">3</option>
+                                                                        <option value="5">5</option>
+                                                                        <option value="10">10</option>
+                                                                        <option value="20" selected>20</option>
+                                                                        <option value="50">50</option>
+                                                                    </select>
+                                                            </div> <!-- end-dashboard-block -->
+                                                        </div> <!-- end-col -->
+
+                                                        <div class="col-xs-12">
+                                                            <div class="dashboard-block">
+                                                                <div class="client-head row">
+                                                                    <div class="col-xs-1 text-center">
+                                                                        <h5>№</h5>
+                                                                    </div>
+                                                                    <div class="col-xs-3 text-center">
+                                                                        <h5>Компания</h5>
+                                                                    </div>
+                                                                    <div class="col-xs-2 text-center">
+                                                                        <h5>Контактное лицо</h5>
+                                                                    </div>
+                                                                    <div class="col-xs-2 text-center">
+                                                                        <h5>Телефон</h5>
+                                                                    </div>
+                                                                    <div class="col-xs-2 text-center">
+                                                                        <h5>Email</h5>
+                                                                    </div>
+                                                                    <div class="col-xs-2 text-center">
+                                                                        <h5>Когда создан</h5>
+                                                                    </div>
+                                                                </div> <!-- end-client-block -->
+
                                                                 <?php $clientsCounter = 1; ?>
-                                                                <table class="table table-bordered table-responsive table-striped">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th class="text-center">
-                                                                                №
-                                                                            </th>
-                                                                            <th class="text-center">
-                                                                                Компания
-                                                                            </th>
-                                                                            <th class="text-center">
-                                                                                Контактное лицо
-                                                                            </th>
-                                                                            <th class="text-center">
-                                                                                Телефон
-                                                                            </th>
-                                                                            <th class="text-center">
-                                                                                Email
-                                                                            </th>
-                                                                            <th class="text-center">
-                                                                                Когда создан
-                                                                            </th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                    <?php foreach ($clients as $key => $client): ?>
-                                                                        <tr>
-                                                                            <td class="text-center" style="vertical-align: middle;">
-                                                                                <?= $clientsCounter ?>
-                                                                            </td>
-                                                                            <td class="text-left" style="vertical-align: middle;">
-                                                                                <?php if($client->company != ''): ?>
-                                                                                    <?= Html::a($client->company, ['../client-view', 'id' => $client->id]) ?>
-                                                                                <?php else: ?>
-                                                                                    <?= Html::a('Гость', ['../client-view', 'id' => $client->id]) ?>
-                                                                                <?php endif ?>
-                                                                            </td>
-                                                                            <td class="text-center" style="vertical-align: middle;">
-                                                                                <?= $client->contact ?>
-                                                                            </td>
-                                                                            <td class="text-center" style="vertical-align: middle;">
-                                                                                <?= $client->phone ?>
-                                                                            </td>
-                                                                            <td class="text-center" style="vertical-align: middle;">
-                                                                                <?= $client->email ?>
-                                                                            </td>
-                                                                            <td class="text-center" style="vertical-align: middle;">
-                                                                                <?php 
-                                                                                    $created = new DateTime($client->created);
-                                                                                ?>
-                                                                                <?= $created->format('d.m.Y') ?>
-                                                                                <br>
-                                                                                <?= $created->format('H:i:s') ?>
-                                                                            </td>
-                                                                        </tr>
+
+                                                                <?php foreach ($clients as $key => $client): ?>
+                                                                    <div class="client-block row" client="<?= $client->id ?>" page="1">
+                                                                        <div class="client-counter col-xs-1 text-center">
+                                                                            <?= $clientsCounter?>
+                                                                        </div>
+                                                                        <div class="client-name-block col-xs-3 text-left">
+                                                                            <?php if($client->company != ''): ?>
+                                                                                <?= Html::a($client->company, ['../admin/client-view', 'id' => $client->id]) ?>
+                                                                            <?php else: ?>
+                                                                                <?= Html::a('Гость', ['../admin/client-view', 'id' => $client->id]) ?>
+                                                                            <?php endif ?>
+                                                                        </div>
+                                                                        <div class="col-xs-2 text-center">
+                                                                            <?= $client->contact ?>                                     
+                                                                        </div>
+                                                                        <div class="col-xs-2 text-center">
+                                                                            <?= $client->phone ?>
+                                                                        </div>
+                                                                        <div class="col-xs-2 text-center">
+                                                                            <?= $client->email ?>
+                                                                        </div>
+                                                                        <div class="col-xs-2 text-center">
+                                                                            <?php 
+                                                                                $created = new DateTime($client->created);
+                                                                            ?>
+                                                                            <?= $created->format('d.m.Y') ?>
+                                                                            <br>
+                                                                            <?= $created->format('H:i:s') ?>
+                                                                        </div>
                                                                         <?php $clientsCounter++; ?>
-                                                                    <?php endforeach ?>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>	<!-- end col -->
-                                                        </div>	<!-- end row -->
+                                                                    </div> <!-- end-client-block -->
+                                                                <?php endforeach ?>
+                                                            </div> <!-- end-dashboard-block -->
+                                                        </div> <!-- end-col -->
+
+                                                        <div class="col-xs-12">
+                                                            <div class="dashboard-block">
+                                                                <div class="category-pagination-block">
+                                                                    <div class="btn-group" data-toggle="buttons">
+                                                                        <!--<?php $pageCounter = 2; ?>
+                                                                        <?= Html::a(
+                                                                            '1', 
+                                                                            ['/admin/clients?page=1'], 
+                                                                            [
+                                                                                'class' => 'btn btn-default active'
+                                                                            ]
+                                                                        )?>
+                                                                        <?php foreach ($clients as $key => $cat): ?>
+                                                                            <?= Html::a(
+                                                                                $pageCounter, 
+                                                                                ['/admin/clients?page='.$pageCounter], 
+                                                                                [
+                                                                                    'class' => 'btn btn-default'
+                                                                                ]
+                                                                            )?>
+                                                                            <?php $pageCounter++; ?>
+                                                                        <?php endforeach ?>-->
+                                                                    </div>
+                                                                </div> <!-- end-clients-filter-block -->
+                                                            </div> <!-- end-dashboard-block -->
+                                                        </div> <!-- end-col -->
+
+                                                    </div>	<!-- end row -->
                                                 </div>	<!-- end goods-container -->
-                                                
+
                                                 <div>
                                                     <?php       
                                                         echo LinkPager::widget([
