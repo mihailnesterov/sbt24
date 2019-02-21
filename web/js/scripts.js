@@ -728,3 +728,30 @@
             $('#type-dropdown-menu').find('li').click(function() {
                 $('#type-field').change();
             });
+        
+        // admin/clients: client-head sort
+        $('.client-head').find('h5').on('click', 'a', function(e) {
+            e.preventDefault();
+            $('.client-head').find('h5').each(function() {
+                $(this).find('i').addClass('hidden');
+            });
+            
+            var i = $(this.parentNode).find('i');
+            
+            if (i.hasClass('hidden')) {
+                i.removeClass('hidden');
+            }
+            
+            function changeClass(i) {
+                if (i.hasClass('fa-arrow-down')) {
+                    i.removeClass('fa-arrow-down').addClass('fa-arrow-up');
+                } else {
+                    i.removeClass('fa-arrow-up').addClass('fa-arrow-down');
+                }
+            }
+            changeClass(i);
+            
+            i.click(function() {
+                changeClass($(this));
+            });
+        });

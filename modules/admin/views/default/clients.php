@@ -50,17 +50,55 @@ use yii\widgets\Breadcrumbs;
                                                 <div class="goods-container">	
                                                     <div class="dashboard row">
 
+                                                        <div class="col-xs-12 col-md-6 col-lg-5 text-left">
+                                                            <div class="dashboard-block" style="min-height: 70px;">
+                                                                <form id="search" class="form-inline">
+                                                                    <div class="input-group col-sm-12">
+                                                                        <input id="search-goods-input" class="form-control" type="text" placeholder="Найти клиента..." aria-label="Поиск...">
+                                                                        <span class="input-group-btn">
+                                                                            <button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                                                        </span>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div> <!-- end-col -->
+                                                        <div class="col-xs-12 col-md-6 col-lg-5 text-left">
+                                                            <div class="dashboard-block" style="min-height: 70px;">
+                                                                <!--<div class="row">
+                                                                    <div class="col-xs-7">
+                                                                        <select id="select-client-sort" class="form-control">
+                                                                            <option value="1" selected>Номер</option>
+                                                                            <option value="2">Компания</option>
+                                                                            <option value="3">Когда создан</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-xs-5">
+                                                                        <div id="btn-client-sort" class="btn-group" data-toggle="buttons">
+                                                                            <?= Html::button(
+                                                                                '<i class="fa fa-arrow-up"></i>',
+                                                                                [
+                                                                                    'class' => 'btn btn-default active'
+                                                                                ]
+                                                                            )?>
+                                                                            <?= Html::button(
+                                                                                '<i class="fa fa-arrow-down"></i>',
+                                                                                [
+                                                                                    'class' => 'btn btn-default'
+                                                                                ]
+                                                                            )?>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>-->
+                                                            </div>
+                                                        </div> <!-- end-col -->
                                                         <div class="col-xs-12 col-sm-4 col-md-2">
-                                                            <div class="dashboard-block">                                                            
-                                                                    <select id="select-pages-count" class="form-control">
-                                                                        <option value="1">1</option>
-                                                                        <option value="2">2</option>
-                                                                        <option value="3">3</option>
-                                                                        <option value="5">5</option>
-                                                                        <option value="10">10</option>
-                                                                        <option value="20" selected>20</option>
-                                                                        <option value="50">50</option>
-                                                                    </select>
+                                                            <div class="dashboard-block" style="min-height: 70px;">                                                            
+                                                                <select id="select-pages-count" class="form-control">
+                                                                    <option value="5">5</option>
+                                                                    <option value="10">10</option>
+                                                                    <option value="20" selected>20</option>
+                                                                    <option value="50">50</option>
+                                                                </select>
                                                             </div> <!-- end-dashboard-block -->
                                                         </div> <!-- end-col -->
 
@@ -68,13 +106,13 @@ use yii\widgets\Breadcrumbs;
                                                             <div class="dashboard-block">
                                                                 <div class="client-head row">
                                                                     <div class="col-xs-1 text-center">
-                                                                        <h5>№</h5>
+                                                                        <h5><a href="#">№</a><i class="fa fa-arrow-down"></i></h5>
                                                                     </div>
                                                                     <div class="col-xs-3 text-center">
-                                                                        <h5>Компания</h5>
+                                                                        <h5><a href="#">Компания</a><i class="fa fa-arrow-down hidden"></i></h5>
                                                                     </div>
                                                                     <div class="col-xs-2 text-center">
-                                                                        <h5>Контактное лицо</h5>
+                                                                        <h5>Контакт</h5>
                                                                     </div>
                                                                     <div class="col-xs-2 text-center">
                                                                         <h5>Телефон</h5>
@@ -83,23 +121,23 @@ use yii\widgets\Breadcrumbs;
                                                                         <h5>Email</h5>
                                                                     </div>
                                                                     <div class="col-xs-2 text-center">
-                                                                        <h5>Когда создан</h5>
+                                                                        <h5><a href="#">Дата</a><i class="fa fa-arrow-down hidden"></i></h5>
                                                                     </div>
                                                                 </div> <!-- end-client-block -->
 
                                                                 <?php $clientsCounter = 1; ?>
 
                                                                 <?php foreach ($clients as $key => $client): ?>
-                                                                    <div class="client-block row" client="<?= $client->id ?>" page="1">
+                                                                    <div class="client-block row" client="<?= $client->id ?>" page="1" style="">
                                                                         <div class="client-counter col-xs-1 text-center">
                                                                             <?= $clientsCounter?>
                                                                         </div>
                                                                         <div class="client-name-block col-xs-3 text-left">
-                                                                            <?php if($client->company != ''): ?>
-                                                                                <?= Html::a($client->company, ['../admin/client-view', 'id' => $client->id]) ?>
-                                                                            <?php else: ?>
-                                                                                <?= Html::a('Гость', ['../admin/client-view', 'id' => $client->id]) ?>
+                                                                            <?php $companyName = $client->company; ?>
+                                                                            <?php if($client->company == ''): ?>
+                                                                                <?php $companyName = 'Гость'; ?>
                                                                             <?php endif ?>
+                                                                            <?= Html::a($companyName, ['../admin/client-view', 'id' => $client->id]) ?>
                                                                         </div>
                                                                         <div class="col-xs-2 text-center">
                                                                             <?= $client->contact ?>                                     
@@ -111,12 +149,14 @@ use yii\widgets\Breadcrumbs;
                                                                             <?= $client->email ?>
                                                                         </div>
                                                                         <div class="col-xs-2 text-center">
+                                                                            <span style="font-size: 0.8em;">
                                                                             <?php 
                                                                                 $created = new DateTime($client->created);
                                                                             ?>
                                                                             <?= $created->format('d.m.Y') ?>
                                                                             <br>
                                                                             <?= $created->format('H:i:s') ?>
+                                                                            </span>
                                                                         </div>
                                                                         <?php $clientsCounter++; ?>
                                                                     </div> <!-- end-client-block -->
