@@ -290,6 +290,12 @@
             for ( ; str.length < length; str += Math.random().toString(36).substr(2) );
             return str.substr(0, length);
         }(20);
+
+        // catalog-menu on img click - redirect to /catalog/id
+        $('#catalog-menu ul .category-menu-item').on('click', 'img', function() {
+            var url = $(this.parentNode).find('a').attr('href');
+            document.location.href = url;
+        });
         
         // admin/category: toggle category
         $('.category-level-0').find('li').on('click', '.has-subcat', function (e) {

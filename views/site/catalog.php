@@ -77,7 +77,7 @@ use yii\widgets\Breadcrumbs;
                                                                     echo '<div class="col-sm-12 col-lg-4">'
                                                                         . '<div class="goods-block">'
                                                                         . '<div class="goods-block-fg">'.'<a href="'.Yii::$app->urlManager->createUrl('catalog/'.$cat->id).'"></a></div>'
-                                                                        . '<a href="'.Yii::$app->urlManager->createUrl('catalog/'.$cat->id).'"><img src="images/tovar1.jpg" alt="'.$cat->name.'" class="img-responsive"></a>'
+                                                                        . '<a href="'.Yii::$app->urlManager->createUrl('catalog/'.$cat->id).'"><img src="images/catalog/'.$cat->image.'" alt="'.$cat->name.'" class="img-responsive"></a>'
                                                                         . '<hr>'
                                                                         //. '<hr><p><i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star-o" aria-hidden="true"></i></p>'
                                                                         . '<h4>'.$cat->name.'</h4>'

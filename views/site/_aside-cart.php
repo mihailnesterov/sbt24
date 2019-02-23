@@ -79,8 +79,9 @@ $order = Yii::$app->controller->getOrderFromCookie();
                                     <?php foreach ($sub_category as $key => $sub_cat): ?>
                                         <?php $tovar_count = \app\models\Tovar::find()->where(['category_id' => $sub_cat->id])->count(); ?>
                                         <?php if ( $tovar_count != 0): ?>
-                                            <li>
-                                                <a href="<?= Yii::$app->urlManager->createUrl(['catalog/'.$sub_cat->id]) ?>"><?= $sub_cat->name ?></a>
+                                            <li class="category-menu-item text-center col-xs-12 col-md-6">
+                                                <img src="images/catalog/<?= $sub_cat->image ?>" alt="<?= $sub_cat->name ?>">
+                                                <a href="<?= Yii::$app->urlManager->createUrl(['catalog/'.$sub_cat->id]) ?>"><?= $sub_cat->name ?> (<?= $tovar_count ?>)</a>
                                             </li>
                                         <?php endif ?>
                                     <?php endforeach ?>

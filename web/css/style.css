@@ -178,9 +178,9 @@ a:hover {
 	color: #5BB112;
 	font-weight: 600;
 }
-#header #top #top-phone-block #top-user {
-	/**/
-}
+/*#header #top #top-phone-block #top-user {
+	
+}*/
 #header #top #top-phone-block #top-user a {
 	font-size: 0.7em;
 	color: #fff;
@@ -197,9 +197,9 @@ a:hover {
 	color: #5BB112;
 	font-weight: 600;
 }
-#header #top #top-phone-block #top-user .dropdown:hover > .dropdown-menu { 
+/*#header #top #top-phone-block #top-user .dropdown:hover > .dropdown-menu { */
 	/*display: block;*/	/* разворачиваем меню при наведении, а не клике */
-}
+/*}*/
 
 #header #top #top-phone-block #top-user .dropdown .dropdown-menu {
         /*transform: translateY(-50%);
@@ -208,9 +208,9 @@ a:hover {
         padding: 0.8em 0.5em;
         transition: .3s;
 }
-#header #top #top-phone-block #top-user .dropdown .dropdown-menu li {
+/*#header #top #top-phone-block #top-user .dropdown .dropdown-menu li {
         
-}
+}*/
 #header #top #top-phone-block #top-user .dropdown .dropdown-menu li a {
         color: #fff;
         font-size: 1em;
@@ -482,6 +482,28 @@ a:hover {
 #catalog-menu ul li a .fa-caret-right {
 	margin-top: 0.2em;
         float: right;
+}
+#catalog-menu ul .category-menu-item {
+	border-bottom: #eee 1px solid; 
+	padding: 1em;
+	width: 100%;
+}
+#catalog-menu ul .category-menu-item:last-child {
+	border-bottom: 0; 
+}
+#catalog-menu ul .category-menu-item img {
+	width: 120px;
+	padding: 0.3em 0.7em; 
+	border: 1px #eee solid; 
+	margin: 0;
+	margin-top: 0.7em;
+	cursor: pointer;
+}
+#catalog-menu ul .category-menu-item img:hover {
+	opacity: 0.8;
+}
+#catalog-menu ul .category-menu-item a {
+	margin: 0;
 }
 
 #catalog-menu a:hover,
