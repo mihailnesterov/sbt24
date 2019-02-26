@@ -108,6 +108,9 @@ use yii\widgets\Breadcrumbs;
                                     </div> <!-- end-col -->
 
                                     <?php $form = ActiveForm::begin(); ?>
+                                    <div class="col-xs-12 btn-block" style="margin-bottom: 1em;">
+                                        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
+                                    </div>  <!-- end col -->
                                     <div class="col-xs-12">
                                         <div class="dashboard-block" tab="1">
                                             <div class="row">

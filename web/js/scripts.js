@@ -68,7 +68,7 @@
 			}
 			catch(e){}
 			};*/
-	
+    
 	/* add to cart from goods preview */
 		$('.buy-from-preview').click(function () {			
                     $('#cart-price').html(
@@ -296,6 +296,15 @@
             var url = $(this.parentNode).find('a').attr('href');
             document.location.href = url;
         });
+
+        /* goods-view fix properties table */
+        $(function () {
+            var table = $('.goods-container .goods-view-block .goods-view-tabs .tab-content .tab-pane table');
+            table.addClass('table table-bordered table-responsive');
+        });
+
+
+        // adminka
         
         // admin/category: toggle category
         $('.category-level-0').find('li').on('click', '.has-subcat', function (e) {
@@ -756,8 +765,70 @@
                 }
             }
             changeClass(i);
+
+            function sortByClientName() {
+                var clientsArray = [];
+                $('.client-block').each(function(){
+                    //$(this).remove();
+                    $(this).appendTo(this.parentNode);
+                });
+            }
+            $('.client-block').each(function(){
+                //$(this).remove();
+                $(this).appendTo(this.parentNode);
+                //alert($(this).html());
+            });
+            sortByClientName();
             
             i.click(function() {
                 changeClass($(this));
+                sortByClientName();
             });
         });
+
+        // admin/clients: search
+        $('#search #admin-clients-search-input').keyup(function(){
+            var str = $(this).val();
+            var clientCounter = 1;
+            $('.client-block').each(function(){
+                $(this).hide();
+                var txt = $(this).find('.client-name-block a').html();
+                if( txt.toLowerCase() == str.toLowerCase() || str == '' ) {
+                    $(this).show();
+                    $(this).find('.client-counter').html(clientCounter++);
+                }
+            });
+        });
+            
+
+        /*
+        
+        DORS 10 -$23;
+DORS 10  лупа автономная - $23; 
+DORS 15 - $36 ;
+DORS 25 - $66;
+DORS 50 (черный) - $14;
+DORS 50 (серый) - $14 ;
+DORS 60 (черный) - $18; DORS 60 (серый) - $18 ;
+DORS 115 - $26;
+DORS 125 -  $31;
+DORS 135 - $35;
+DORS 145 - $46
+DORS 1000 М3 (черный) - $75; DORS 1000 М3 (серый)  - $75; DORS 1100- $136;
+DORS 1170 Light Универсальный детектор - $136 ;
+DORS 1170D Универсальный детектор - $190;
++DORS 1050A (универс. детектор)  NEW - $130;
+DORS 1200 - $180;
+DORS 1250 М1 (+Антистокс, МГ) - $245;
+DORS 1300 M2 (+Антистокс-контроль (iAS), МГ, 20х) - $480;
+DORS 1010 -  $56;
+DORS 1020 - $80;
+    +DORS CT 2015  NEW - 5 650р ;
+    DORS CT 2015  с АКБ NEW - 6 330р.;
++DORS 210 RUB  (iAS, CIS, МГ, ИК, УФ) - 9 800р.
++DORS 210 RUB Compact  (iAS, CIS, МГ, ИК, УФ)    NEW - 9 800р.
+
+(опция) Программатор для  DORS 210 - $30
+DORS 230 M2  - $240
+DORS 230 M2 с аккумулятором  - $260 
+        */

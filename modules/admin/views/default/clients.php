@@ -52,14 +52,14 @@ use yii\widgets\Breadcrumbs;
 
                                                         <div class="col-xs-12 col-md-6 col-lg-5 text-left">
                                                             <div class="dashboard-block" style="min-height: 70px;">
-                                                                <form id="search" class="form-inline">
+                                                                <div id="search" class="form-inline">
                                                                     <div class="input-group col-sm-12">
-                                                                        <input id="search-goods-input" class="form-control" type="text" placeholder="Найти клиента..." aria-label="Поиск...">
+                                                                        <input id="admin-clients-search-input" class="form-control" type="text" placeholder="Найти клиента..." aria-label="Поиск...">
                                                                         <span class="input-group-btn">
-                                                                            <button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                                                            <button class="btn btn-default" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
                                                                         </span>
                                                                     </div>
-                                                                </form>
+                                                                </div>
                                                             </div>
                                                         </div> <!-- end-col -->
                                                         <div class="col-xs-12 col-md-6 col-lg-5 text-left">
@@ -123,12 +123,12 @@ use yii\widgets\Breadcrumbs;
                                                                     <div class="col-xs-2 text-center">
                                                                         <h5><a href="#">Дата</a><i class="fa fa-arrow-down hidden"></i></h5>
                                                                     </div>
-                                                                </div> <!-- end-client-block -->
+                                                                </div> <!-- end-client-head -->
 
                                                                 <?php $clientsCounter = 1; ?>
 
                                                                 <?php foreach ($clients as $key => $client): ?>
-                                                                    <div class="client-block row" client="<?= $client->id ?>" page="1" style="">
+                                                                    <div class="client-block row" client="<?= $client->id ?>" page="1">
                                                                         <div class="client-counter col-xs-1 text-center">
                                                                             <?= $clientsCounter?>
                                                                         </div>
@@ -148,7 +148,7 @@ use yii\widgets\Breadcrumbs;
                                                                         <div class="col-xs-2 text-center">
                                                                             <?= $client->email ?>
                                                                         </div>
-                                                                        <div class="col-xs-2 text-center">
+                                                                        <div class="client-date-block col-xs-2 text-center">
                                                                             <span style="font-size: 0.8em;">
                                                                             <?php 
                                                                                 $created = new DateTime($client->created);
