@@ -192,6 +192,7 @@ use yii\widgets\Breadcrumbs;
                                                         'tabindex' => '6',
                                                         'placeholder' => $model->getAttributeLabel('discount'),
                                                         'class'=>'form-control',
+                                                        'value'=>0,
                                                         ]
                                                     ])->label($model->getAttributeLabel('discount')) ?>
                                                 </div> <!-- end-col -->
@@ -430,6 +431,7 @@ use yii\widgets\Breadcrumbs;
                                                         'tabindex' => '13',
                                                         'placeholder' => $model->getAttributeLabel('garantee'),
                                                         'class'=>'form-control',
+                                                        'value'=>12,
                                                         ]
                                                     ])->label($model->getAttributeLabel('garantee')) ?>
                                                 </div>
