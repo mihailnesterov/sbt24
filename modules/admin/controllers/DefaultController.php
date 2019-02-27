@@ -150,17 +150,18 @@ class DefaultController extends Controller
         $this->view->title = 'Товары';
         $this->view->params['breadcrumbs'][] = $this->view->title;
         
-        $query = Tovar::find()->orderby(['created'=>SORT_ASC]);
+        $tovar = Tovar::find()->orderby(['created'=>SORT_DESC])->all();
+        /*$query = Tovar::find()->orderby(['created'=>SORT_ASC]);
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 20]);
         $pages->pageSizeParam = false;
-        $tovar = $query->offset($pages->offset)->limit($pages->limit)->all();
+        $tovar = $query->offset($pages->offset)->limit($pages->limit)->all();*/
 
         $categories = Tovar::find()->select('category_id')->distinct()->orderby(['id'=>SORT_ASC])->all();
 
         return $this->render('goods', [
             'tovar' => $tovar,
-            'pages' => $pages,
+            //'pages' => $pages,
             'categories' => $categories,
         ]);
     }

@@ -65,7 +65,7 @@ use yii\widgets\Breadcrumbs;
                                                                        <?= $form->field($client, 'company')
                                                                             ->textInput(['type' => 'hidden'])
                                                                             ->label(false) ?>
-                                                                        <?= Html::submitButton('<i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину', ['class' => 'goods-buy buy-from-view col-md-5']) ?>
+                                                                        <?= Html::submitButton('<i class="fa fa-shopping-cart"></i> В корзину', ['class' => 'goods-buy buy-from-view col-md-5']) ?>
                                                                     </div> <!-- end row -->
                                                                 <?php ActiveForm::end(); ?>
                                                                 <?php //yii\widgets\Pjax::end(); ?>
@@ -95,8 +95,8 @@ use yii\widgets\Breadcrumbs;
                                                                 
                                                                 
                                                             </div>  <!-- end col -->
-                                                        <hr>
-                                                        <div class="goods-view-tabs">
+                                                        
+                                                        <div class="goods-view-tabs col-xs-12">
 
                                                             <!-- Tabs navigation -->  
                                                             <ul class="nav nav-tabs" role="tablist">
@@ -116,7 +116,7 @@ use yii\widgets\Breadcrumbs;
 
                                                         </div>  <!-- end goods-view-tabs --> 
                                                         
-                                                        <div class="social-buttons">
+                                                        <div class="social-buttons col-xs-12">
                                                             <script type="text/javascript">(function() {
                                                                 if (window.pluso)if (typeof window.pluso.start == "function") return;
                                                                 if (window.ifpluso==undefined) { window.ifpluso = 1;

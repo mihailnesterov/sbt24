@@ -165,14 +165,15 @@ use yii\widgets\Breadcrumbs;
                                                             .'</a>'
                                                             .'<div class="collapse" id="collapse-options-'.$good->id.'">'
                                                             .'<div class="well">'
-                                                            .'<table class="table table-bordered table-striped">'
+                                                            /*.'<table class="table table-bordered table-striped">'
                                                             .'<tbody>'
                                                             .'<tr> <td>Бренд</td><td>'.$good->brand.'</td></tr>'
                                                             .'<tr><td>Тип</td><td>'.$good->type.'</td></tr>'
                                                             .'<tr><td>Модель</td><td>'.$good->model.'</td></tr>'
                                                             .'<tr><td>Гарантия</td><td>'.$good->garantee.' мес.</td></tr>'
                                                             .'</tbody>'
-                                                            .'</table>'
+                                                            .'</table>'*/
+                                                            .'<div class="catalog-view-props-table">'.$good->properties.'</div>'
                                                             .'</div> <!-- end well -->'
                                                             .'</div>  <!-- end collapse -->'
                                                             .Html::a('Подробнее...', ['view?id='.$good->id], ['class' => 'goods-more'])

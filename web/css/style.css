@@ -839,7 +839,7 @@ a:hover {
 .goods-container .goods-view-block .goods-view-img-block {
 	border: 1px #E5E5E5 solid;
         padding: 1em;
-        height: 257px;
+        min-height: 263px;
 }
 .goods-container .goods-view-block .goods-view-img-block:hover {
 	box-shadow: 3px 3px 5px rgba(229,229,229,0.5);
@@ -891,7 +891,8 @@ a:hover {
 	margin: 1em 0;
 }
 .goods-container .goods-view-block .goods-view-tabs {
-        margin: 2em 0;
+	margin: 2em 0;
+	padding: 0;
 }
 .goods-container .goods-view-block .goods-view-tabs .nav-tabs {
         border-bottom: 0;

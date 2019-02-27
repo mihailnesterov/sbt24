@@ -297,11 +297,15 @@
             document.location.href = url;
         });
 
-        /* goods-view fix properties table */
+        /* goods-view catalog-view fix properties table */
         $(function () {
             var table = $('.goods-container .goods-view-block .goods-view-tabs .tab-content .tab-pane table');
-            table.addClass('table table-bordered table-responsive');
+            table.addClass('table table-bordered table-responsive table-striped');
+            $('.catalog-view-props-table table').each(function() {
+                $(this).addClass('table table-bordered table-responsive table-striped');
+            });
         });
+        
 
 
         // adminka
@@ -803,32 +807,84 @@
 
         /*
         
-        DORS 10 -$23;
+    +DORS 10 -$23;
 DORS 10  лупа автономная - $23; 
-DORS 15 - $36 ;
-DORS 25 - $66;
-DORS 50 (черный) - $14;
-DORS 50 (серый) - $14 ;
-DORS 60 (черный) - $18; DORS 60 (серый) - $18 ;
-DORS 115 - $26;
-DORS 125 -  $31;
-DORS 135 - $35;
-DORS 145 - $46
-DORS 1000 М3 (черный) - $75; DORS 1000 М3 (серый)  - $75; DORS 1100- $136;
-DORS 1170 Light Универсальный детектор - $136 ;
-DORS 1170D Универсальный детектор - $190;
-+DORS 1050A (универс. детектор)  NEW - $130;
+    +DORS 15 - $36 ;
+    +DORS 25 - $66;
+    +DORS 50 (черный) - $14;
+    +DORS 50 (серый) - $14 ;
+    +DORS 60 (черный) - $18; DORS 60 (серый) - $18 ;
+    +DORS 115 - $26;
+    +DORS 125 -  $31;
+    +DORS 135 - $35;
+    +DORS 145 - $46
+    +DORS 1000 М3 (черный) - $75; DORS 1000 М3 (серый)  - $75; 
+    +DORS 1100- $136;
+    +DORS 1170 Light Универсальный детектор - $136 ;
+    +DORS 1170D Универсальный детектор - $190;
+    +DORS 1050A (универс. детектор)  NEW - $130;
 DORS 1200 - $180;
-+DORS 1250 М1 (+Антистокс, МГ) - $245;
-DORS 1300 M2 (+Антистокс-контроль (iAS), МГ, 20х) - $480;
-DORS 1010 -  $56;
-DORS 1020 - $80;
-+DORS CT 2015  NEW - 5 650р ;
-+DORS CT 2015  с АКБ NEW - 6 330р.;
-+DORS 210 RUB  (iAS, CIS, МГ, ИК, УФ) - 9 800р.
-+DORS 210 RUB Compact  (iAS, CIS, МГ, ИК, УФ)    NEW - 9 800р.
+    +DORS 1250 М1 (+Антистокс, МГ) - $245;
+    +DORS 1300 M2 (+Антистокс-контроль (iAS), МГ, 20х) - $480;
+    +DORS 1010 -  $56;
+    +DORS 1020 - $80;
+    +DORS CT 2015  NEW - 5 650р ;
+    +DORS CT 2015  с АКБ NEW - 6 330р.;
+    +DORS 210 RUB  (iAS, CIS, МГ, ИК, УФ) - 9 800р.
+    +DORS 210 RUB Compact  (iAS, CIS, МГ, ИК, УФ)    NEW - 9 800р.
 
 (опция) Программатор для  DORS 210 - $30
-DORS 230 M2  - $240
-DORS 230 M2 с аккумулятором  - $260 
+    +DORS 230 M2  - $240
+    +DORS 230 M2 с аккумулятором  - $260 
+
+
+Сортировщики банкнот:
+
+    +https://deep2000.ru/oborudovanie/sortirovshiki_banknot/Kisan%20Newton%20PF.html (3200 $)
+
+    +https://deep2000.ru/oborudovanie/sortirovshiki_banknot/sortirovshchik-banknot-kisan-k2.html  ( 1170 $)
+
+    +https://deep2000.ru/oborudovanie/sortirovshiki_banknot/PLUS%20624N.html  ( 950 $)
+
+https://deep2000.ru/oborudovanie/sortirovshiki_banknot/ribao-bcs-150.html  (1100 $)
+
+https://deep2000.ru/oborudovanie/sortirovshiki_banknot/k5.html  (13000 $)
+
+
+Счетчики банкнот: 
+
+https://deep2000.ru/oborudovanie/schetchiki_banknot/Ribao%20R-506.html  ( 260 $ )
+
+https://deep2000.ru/oborudovanie/schetchiki_banknot/schetchik-banknot-plus-p-16.html 
+
+https://deep2000.ru/oborudovanie/schetchiki_banknot/ds-25.html ( 150 $)
+
+https://deep2000.ru/oborudovanie/schetchiki_banknot/ds-50.html (240 $)
+
+Детекторы валют:
+
+https://deep2000.ru/oborudovanie/detektory_valut/MD%208007.html  ( 340 $)
+
+https://deep2000.ru/oborudovanie/detektory_valut/PF%209007.html  ( 510 $)
+
+https://deep2000.ru/oborudovanie/detektory_valut/md8000.html ( 250 $)
+
+https://deep2000.ru/oborudovanie/detektory_valut/pf_9000.html (490 $)
+
+https://deep2000.ru/oborudovanie/detektory_valut/ird_2200.html ( 90$)
+
+https://deep2000.ru/oborudovanie/detektory_valut/ird-1000.html  (78 $)
+
+
+Счетчики и сортировщики монет:
+
+https://deep2000.ru/oborudovanie/obrabotka_monet/Zebra.html  (
+
+https://deep2000.ru/oborudovanie/obrabotka_monet/schetchik-i-sortirovshchik-monet-zebra-301.html ( 4300 $)
+
+https://deep2000.ru/oborudovanie/obrabotka_monet/pelican_301.html (2400 $)
+
+https://deep2000.ru/oborudovanie/obrabotka_monet/schetchik-monet-cs-2000.html (450 $)
+
+https://deep2000.ru/oborudovanie/obrabotka_monet/cs-100.html (240 $)
         */

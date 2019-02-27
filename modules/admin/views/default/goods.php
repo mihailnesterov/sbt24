@@ -212,10 +212,10 @@ use yii\widgets\Breadcrumbs;
 
                                         <div>
                                             <?php       
-                                                echo LinkPager::widget([
+                                                /*echo LinkPager::widget([
                                                     'pagination' => $pages,
                                                     'registerLinkTags' => true
-                                                ]);
+                                                ]);*/
                                             ?>
                                         </div>
                                 </div>	<!-- end content-block -->

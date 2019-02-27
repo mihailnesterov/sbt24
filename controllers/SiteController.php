@@ -373,7 +373,7 @@ class SiteController extends Controller
     
     public function actionIndex()
     {
-        $newTovar = Tovar::find()->orderby(['created'=>SORT_ASC])->limit(3)->all();
+        $newTovar = Tovar::find()->orderby(['created'=>SORT_DESC])->limit(3)->all();
         $hitTovar = Tovar::find()->where((['hit' => 1]))->orderby(['created'=>SORT_ASC])->limit(3)->all();
         $brands = Tovar::find()->select('brand')->orderby(['brand'=>SORT_ASC])->distinct()->all();
         $bannersPos1 = Banners::find()->where((['position' => 1]))->orderby(['created'=>SORT_ASC])->all();
