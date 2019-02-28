@@ -846,24 +846,24 @@ DORS 1200 - $180;
 
     +https://deep2000.ru/oborudovanie/sortirovshiki_banknot/PLUS%20624N.html  ( 950 $)
 
-https://deep2000.ru/oborudovanie/sortirovshiki_banknot/ribao-bcs-150.html  (1100 $)
+    +https://deep2000.ru/oborudovanie/sortirovshiki_banknot/ribao-bcs-150.html  (1100 $)
 
-https://deep2000.ru/oborudovanie/sortirovshiki_banknot/k5.html  (13000 $)
+    +https://deep2000.ru/oborudovanie/sortirovshiki_banknot/k5.html  (13000 $)
 
 
 Счетчики банкнот: 
 
-https://deep2000.ru/oborudovanie/schetchiki_banknot/Ribao%20R-506.html  ( 260 $ )
+    +https://deep2000.ru/oborudovanie/schetchiki_banknot/Ribao%20R-506.html  ( 260 $ )
 
-https://deep2000.ru/oborudovanie/schetchiki_banknot/schetchik-banknot-plus-p-16.html 
+    +цена?   https://deep2000.ru/oborudovanie/schetchiki_banknot/schetchik-banknot-plus-p-16.html 
 
-https://deep2000.ru/oborudovanie/schetchiki_banknot/ds-25.html ( 150 $)
+    +https://deep2000.ru/oborudovanie/schetchiki_banknot/ds-25.html ( 150 $)
 
-https://deep2000.ru/oborudovanie/schetchiki_banknot/ds-50.html (240 $)
+    +https://deep2000.ru/oborudovanie/schetchiki_banknot/ds-50.html (240 $)
 
 Детекторы валют:
 
-https://deep2000.ru/oborudovanie/detektory_valut/MD%208007.html  ( 340 $)
+    +https://deep2000.ru/oborudovanie/detektory_valut/MD%208007.html  ( 340 $)
 
 https://deep2000.ru/oborudovanie/detektory_valut/PF%209007.html  ( 510 $)
 
