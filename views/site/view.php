@@ -60,7 +60,34 @@ use yii\widgets\Breadcrumbs;
                                                                     ]) */
                                                                 ?>
                                                                 <?php $form = ActiveForm::begin(/*['options' => ['data-pjax' => true]]*/); ?>
-                                                                    <div class="row">                                                                    
+                                                                    <div class="row">      
+                                                                    <?php
+                                                                        /*if($old_price != '') {
+                                                                            if(substr($old_price, -3, 1) != '.') {
+                                                                                $old_price = $old_price.'0';
+                                                                            }
+                                                                        }
+                                                                        if(substr($price, -3, 1) != '.') {
+                                                                            $price = $price.'0';
+                                                                        }*/
+
+                                                                        if(strpos($price, '.')) {
+                                                                            if(substr($price, -3, 1) != '.') {
+                                                                                $price = round($price,2).'0';
+                                                                            }
+                                                                        }
+                                                                        if(strpos($old_price, '.')) {
+                                                                            if(substr($old_price, -3, 1) != '.') {
+                                                                                $old_price = round($old_price,2).'0';
+                                                                            }
+                                                                        }
+                                                                        if(!strpos($price, '.')) {
+                                                                            $price = $price.'.00';
+                                                                        }
+                                                                        if(!strpos($old_price, '.') && $old_price != '') {
+                                                                            $old_price = $old_price.'.00';
+                                                                        }
+                                                                    ?>                                                              
                                                                         <i class="goods-price col-md-6"><s><?= $old_price ?></s><span><?= $price ?></span> &#8381;</i>
                                                                        <?= $form->field($client, 'company')
                                                                             ->textInput(['type' => 'hidden'])
@@ -168,6 +195,24 @@ use yii\widgets\Breadcrumbs;
                                                                     $discount_other = '';
                                                                     $old_price_other = '';
                                                                 }
+
+                                                                if(strpos($price_other, '.')) {
+                                                                    if(substr($price_other, -3, 1) != '.') {
+                                                                        $price_other = round($price_other,2).'0';
+                                                                    }
+                                                                }
+                                                                if(strpos($old_price_other, '.')) {
+                                                                    if(substr($old_price_other, -3, 1) != '.') {
+                                                                        $old_price_other = round($old_price_other,2).'0';
+                                                                    }
+                                                                }
+                                                                if(!strpos($price_other, '.')) {
+                                                                    $price_other = $price_other.'.00';
+                                                                }
+                                                                if(!strpos($old_price_other, '.') && $old_price_other != '') {
+                                                                    $old_price_other = $old_price_other.'.00';
+                                                                }
+
                                                             ?>
                                                         <div class="swiper-slide" data-swiper-autoplay="5000">
                                                             <div class="goods-container">
@@ -189,9 +234,8 @@ use yii\widgets\Breadcrumbs;
                                                                             </div>
                                                                             </div>
                                                                     </div>  <!-- end col -->
-                                                                    <div class="goods-view-img-block col-sm-4">
-                                                                        
-                                                                        <?= Html::a('<img src="images/goods/'.$tovar->photo1.'" alt="" class="img-responsive">', Yii::$app->urlManager->createUrl(['view?id='.$tovar->id])) ?>
+                                                                    <div class="goods-view-img-block-other col-sm-4">
+                                                                        <?= Html::a('<img src="images/goods/'.$tovar->photo1.'" alt="'.$tovar->model.'" class="img-responsive">', Yii::$app->urlManager->createUrl(['view?id='.$tovar->id])) ?>
                                                                         <?= $discount_other ?>
                                                                     </div>  <!-- end col -->
                                                                 </div> 
@@ -201,12 +245,12 @@ use yii\widgets\Breadcrumbs;
                                                 </div>
                                                 <!-- Swiper slider navigation -->
                                                 <div class="swiper-button-prev">
-                                                        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                                                    <i class="fa fa-chevron-left"></i>
                                                 </div>
                                                 <div class="swiper-button-next">
-                                                        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                                    <i class="fa fa-chevron-right"></i>
                                                 </div>
-                                            </div> <!-- end swiper -->
+                                            </div> <!-- end swiper-container -->
                                             
                                         </div>	<!-- end content-block -->
                                 </div>	<!-- end content-container -->

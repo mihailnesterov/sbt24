@@ -63,8 +63,20 @@
                                                 </div>
                                         </div>
                                         <div id="schedule-block-admin" class="col-md-4 text-center">
-                                                <p>Курс USD = <span id="curs-usd"><?= $currencies['USD'] ?></span></p>
-                                                <p>Курс EUR = <span id="curs-eur"><?= $currencies['EUR'] ?></span></p>
+                                            <?php
+                                                // add '0' if *.1_
+                                                $usd = round($currencies['USD'],2);
+                                                $eur = round($currencies['EUR'],2);
+                                                if(substr($usd, -3, 1) != '.') {
+                                                    $usd = round($currencies['USD'],2).'0';
+                                                }
+
+                                                if(substr($eur, -3, 1) != '.') {
+                                                    $eur = round($currencies['EUR'],2).'0';
+                                                }
+                                            ?>
+                                            <p>Курс USD = <span id="curs-usd"><?= $usd ?></span></p>
+                                            <p>Курс EUR = <span id="curs-eur"><?= $eur ?></span></p>
                                         </div>
                                         <div id="top-phone-block" class="col-md-3">
                                                 <div id="top-user" class="text-right">

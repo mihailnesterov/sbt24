@@ -808,7 +808,7 @@
         /*
         
     +DORS 10 -$23;
-DORS 10  лупа автономная - $23; 
+? DORS 10  лупа автономная - $23; 
     +DORS 15 - $36 ;
     +DORS 25 - $66;
     +DORS 50 (черный) - $14;
@@ -823,7 +823,7 @@ DORS 10  лупа автономная - $23;
     +DORS 1170 Light Универсальный детектор - $136 ;
     +DORS 1170D Универсальный детектор - $190;
     +DORS 1050A (универс. детектор)  NEW - $130;
-DORS 1200 - $180;
+    +DORS 1200 - $180;
     +DORS 1250 М1 (+Антистокс, МГ) - $245;
     +DORS 1300 M2 (+Антистокс-контроль (iAS), МГ, 20х) - $480;
     +DORS 1010 -  $56;
@@ -833,7 +833,7 @@ DORS 1200 - $180;
     +DORS 210 RUB  (iAS, CIS, МГ, ИК, УФ) - 9 800р.
     +DORS 210 RUB Compact  (iAS, CIS, МГ, ИК, УФ)    NEW - 9 800р.
 
-(опция) Программатор для  DORS 210 - $30
+    +(опция) Программатор для  DORS 210 - $30
     +DORS 230 M2  - $240
     +DORS 230 M2 с аккумулятором  - $260 
 
@@ -855,7 +855,7 @@ DORS 1200 - $180;
 
     +https://deep2000.ru/oborudovanie/schetchiki_banknot/Ribao%20R-506.html  ( 260 $ )
 
-    +цена?   https://deep2000.ru/oborudovanie/schetchiki_banknot/schetchik-banknot-plus-p-16.html 
++цена?   https://deep2000.ru/oborudovanie/schetchiki_banknot/schetchik-banknot-plus-p-16.html 
 
     +https://deep2000.ru/oborudovanie/schetchiki_banknot/ds-25.html ( 150 $)
 
@@ -865,26 +865,52 @@ DORS 1200 - $180;
 
     +https://deep2000.ru/oborudovanie/detektory_valut/MD%208007.html  ( 340 $)
 
-https://deep2000.ru/oborudovanie/detektory_valut/PF%209007.html  ( 510 $)
+    + https://deep2000.ru/oborudovanie/detektory_valut/PF%209007.html  ( 510 $)
 
-https://deep2000.ru/oborudovanie/detektory_valut/md8000.html ( 250 $)
+    +https://deep2000.ru/oborudovanie/detektory_valut/md8000.html ( 250 $)
 
-https://deep2000.ru/oborudovanie/detektory_valut/pf_9000.html (490 $)
+    +https://deep2000.ru/oborudovanie/detektory_valut/pf_9000.html (490 $)
 
-https://deep2000.ru/oborudovanie/detektory_valut/ird_2200.html ( 90$)
+    +https://deep2000.ru/oborudovanie/detektory_valut/ird_2200.html ( 90$)
 
-https://deep2000.ru/oborudovanie/detektory_valut/ird-1000.html  (78 $)
+    +https://deep2000.ru/oborudovanie/detektory_valut/ird-1000.html  (78 $)
 
 
 Счетчики и сортировщики монет:
 
-https://deep2000.ru/oborudovanie/obrabotka_monet/Zebra.html  (
++ цена ? https://deep2000.ru/oborudovanie/obrabotka_monet/Zebra.html  (
 
-https://deep2000.ru/oborudovanie/obrabotka_monet/schetchik-i-sortirovshchik-monet-zebra-301.html ( 4300 $)
+    +https://deep2000.ru/oborudovanie/obrabotka_monet/schetchik-i-sortirovshchik-monet-zebra-301.html ( 4300 $)
 
-https://deep2000.ru/oborudovanie/obrabotka_monet/pelican_301.html (2400 $)
+    +https://deep2000.ru/oborudovanie/obrabotka_monet/pelican_301.html (2400 $)
 
-https://deep2000.ru/oborudovanie/obrabotka_monet/schetchik-monet-cs-2000.html (450 $)
+    +https://deep2000.ru/oborudovanie/obrabotka_monet/schetchik-monet-cs-2000.html (450 $)
 
-https://deep2000.ru/oborudovanie/obrabotka_monet/cs-100.html (240 $)
-        */
+    +https://deep2000.ru/oborudovanie/obrabotka_monet/cs-100.html (240 $)
+
+
+Счетчики банкнот:
+
+    +DORS CT1015 - $85 - http://dors.com/catalog/dors-ct1015/#specs
+    +DORS CT1040 - $114 - http://dors.com/catalog/dors-ct1040/
+    +DORS CT1040U - $122 - http://dors.com/catalog/dors-ct1040/
+    +DORS CT1040UM - $140  - http://dors.com/catalog/dors-ct1040/ 
+    +DORS 600  - $177 - http://dors.com/catalog/dors-600/ 
+    +DORS 620  с функцией АS - $220  - http://dors.com/catalog/dors-620/ 
+    +DORS 700 -  $295 - http://dors.com/catalog/dors-700/ 
+    +DORS 750 -  $530  - http://dors.com/catalog/dors-750/#description 
+    +Magner 35-2003 - $410 -  http://dors.com/catalog/magner-35/ 
+    +Magner 35 S - $472 - http://dors.com/catalog/magner-35s/ 
+    +Magner 75 D - $594 - http://dors.com/catalog/magner-75d-ud/
+    +Magner 75 UD - $725 - http://dors.com/catalog/magner-75d-ud/ 
+    +Magner 100 - $1 340 - http://dors.com/catalog/magner-100/
+
+Сортировщики банкнот:
+
+    +DORS 800 RUB -  $ 757 - http://dors.com/catalog/dors-800/
+    +DORS 800 RUB/USD/EUR - $ 802  - http://dors.com/catalog/dors-800/
+    +DORS 800 Multi (5 валют) - $847 - http://dors.com/catalog/dors-800/ 
+    +Magner 150 Digital  - 1250$. -http://dors.com/catalog/magner-150/
+    +Magner 175 - $1 690 - http://dors.com/catalog/magner-175/ 
+
+    */

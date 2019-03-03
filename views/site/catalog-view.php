@@ -118,10 +118,10 @@ use yii\widgets\Breadcrumbs;
                                                             $price = round($good->price_rub);
                                                         } 
                                                         if ($good->price_usd != 0) {
-                                                            $price = round($good->price_usd * $currencies['USD']);
+                                                            $price = round($good->price_usd * $currencies['USD'],2);
                                                         } 
                                                         if ($good->price_eur != 0) {
-                                                            $price = round($good->price_eur * $currencies['EUR']);
+                                                            $price = round($good->price_eur * $currencies['EUR'],2);
                                                         }
                                                         if ($good->discount != 0) {
                                                             $discount = '<a href="'.Yii::$app->urlManager->createUrl(Yii::$app->homeUrl.'../view?id='.$good->id).'" class="label discount"><span class="flash animated">'.$good->discount.'%</span></a>';
@@ -136,7 +136,35 @@ use yii\widgets\Breadcrumbs;
                                                         } else {
                                                             $hit = '';
                                                         }
-                                                        echo '<div class="goods-list-block">'
+
+                                                        /*if($old_price != '') {
+                                                            if(substr($old_price, -3, 1) != '.') {
+                                                                $old_price = $old_price.'0';
+                                                            }
+                                                        }
+
+                                                        if(substr($price, -3, 1) != '.') {
+                                                            $price = $price.'0';
+                                                        }*/
+
+                                                        if(strpos($price, '.')) {
+                                                            if(substr($price, -3, 1) != '.') {
+                                                                $price = round($price,2).'0';
+                                                            }
+                                                        }
+                                                        if(strpos($old_price, '.')) {
+                                                            if(substr($old_price, -3, 1) != '.') {
+                                                                $old_price = round($old_price,2).'0';
+                                                            }
+                                                        }
+                                                        if(!strpos($price, '.')) {
+                                                            $price = $price.'.00';
+                                                        }
+                                                        if(!strpos($old_price, '.') && $old_price != '') {
+                                                            $old_price = $old_price.'.00';
+                                                        }
+
+                                                        echo '<div v-if="categoryID == 0" class="goods-list-block">'
                                                             .'<div class="row">'
                                                             .'<div class="col-md-4 col-lg-3">'
                                                             .'<a href="'.Yii::$app->urlManager->createUrl(Yii::$app->homeUrl.'../view?id='.$good->id).'"><img src="images/goods/'.$good->photo1.'" alt="" class="img-responsive"></a>'

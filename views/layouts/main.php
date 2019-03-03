@@ -75,8 +75,20 @@
                                                 </div>
                                         </div>
                                         <div id="schedule-block" class="col-md-4 text-left">
-                                            <p>USD = <?= $currencies['USD'] ?></p>
-                                            <p>EUR = <?= $currencies['EUR'] ?></p>
+                                            <?php
+                                                // add '0' if *.1_
+                                                $usd = round($currencies['USD'],2);
+                                                $eur = round($currencies['EUR'],2);
+                                                if(substr($usd, -3, 1) != '.') {
+                                                    $usd = round($currencies['USD'],2).'0';
+                                                }
+
+                                                if(substr($eur, -3, 1) != '.') {
+                                                    $eur = round($currencies['EUR'],2).'0';
+                                                }
+                                            ?>
+                                            <p>Курс USD = <?= $usd ?></p>
+                                            <p>Курс EUR = <?= $eur ?></p>
                                         </div>
                                         <div id="top-phone-block" class="col-md-3">
                                                 <p id="top-phone" class="text-left"><i class="fa fa-phone" aria-hidden="true"></i><?= $company->phone1 ?></p>
@@ -152,6 +164,12 @@
                                     else {
                                         $orderItemsSum = $order['orderItemsSum'];
                                         $orderItemsCount = $order['orderItemsCount'];
+                                    }
+
+                                    if($orderItemsSum != '0.00') {
+                                        if(substr($orderItemsSum, -3, 1) != '.') {
+                                            $orderItemsSum = $orderItemsSum.'0';
+                                        }
                                     }
                                 ?>
                                 <a href="<?= $url ?>" id="cart-link">

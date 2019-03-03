@@ -72,6 +72,24 @@ use yii\widgets\Breadcrumbs;
                                                                 $price = round(($price - $price/100*$tovar->discount),2);
                                                             }
                                                             $sum = ($price * $item->count);
+                                                            
+                                                            if(strpos($price, '.')) {
+                                                                if(substr($price, -3, 1) != '.') {
+                                                                    $price = round($price,2).'0';
+                                                                }
+                                                            }
+                                                            if(strpos($sum, '.')) {
+                                                                if(substr($sum, -3, 1) != '.') {
+                                                                    $sum = round($sum,2).'0';
+                                                                }
+                                                            }
+                                                            if(!strpos($price, '.')) {
+                                                                $price = $price.'.00';
+                                                            }
+                                                            if(!strpos($sum, '.')) {
+                                                                $sum = $sum.'.00';
+                                                            }
+                                                            
                                                             echo '<tr>'
                                                             .'<td class="hidden">'
                                                             .$item->id        

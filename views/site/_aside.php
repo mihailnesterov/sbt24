@@ -110,6 +110,32 @@ $bannersPos4 = Yii::$app->controller->getAsideBanners('bannersPos4');
                                     $old_price = round($price,2);
                                     $price = round(($price - $price/100*$tovar->discount),2);
                                 }
+                                /*if($old_price != '') {
+                                    if(substr($old_price, -3, 1) != '.') {
+                                        $old_price = $old_price.'0';
+                                    }
+                                }
+
+                                if(substr($price, -3, 1) != '.') {
+                                    $price = $price.'0';
+                                }*/
+
+                                if(strpos($price, '.')) {
+                                    if(substr($price, -3, 1) != '.') {
+                                        $price = round($price,2).'0';
+                                    }
+                                }
+                                if(strpos($old_price, '.')) {
+                                    if(substr($old_price, -3, 1) != '.') {
+                                        $old_price = round($old_price,2).'0';
+                                    }
+                                }
+                                if(!strpos($price, '.')) {
+                                    $price = $price.'.00';
+                                }
+                                if(!strpos($old_price, '.') && $old_price != '') {
+                                    $old_price = $old_price.'.00';
+                                }
                             ?>
                             <div class="goods-block">
                                     <?= Html::a('<img src="images/goods/'.$tovar->photo1.'" alt="'.$tovar->name.'" class="img-responsive img-goods-discount">', [Yii::$app->homeUrl.'../view?id='.$tovar->id]) ?>
