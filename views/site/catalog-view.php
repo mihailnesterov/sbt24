@@ -91,6 +91,22 @@ use yii\widgets\Breadcrumbs;
                                                     ?>
                                                 </ul>
                                             </div>
+
+                                            <div class="btn-group" role="group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa fa-fa" aria-hidden="true"></i> Модели
+                                                <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <?php
+                                                        // выводим модели
+                                                        foreach ($models as $model):
+                                                            echo '<li><a href="#">'.$model->model.'</a></li>';
+                                                        endforeach;
+                                                    ?>
+                                                </ul>
+                                            </div>
+
                                         </div>  <!-- end filter-block -->
                                         
                                         <div class="goods-container">	
@@ -100,7 +116,7 @@ use yii\widgets\Breadcrumbs;
                                                 // если есть подкатегории - выводим их, иначе - выводим товары категории
                                                 if ($sub_category != NULL) {
                                                     foreach ($sub_category as $cat):
-                                                        $tovar_count = \app\models\Tovar::find()->where(['category_id' => $cat->id])->count();
+                                                        $tovar_count = $cat->getTovarCount($cat->id);
                                                         if ( $tovar_count != 0) {
                                                         echo '<div class="col-sm-12 col-lg-4">'
                                                             . '<div class="goods-block">'

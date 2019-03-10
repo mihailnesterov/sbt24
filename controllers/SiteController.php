@@ -562,11 +562,14 @@ class SiteController extends Controller
         $tovar = Tovar::find()->where(['category_id' => $model->id])->all();  
         $sub_category = Category::find()->where(['parent' => $model->id])->all();
         $brands = Tovar::find()->select('brand')->where(['category_id' => $model->id])->orderby(['brand'=>SORT_ASC])->distinct()->all();
+        $models = Tovar::find()->select('model')->where(['category_id' => $model->id])->orderby(['brand'=>SORT_ASC])->distinct()->all();
         $bannersPos3 = Banners::find()->where((['position' => 3]))->orderby(['rand()'=>SORT_ASC])->limit(1)->all();
         $currencies = $this->getCurrencies();
         
         $catalog_url = '..'.Yii::$app->homeUrl.'catalog';
-        $this->view->title = $model->title;
+        $tovar_count = $model->getTovarCount($model->id);
+
+        $this->view->title = $model->title.' ('.$tovar_count.')';
         $this->view->params['breadcrumbs'][] = ['label' => 'Каталог', 'url' => [$catalog_url]];
         if (!$sub_category) {
             $sub_category_url = '..'.Yii::$app->homeUrl.'catalog/'.$model->parent;
@@ -591,6 +594,7 @@ class SiteController extends Controller
             'sub_category' => $sub_category,
             'tovar' => $tovar,
             'brands' => $brands,
+            'models' => $models,
             'bannersPos3' => $bannersPos3,
             'currencies' => $currencies
         ]);
