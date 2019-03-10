@@ -100,6 +100,8 @@ use yii\widgets\Breadcrumbs;
                                                 // если есть подкатегории - выводим их, иначе - выводим товары категории
                                                 if ($sub_category != NULL) {
                                                     foreach ($sub_category as $cat):
+                                                        $tovar_count = \app\models\Tovar::find()->where(['category_id' => $cat->id])->count();
+                                                        if ( $tovar_count != 0) {
                                                         echo '<div class="col-sm-12 col-lg-4">'
                                                             . '<div class="goods-block">'
                                                             . '<div class="goods-block-fg">'.'<a href="'.Yii::$app->urlManager->createUrl('catalog/'.$cat->id).'"></a></div>'
@@ -110,6 +112,7 @@ use yii\widgets\Breadcrumbs;
                                                             . Html::a('Подробнее', ['catalog/'.$cat->id], ['class' => 'goods-more'])
                                                             . '</div>    <!-- end goods-block -->'
                                                             . '</div>    <!-- end col -->';
+                                                        }
                                                     endforeach;
                                                 } else {
                                                     

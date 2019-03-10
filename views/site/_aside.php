@@ -5,6 +5,7 @@
  */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 // получаем структуру каталога
@@ -45,24 +46,32 @@ $bannersPos4 = Yii::$app->controller->getAsideBanners('bannersPos4');
                     </li>
                     <?php // вывод меню ?>
                     <?php foreach ($category as $key => $cat): ?>
-                        <?php $sub_category = \app\models\Category::find()->where(['parent' => $cat->id])->all(); ?>
+                        <?php 
+                            //$sub_category = \app\models\Category::find()->where(['parent' => $cat->id])->all(); 
+                            $sub_category = $cat->getSubcategory($cat->id);
+                        ?>
                         <?php if ( $sub_category == NULL): ?>
-                            <?php $tovar_count = \app\models\Tovar::find()->where(['category_id' => $cat->id])->count(); ?>
+                            <?php 
+                                //$tovar_count = \app\models\Tovar::find()->where(['category_id' => $cat->id])->count(); 
+                                $tovar_count = $cat->getTovarCount($cat->id);
+                            ?>
                                 <?php if ( $tovar_count != 0): ?>
                                     <li>
-                                        <a href="<?= Yii::$app->urlManager->createUrl(['catalog/'.$cat->id]) ?>"><i class="fa fa-arrow-right"></i><?= $cat->name ?></a>
+                                        <a href="<?= Url::to(['catalog/'.$cat->link]) ?>"><i class="fa fa-arrow-right"></i><?= $cat->name ?></a>
+                                        <!--<a href="<?= Yii::$app->urlManager->createUrl(['catalog/'.$cat->id]) ?>"><i class="fa fa-arrow-right"></i><?= $cat->name ?></a>-->
                                     </li>
                                 <?php endif ?>
                         <?php else : ?>
                             <li role="presentation" class="dropdown">
-                                <a href="<?= Yii::$app->urlManager->createUrl(['catalog/'.$cat->id]) ?>" data-target="<?= Yii::$app->urlManager->createUrl(['catalog/'.$cat->link]) ?>" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-arrow-right"></i><?= $cat->name ?>  <i class="fa fa-caret-right"></i></a>
+                                <a href="<?= Yii::$app->urlManager->createUrl(['catalog/'.$cat->link]) ?>" data-target="<?= Yii::$app->urlManager->createUrl(['catalog/'.$cat->link]) ?>" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-arrow-right"></i><?= $cat->name ?>  <i class="fa fa-caret-right"></i></a>
                                 <ul class="dropdown-menu row">
                                     <?php foreach ($sub_category as $key => $sub_cat): ?>
-                                        <?php $tovar_count = \app\models\Tovar::find()->where(['category_id' => $sub_cat->id])->count(); ?>
+                                        <?php $tovar_count = $sub_cat->getTovarCount($sub_cat->id); ?>
                                         <?php if ( $tovar_count != 0): ?>
                                             <li class="category-menu-item text-center col-xs-12 col-md-6">
                                                 <img src="images/catalog/<?= $sub_cat->image ?>" alt="<?= $sub_cat->name ?>">
-                                                <a href="<?= Yii::$app->urlManager->createUrl(['catalog/'.$sub_cat->id]) ?>"><?= $sub_cat->name ?> (<?= $tovar_count ?>)</a>
+                                                <a href="<?= Url::to(['catalog/'.$cat->link.'/'.$sub_cat->link]) ?>"><?= $sub_cat->name ?> (<?= $tovar_count ?>)</a>
+                                                <!--<a href="<?= Yii::$app->urlManager->createUrl(['catalog/'.$sub_cat->id]) ?>"><?= $sub_cat->name ?> (<?= $tovar_count ?>)</a>-->
                                             </li>
                                         <?php endif ?>
                                     <?php endforeach ?>

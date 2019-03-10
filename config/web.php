@@ -18,11 +18,17 @@ return [
                     '' => 'site/index',
                     'view?id=<id:\d+>' => 'site/view',
                     'catalog/<id:\d+>' => 'site/catalog-view',
+                    'catalog?id=<id:\d+>' => 'site/catalog-view',
+                    /*[
+                        'class' => 'app\components\CatalogRules',
+                    ],*/
                     'invoice?id=<id:\d+>' => 'site/invoice',
                     'invoice-pdf?id=<id:\d+>' => 'site/invoice-pdf',
                     'sitemap.xml' => 'site/sitemap',
                     
                     //'loginUrl' => 'admin/login',
+
+                    
                 
                     //'<module:admin/banners?id=<id:\d+>' => 'admin/default/banner-view',
                     '<module:admin>' => 'admin/default/index',

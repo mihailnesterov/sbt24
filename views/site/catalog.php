@@ -72,9 +72,10 @@ use yii\widgets\Breadcrumbs;
                                                             
                                                             <?php
                                                                 // вывод каталога из БД
-
                                                                 foreach ($model as $cat):
-                                                                    echo '<div class="col-sm-12 col-lg-4">'
+                                                                    //$tovar_count = \app\models\Tovar::find()->where(['category_id' => $cat->id])->count();
+                                                                    //if ( $tovar_count != 0) {
+                                                                        echo '<div class="col-sm-12 col-lg-4">'
                                                                         . '<div class="goods-block">'
                                                                         . '<div class="goods-block-fg">'.'<a href="'.Yii::$app->urlManager->createUrl('catalog/'.$cat->id).'"></a></div>'
                                                                         . '<a href="'.Yii::$app->urlManager->createUrl('catalog/'.$cat->id).'"><img src="images/catalog/'.$cat->image.'" alt="'.$cat->name.'" class="img-responsive"></a>'
@@ -84,6 +85,7 @@ use yii\widgets\Breadcrumbs;
                                                                         . Html::a('Подробнее', ['catalog/'.$cat->id], ['class' => 'goods-more'])
                                                                         . '</div>    <!-- end goods-block -->'
                                                                         . '</div>    <!-- end col -->';
+                                                                    //}                                                                   
                                                                 endforeach;
                                                             ?>
 
