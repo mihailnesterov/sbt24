@@ -150,38 +150,46 @@ class SiteController extends Controller
             if($cookie !=0) {
                 // if value of cookie = order->id
                 $order = Order::find()->where(['id' => $cookie])->one();
-                $client = Clients::find()->where(['id' => $order->client_id])->one();
-                $orderItems = OrderItems::find()->where(['order_id' => $cookie])->all();
-                if($orderItems){
-                    foreach ($order['orderItems'] as $item):
-                        $tovar = Tovar::find()->where(['id' => $item->tovar_id])->one();
-                        if ($tovar->price_rub != 0) { 
-                            $price = round($tovar->price_rub,2);
-                        } 
-                        if ($tovar->price_usd != 0) {
-                            $price = round(($tovar->price_usd * $currencies['USD']),2);
-                        } 
-                        if ($tovar->price_eur != 0) {
-                            $price = round(($tovar->price_eur * $currencies['EUR']),2);
-                        }
-                        if ($tovar->discount != 0) {
-                            $price = round(($price - $price/100*$tovar->discount),2);
-                        }
-                        $orderItemsSum = $orderItemsSum + $price*$item->count;
-                        $orderItemsCount += $item->count;
-                    endforeach;
-                }
+                if($order) {
+                    // if order that in the cookie is available
+                    $client = Clients::find()->where(['id' => $order->client_id])->one();
+                    $orderItems = OrderItems::find()->where(['order_id' => $cookie])->all();
+                    if($orderItems){
+                        foreach ($order['orderItems'] as $item):
+                            $tovar = Tovar::find()->where(['id' => $item->tovar_id])->one();
+                            if ($tovar->price_rub != 0) { 
+                                $price = round($tovar->price_rub,2);
+                            } 
+                            if ($tovar->price_usd != 0) {
+                                $price = round(($tovar->price_usd * $currencies['USD']),2);
+                            } 
+                            if ($tovar->price_eur != 0) {
+                                $price = round(($tovar->price_eur * $currencies['EUR']),2);
+                            }
+                            if ($tovar->discount != 0) {
+                                $price = round(($price - $price/100*$tovar->discount),2);
+                            }
+                            $orderItemsSum = $orderItemsSum + $price*$item->count;
+                            $orderItemsCount += $item->count;
+                        endforeach;
+                    }
 
-                $params = [
-                    'cookie' => $cookie,
-                    'order' => $order,
-                    'orderItems' => $orderItems,
-                    'orderItemsCount' => $orderItemsCount,
-                    'orderItemsSum' => $orderItemsSum,
-                    'tovar' => $tovar,
-                    'client' => $client,
-                    'currencies' => $currencies
-                ];
+                    $params = [
+                        'cookie' => $cookie,
+                        'order' => $order,
+                        'orderItems' => $orderItems,
+                        'orderItemsCount' => $orderItemsCount,
+                        'orderItemsSum' => $orderItemsSum,
+                        'tovar' => $tovar,
+                        'client' => $client,
+                        'currencies' => $currencies
+                    ];
+                }
+                else {
+                    // delete both cookies if order from sbt24order is not available
+                    Yii::$app->response->cookies->remove('sbt24order');
+                    Yii::$app->response->cookies->remove('sbt24client');
+                }
             }
             else {
                 // if value of cookie = 0
@@ -568,6 +576,11 @@ class SiteController extends Controller
         
         $catalog_url = '..'.Yii::$app->homeUrl.'catalog';
         $tovar_count = $model->getTovarCount($model->id);
+        $sub_tovar_count = $model->getSubTovarCount($model->id);
+
+        if($tovar_count == 0) {
+            $tovar_count = $sub_tovar_count;
+        }
 
         $this->view->title = $model->title.' ('.$tovar_count.')';
         $this->view->params['breadcrumbs'][] = ['label' => 'Каталог', 'url' => [$catalog_url]];

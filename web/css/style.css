@@ -603,6 +603,10 @@ a:hover {
         color: #5BB112;
         font-size: 1.2em;
 }
+#content-container .catalog-view-pagination-block {
+	padding: 0.5em;
+	margin-bottom: 1em;
+}
 
 
 /* goods-block - вывод категорий товаров --------------------------*/

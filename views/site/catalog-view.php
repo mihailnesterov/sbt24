@@ -106,8 +106,30 @@ use yii\widgets\Breadcrumbs;
                                                     ?>
                                                 </ul>
                                             </div>
-
                                         </div>  <!-- end filter-block -->
+
+                                        
+                                        <div class="catalog-view-pagination-block">
+                                            <div class="row">
+                                                <div class="col-xs-12 col-md-8">
+                                                    <div class="catalog-view-pagination">
+                                                        <div class="btn-group" role="group">
+                                                        
+                                                        </div>
+                                                    </div>
+                                                </div>  <!-- end col -->
+                                                <div class="col-xs-12 col-md-4 text-right">
+                                                    <div class="btn-group" role="group">                                                       
+                                                        <select id="select-catalog-pages-count" class="form-control">
+                                                            <option value="5">5</option>
+                                                            <option value="10" selected>10</option>
+                                                            <option value="20">20</option>
+                                                            <option value="50">50</option>
+                                                        </select>
+                                                    </div>
+                                                </div>  <!-- end col -->
+                                            </div>  <!-- end row -->
+                                        </div>  <!-- end catalog-view-pagination-block -->
                                         
                                         <div class="goods-container">	
                                             <div class="row">
@@ -132,6 +154,8 @@ use yii\widgets\Breadcrumbs;
                                                     endforeach;
                                                 } else {
                                                     
+                                                    $pageNumber = 1;
+
                                                     foreach ($tovar as $good):
                                                         if ($good->price_rub != 0) { 
                                                             $price = round($good->price_rub);
@@ -156,16 +180,6 @@ use yii\widgets\Breadcrumbs;
                                                             $hit = '';
                                                         }
 
-                                                        /*if($old_price != '') {
-                                                            if(substr($old_price, -3, 1) != '.') {
-                                                                $old_price = $old_price.'0';
-                                                            }
-                                                        }
-
-                                                        if(substr($price, -3, 1) != '.') {
-                                                            $price = $price.'0';
-                                                        }*/
-
                                                         if(strpos($price, '.')) {
                                                             if(substr($price, -3, 1) != '.') {
                                                                 $price = round($price,2).'0';
@@ -183,7 +197,7 @@ use yii\widgets\Breadcrumbs;
                                                             $old_price = $old_price.'.00';
                                                         }
 
-                                                        echo '<div v-if="categoryID == 0" class="goods-list-block">'
+                                                        echo '<div class="goods-list-block" data-page-number="'.$pageNumber.'">'
                                                             .'<div class="row">'
                                                             .'<div class="col-md-4 col-lg-3">'
                                                             .'<a href="'.Yii::$app->urlManager->createUrl(Yii::$app->homeUrl.'../view?id='.$good->id).'"><img src="images/goods/'.$good->photo1.'" alt="" class="img-responsive"></a>'
@@ -228,13 +242,26 @@ use yii\widgets\Breadcrumbs;
                                                             .'</div>  <!-- end row -->'
                                                             .'</div>  <!-- end goods-list-block -->';
                                                     endforeach;
+                                                    
                                                 }
 
                                                 ?>
-                                                
                                         
                                             </div>	<!-- end row -->
+
                                         </div>	<!-- end goods-container -->
+
+                                        <div class="catalog-view-pagination-block">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <div class="catalog-view-pagination">
+                                                        <div class="btn-group" role="group">
+                                                        
+                                                        </div>
+                                                    </div>
+                                                </div>  <!-- end col -->
+                                            </div>  <!-- end row -->
+                                        </div>  <!-- end catalog-view-pagination-block -->
 
                                     </div>	<!-- end content-block -->
 

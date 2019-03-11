@@ -305,8 +305,89 @@
                 $(this).addClass('table table-bordered table-responsive table-striped');
             });
         });
-        
 
+        /* goods-list-block paging */
+        function catalogPagination(){
+            let blocksCount = 0;
+            let pagesCount = $('#select-catalog-pages-count').val();
+            $('.goods-list-block').each(function() {
+                $(this).show();
+                blocksCount++;
+                let pageNumber = $(this).data('pageNumber');
+                if(blocksCount > pagesCount) {
+                    pageNumber++;
+                    $(this).data('pageNumber',pageNumber);
+                    $(this).hide();
+                }
+                //alert($(this).data('pageNumber'));
+            });
+            $('.catalog-view-pagination .btn-group').find('button').each(function() {
+                $(this).remove();
+            });
+            $('<button>', {
+                html: '1',
+                id: 'btn-pagination-block-1',
+                class: 'btn btn-default active',
+                click: function() {
+                    let page = $(this).html();
+                    
+                    $('.catalog-view-pagination').find('.btn-group button').each(function () {
+                        $(this).removeClass('active');
+                    });
+
+                    $(this).addClass('active');
+                }
+            }).appendTo('.catalog-view-pagination .btn-group');
+
+            var page = 1;           // current page number
+            //var goodsCounter = 0;   // counter for all goods
+            var first = 1;          // first good number in range
+            var last = (Number(first) + Number(pagesCount) - 1);    // last good number in range
+
+            $('.goods-list-block').each(function () {
+                if (pagesCount == last) {
+                    first = last;
+                    last = (Number(first) + Number(pagesCount)); 
+                    page++;
+                }
+                //$(this).attr('page', page);
+                $(this).data('pageNumber',page);
+                pagesCount++;
+            });
+
+            for(var i=1; i<page; i++) {
+                $('<button>', {
+                    html: (i+1),
+                    class: 'btn btn-default',
+                    click: function() {    
+                        let page = $(this).html();
+                        
+                        $('.catalog-view-pagination').find('.btn-group button').each(function () {
+                            $(this).removeClass('active');
+                        });
+    
+                        $(this).addClass('active');
+                        
+    
+                        $('.goods-list-block').each(function () {
+                            $(this).hide();
+                            if($(this).data('pageNumber') == page) {
+                                $(this).show();
+                            }
+                        });
+                    }
+                }).appendTo('.catalog-view-pagination .btn-group');
+            }
+        }
+        
+        $('#select-catalog-pages-count').change(function() {
+            catalogPagination();
+        });
+
+        $(function () {
+            $('#select-catalog-pages-count').change();
+        });
+        
 
         // adminka
         
