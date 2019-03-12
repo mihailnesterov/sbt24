@@ -23,8 +23,7 @@ class AppAsset extends AssetBundle
         'plugins/gritter/js/jquery.gritter.js',
         'js/swiper.min.js',
         'js/js.cookie.js',
-        'js/scripts.js',
-        'js/app.js'
+        'js/scripts.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
