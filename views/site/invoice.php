@@ -30,11 +30,6 @@ use yii2assets\printthis\PrintThis;
 
                 <div class="row">
 
-                        <?php
-                            // aside
-                            //echo $this->render('_aside-cart');
-                        ?>
-
                         <div class="col-md-10">
                                 <div id="content-container">
 

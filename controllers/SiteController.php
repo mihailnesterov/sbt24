@@ -870,7 +870,8 @@ class SiteController extends Controller
         date_default_timezone_set('Asia/Krasnoyarsk');
         $created = new \DateTime($order->created);
         //$created->format('d.m.Y (h:i)');
-        $this->view->title = 'Счет на оплату № sbt24-'.$id.' от '.$created->format( 'd ' . $months[date( 'n' )] . ' Y' ).' г.';
+        // $created->format( 'd ' . $months[date( 'n' )] . ' Y' )
+        $this->view->title = 'Счет на оплату № sbt24-'.$id.' от '.$created->format( 'd '.$months[$created->format('n')].' Y' ).' г.';
         $this->view->params['breadcrumbs'][] = ['label' => 'Мои заказы', 'url' => [Yii::$app->urlManager->createUrl(['../orders'])]];
         $this->view->params['breadcrumbs'][] = $this->view->title;
        
@@ -1014,7 +1015,7 @@ class SiteController extends Controller
         date_default_timezone_set('Asia/Krasnoyarsk');
         $created = new \DateTime($order->created);
         
-        $this->view->title = 'Счет на оплату № sbt24-'.$id.' от '.$created->format( 'd ' . $months[date( 'n' )] . ' Y' ).' г.';
+        $this->view->title = 'Счет на оплату № sbt24-'.$id.' от '.$created->format( 'd '.$months[$created->format('n')].' Y' ).' г.';
         
         Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
         $pdf = new Pdf([
