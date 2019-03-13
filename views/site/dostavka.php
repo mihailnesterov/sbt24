@@ -47,6 +47,34 @@ use yii\widgets\Breadcrumbs;
                                                                 <a href="<?= Yii::$app->urlManager->createUrl($banner->link) ?>"><img src="images/banners/<?= $banner->image ?>" alt="<?= $banner->name ?>" class="img-responsive"></a>
                                                         </div><!-- end banner-block -->
                                                 <?php endforeach ?>
+
+                                                <div class="page-block">
+                                                        <h2>Виды доставки</h2>
+                                                        
+                                                        <ul class="checked-list">
+                                                                <li>Самовывоз со склада</li>
+                                                                <li>Можно забрать товар в день оформления заказа или когда он поступит на склад.</li>
+                                                        </ul>
+                                                </div>
+                                                
+                                                <div class="page-block">
+                                                        <h2>Доставка по Красоярску</h2>
+                                                        
+                                                        <ul class="checked-list">
+                                                                <li>Курьерская служба привезет товары в течение 1-3 дней.</li>
+                                                                <li>Для товаров под заказ срок отгрузки уточнит менеджер.</li>
+                                                        </ul>
+                                                </div>
+
+                                                <div class="page-block">
+                                                        <h2>Доставка по Красоярскому краю и России</h2>
+                                                        <ul class="checked-list">
+                                                                <li>Доставим товар на склад транспортной компании, далее перевозкой занимается ТК. </li>
+                                                                <li>Работаем с ПЭК, ТрансГарант, Энергия, ЖелДорЭкспедиция, Деловые линии, ГарантПост и др. </li>
+                                                                <li>Стоимость доставки до склада 350 р., при заказе свыше 50 000 р. бесплатно. </li>
+                                                                <li>Услуги ТК оплачивает клиент при получении товара.</li>
+                                                        </ul>
+                                                </div>
                                                 
                                         </div>	<!-- end content-block -->
 

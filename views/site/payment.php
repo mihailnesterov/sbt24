@@ -47,6 +47,16 @@ use yii\widgets\Breadcrumbs;
                                                                 <a href="<?= Yii::$app->urlManager->createUrl($banner->link) ?>"><img src="images/banners/<?= $banner->image ?>" alt="<?= $banner->name ?>" class="img-responsive"></a>
                                                         </div><!-- end banner-block -->
                                                 <?php endforeach ?>
+
+                                                <div class="page-block">
+                                                        <h2>Способы оплаты</h2>
+                                                        <ul class="checked-list">
+                                                                <li>Наличными курьеру</li>
+                                                                <li>Можно забрать товар в день оформления заказа или когда он поступит на склад.</li>
+                                                                <li>Наличными или через терминал для безналичной оплаты в офисе</li>
+                                                                <li>Для юр. лиц по безналичному расчету</li>
+                                                        </ul>
+                                                </div>
                                                 
                                         </div>	<!-- end content-block -->
 

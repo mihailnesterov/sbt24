@@ -63,12 +63,12 @@ header, nav, section, main, article, aside, footer
 }
 
 /* temp ---------------------- */
-.container, .container-fluid {
+/*.container, .container-fluid {
 	border: 0px red solid;
 }
 div, header, main, footer, aside, ul, nav {
 	border: 0px green solid;
-}
+}*/
 
 
 /* default ---------------------- */
@@ -115,9 +115,9 @@ a:hover {
 
 /* wrapper ---------------------- */
 
-#wrapper {
-	/**/
-}
+/*#wrapper {
+	
+}*/
 
 /* header ---------------------- */
 
@@ -582,6 +582,34 @@ a:hover {
 #content-container .content-block header p {
 	padding: 1em;
 	margin: 0.5em 0;
+}
+#content-container .content-block .page-block {
+	padding: 2em 1em;
+	margin: 1.5em 0;
+	border: 1px #f0f0f0  solid;
+}
+#content-container .content-block h2 {
+	padding: 0.5em;
+	/*color: #5BB112;*/
+	color: #555;
+	font-weight: 600;
+}
+#content-container .content-block .checked-list {
+	margin-left: 1em;
+	margin-bottom: 1em;
+	list-style-type: none;
+}
+#content-container .content-block .checked-list li {
+	line-height: 2;
+}
+#content-container .content-block .checked-list li:before{
+	content: '\f00c';
+	font-family: 'FontAwesome';
+	/*width: 10px;
+	height: 10px;*/
+	font-size: 1.3em;
+	margin-right: 0.6em;
+	color: #5BB112;
 }
 
 #content-container .banner-block {
