@@ -306,72 +306,76 @@
             });
         });
 
+        // https://github.com/dbrekalo/fastsearch
+
         /* goods-list-block paging */
         function catalogPagination(){
-            let blocksCount = 0;
-            let pagesCount = $('#select-catalog-pages-count').val();
-            $('.goods-list-block').each(function() {
-                $(this).show();
-                blocksCount++;
-                let pageNumber = $(this).data('pageNumber');
-                if(blocksCount > pagesCount) {
-                    pageNumber++;
-                    $(this).data('pageNumber',pageNumber);
-                    $(this).hide();
+            // vars:
+            let pageQuantity = 0;  // pagination pages quantity (get below)
+            let goodsQuantity = 0;  // goods quantity
+            let currPage = 1;   // current page number
+            let selectPageCount = $('#select-catalog-pages-count').val(); // selected page count
+            let last = selectPageCount; // set last goods in range
+
+            // init goods params
+            $('.goods-list-block').each(function () {
+                goodsQuantity++;    // calc goods quantity
+                // update last if goodsQuantity == last
+                if( goodsQuantity == (parseInt(last)+1) ) {
+                    currPage++; // set current page + 1
+                    last = parseInt(selectPageCount) * parseInt(currPage);
                 }
-                //alert($(this).data('pageNumber'));
+                $(this).data('pageNumber', currPage);  // set data-page-number
             });
+
+            // get pagination pages quantity
+            pageQuantity = Math.ceil(goodsQuantity / selectPageCount);  
+
+            // remove all pagination button
             $('.catalog-view-pagination .btn-group').find('button').each(function() {
                 $(this).remove();
             });
+
+            // add first default pagination button
             $('<button>', {
                 html: '1',
-                id: 'btn-pagination-block-1',
+                //id: 'btn-pagination-block-1',
                 class: 'btn btn-default active',
                 click: function() {
-                    let page = $(this).html();
-                    
+                    let btnPageNum = $(this).html();    // num on selected button
+                    // set carrent page = html of current button
+                    currPage = btnPageNum;
+                    // set active current button
                     $('.catalog-view-pagination').find('.btn-group button').each(function () {
                         $(this).removeClass('active');
                     });
-
                     $(this).addClass('active');
+                    $('.goods-list-block').each(function () {
+                        $(this).hide();
+                        if($(this).data('pageNumber') == currPage) {
+                            $(this).show();
+                        }
+                    });
                 }
             }).appendTo('.catalog-view-pagination .btn-group');
 
-            var page = 1;           // current page number
-            //var goodsCounter = 0;   // counter for all goods
-            var first = 1;          // first good number in range
-            var last = (Number(first) + Number(pagesCount) - 1);    // last good number in range
-
-            $('.goods-list-block').each(function () {
-                if (pagesCount == last) {
-                    first = last;
-                    last = (Number(first) + Number(pagesCount)); 
-                    page++;
-                }
-                //$(this).attr('page', page);
-                $(this).data('pageNumber',page);
-                pagesCount++;
-            });
-
-            for(var i=1; i<page; i++) {
+            // add all pagination buttons (second... and more)
+            for(var i=1; i<pageQuantity; i++) {
                 $('<button>', {
                     html: (i+1),
                     class: 'btn btn-default',
                     click: function() {    
-                        let page = $(this).html();
-                        
+                        let btnPageNum = $(this).html();    // num on selected button
+                        // set carrent page = html of current button
+                        currPage = btnPageNum;
+                        // set active current button
                         $('.catalog-view-pagination').find('.btn-group button').each(function () {
                             $(this).removeClass('active');
                         });
-    
                         $(this).addClass('active');
-                        
-    
                         $('.goods-list-block').each(function () {
                             $(this).hide();
-                            if($(this).data('pageNumber') == page) {
+                            if($(this).data('pageNumber') == currPage) {
                                 $(this).show();
                             }
                         });
@@ -379,17 +383,19 @@
                 }).appendTo('.catalog-view-pagination .btn-group');
             }
         }
-        
+        // set pagination on select page value
         $('#select-catalog-pages-count').change(function() {
             catalogPagination();
+            $('.catalog-view-pagination').find('.btn-group .active').click();
         });
-
+        // set pagination on DOM load
         $(function () {
-            $('#select-catalog-pages-count').change();
+            catalogPagination();
+            $('.catalog-view-pagination').find('.btn-group .active').click();
         });
         
 
-        // adminka
+        // admin module
         
         // admin/category: toggle category
         $('.category-level-0').find('li').on('click', '.has-subcat', function (e) {
