@@ -146,7 +146,7 @@ use yii\widgets\Breadcrumbs;
                                                             . '<a href="'.Yii::$app->urlManager->createUrl('catalog/'.$cat->id).'"><img src="images/catalog/'.$cat->image.'" alt="'.$cat->name.'" class="img-responsive"></a>'
                                                             . '<hr>'
                                                             //. '<hr><p><i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star-o" aria-hidden="true"></i></p>'
-                                                            . '<h4>'.$cat->name.'</h4>'
+                                                            . '<h4>'.$cat->name.' ('.$tovar_count.')</h4>'
                                                             . Html::a('Подробнее', ['catalog/'.$cat->id], ['class' => 'goods-more'])
                                                             . '</div>    <!-- end goods-block -->'
                                                             . '</div>    <!-- end col -->';
