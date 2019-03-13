@@ -16,12 +16,14 @@ class AppAsset extends AssetBundle
         'css/font-awesome.min.css',
         'css/animate.css',
         'css/swiper.min.css',
+        'css/lightbox.min.css',
         'plugins/gritter/css/jquery.gritter.css',
         'css/style.css'
     ];
     public $js = [
         'plugins/gritter/js/jquery.gritter.js',
         'js/swiper.min.js',
+        'js/lightbox.min.js',
         'js/js.cookie.js',
         'js/scripts.js'
     ];

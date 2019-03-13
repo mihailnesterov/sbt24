@@ -399,6 +399,14 @@
             catalogPagination();
             $('.catalog-view-pagination .btn-group .active:first').click();
         });
+
+        // init lightbox    https://lokeshdhakar.com/projects/lightbox2
+        $(function () {
+            lightbox.option({
+                'showImageNumberLabel': false,
+                'maxWidth': 900,
+            });
+        });
         
 
         // admin module

@@ -48,29 +48,15 @@ use yii\widgets\Breadcrumbs;
                                                 <div class="row">
                                                     <div class="goods-view-block">
                                                             <div class="goods-view-img-block col-md-4 col-lg-4">
-                                                                <img src="images/goods/<?= $model->photo1 ?>" alt="<?= $model->name ?>" class="img-responsive">
+                                                                <a href="images/goods/<?= $model->photo1 ?>" data-lightbox="photo1"><img src="images/goods/<?= $model->photo1 ?>" alt="<?= $model->name ?>" class="img-responsive"></a>
                                                                 <?= $hit ?>
                                                                 <?= $discount ?>
                                                             </div>  <!-- end col -->
                                                             
                                                             <div class="col-md-8 col-lg-8">
-                                                                <?php /*yii\widgets\Pjax::begin([
-                                                                    'id' => 'addToCartFromViewPjax',
-                                                                    'timeout' => 0
-                                                                    ]) */
-                                                                ?>
-                                                                <?php $form = ActiveForm::begin(/*['options' => ['data-pjax' => true]]*/); ?>
+                                                                <?php $form = ActiveForm::begin(); ?>
                                                                     <div class="row">      
                                                                     <?php
-                                                                        /*if($old_price != '') {
-                                                                            if(substr($old_price, -3, 1) != '.') {
-                                                                                $old_price = $old_price.'0';
-                                                                            }
-                                                                        }
-                                                                        if(substr($price, -3, 1) != '.') {
-                                                                            $price = $price.'0';
-                                                                        }*/
-
                                                                         if(strpos($price, '.')) {
                                                                             if(substr($price, -3, 1) != '.') {
                                                                                 $price = round($price,2).'0';
@@ -95,7 +81,6 @@ use yii\widgets\Breadcrumbs;
                                                                         <?= Html::submitButton('<i class="fa fa-shopping-cart"></i> В корзину', ['class' => 'goods-buy buy-from-view col-md-5']) ?>
                                                                     </div> <!-- end row -->
                                                                 <?php ActiveForm::end(); ?>
-                                                                <?php //yii\widgets\Pjax::end(); ?>
                                                                 
                                                                 <br>
                                                                 
