@@ -1163,20 +1163,4 @@ class SiteController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
     
-    /**
-     * ajax cart-add-client - проверить, надо ли? если нет - удалить views/ajax/cart-to-client
-     */
-    /*public function actionCartAddClient()
-    {
-        $model = new Clients();
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            $model->company = 'new';
-            $model->save();
-        }
-        
-        return $this->renderAjax('cart-add-client', [
-            'model' => $model,
-        ]);
-    }*/
 }

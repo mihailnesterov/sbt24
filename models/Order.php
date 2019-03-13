@@ -133,4 +133,10 @@ class Order extends \yii\db\ActiveRecord
         }
 
     }
+
+    /*  */
+    public function getOrderSum($id)
+    {
+        return $sum = OrderItems::find()->where(['order_id' => $id])->sum('sum');
+    }
 }

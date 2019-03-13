@@ -56,7 +56,7 @@ use yii\widgets\ActiveForm;
                                                             Дата заказа
                                                         </th>
                                                         <th class="text-center">
-                                                            Сумма, руб.
+                                                            Сумма заказа, руб.
                                                         </th>
                                                     </tr>
                                                 </thead>
@@ -74,7 +74,7 @@ use yii\widgets\ActiveForm;
                                                             <?= $created->format('d.m.Y') ?> г.
                                                         </td>
                                                         <td class="text-center">
-                                                            0,00
+                                                            <?= $order->getOrderSum($order->id) ?>
                                                         </td>
                                                     </tr>
                                                     <?php $ordersCounter++; ?>
