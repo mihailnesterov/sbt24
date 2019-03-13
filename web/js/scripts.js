@@ -310,13 +310,19 @@
 
         /* goods-list-block paging */
         function catalogPagination(){
+            // if there are no any goods-list-block - hide pagination and return
+            if($.find('.goods-list-block') == false) {
+                $('.filter-block').hide();
+                $('.catalog-view-pagination-block').hide();
+                return;
+            }
             // vars:
             let pageQuantity = 0;  // pagination pages quantity (get below)
             let goodsQuantity = 0;  // goods quantity
             let currPage = 1;   // current page number
             let selectPageCount = $('#select-catalog-pages-count').val(); // selected page count
             let last = selectPageCount; // set last goods in range
-
+            
             // init goods params
             $('.goods-list-block').each(function () {
                 goodsQuantity++;    // calc goods quantity
@@ -386,12 +392,12 @@
         // set pagination on select page value
         $('#select-catalog-pages-count').change(function() {
             catalogPagination();
-            $('.catalog-view-pagination').find('.btn-group .active').click();
+            $('.catalog-view-pagination .btn-group .active:first').click();
         });
         // set pagination on DOM load
         $(function () {
             catalogPagination();
-            $('.catalog-view-pagination').find('.btn-group .active').click();
+            $('.catalog-view-pagination .btn-group .active:first').click();
         });
         
 
