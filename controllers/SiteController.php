@@ -1136,6 +1136,57 @@ class SiteController extends Controller
         ]);
     }
 
+    /**
+     * Search page model.
+     * If view is successful, the browser will be redirected to the 'search' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionSearch()
+    {
+        mb_internal_encoding('UTF-8');
+        
+        $search = Yii::$app->request->get('q');
+
+        $search1 = str_replace(' ', '', strtolower($search));
+        //$search1 = strtolower($search);
+        $tovar = Tovar::find()
+                /*->where(['like', 'replace(lower(name), " ", "")', $search1])
+                ->orWhere(['like', 'replace(lower(keywords), " ", "")', $search1])
+                ->orWhere(['like', 'replace(lower(description), " ", "")', $search1])
+                ->orWhere(['like', 'replace(lower(brand), " ", "")', $search1])
+                ->orWhere(['like', 'replace(lower(type), " ", "")', $search1])
+                ->andWhere(['like', 'replace(lower(model), " ", "")', $search1]);*/
+
+                /*->where(['like', 'lower(name)', $search1])
+                ->orWhere(['like', 'lower(keywords)', $search1])
+                ->orWhere(['like', 'lower(description)', $search1])
+                ->orWhere(['like', 'lower(brand)', $search1])
+                ->orWhere(['like', 'lower(type)', $search1])
+                ->andWhere(['like', 'lower(model)', $search1]);*/
+
+                ->where(['like', 'replace(name, " ", "")', $search1])
+                ->orWhere(['like', 'replace(keywords, " ", "")', $search1])
+                ->orWhere(['like', 'replace(description, " ", "")', $search1])
+                ->orWhere(['like', 'replace(brand, " ", "")', $search1])
+                ->orWhere(['like', 'replace(type, " ", "")', $search1])
+                ->orWhere(['like', 'replace(model, " ", "")', $search1]);
+
+        $currencies = $this->getCurrencies();
+        
+        $this->view->title = 'Результаты поиска';
+        $this->view->params['breadcrumbs'][] = $this->view->title;
+        
+        return $this->render('search', [
+            'tovar' => $tovar->all(),
+            'tovar_count' => $tovar->count(),
+            //'pages' => $pages,
+            'currencies' => $currencies,
+            'search' => $search,
+        ]);
+    }
+
     protected function findClientModel($id)
     {
         if (($model = Clients::findOne($id)) !== null) {

@@ -12,6 +12,8 @@ $category = Yii::$app->controller->getCatalog('category');
 $client = Yii::$app->controller->getClient();
 // получаем данные о заказе
 $order = Yii::$app->controller->getOrderFromCookie();
+
+mb_internal_encoding('UTF-8');
 ?>
 <aside class="col-sm-5 col-md-4">
     
@@ -51,11 +53,11 @@ $order = Yii::$app->controller->getOrderFromCookie();
                 <ul class="nav navbar-nav">
                     <h3><i class="fa fa-bars" aria-hidden="true"></i>Каталог товаров</h3>
                     <li>
-                        <form id="search" class="form-inline">
+                        <form id="search" method="GET" action="<?= Yii::$app->urlManager->createUrl(['search']) ?>" class="form-inline">
                             <div class="input-group col-xs-12">
-                                <input class="form-control" type="text" placeholder="Поиск по каталогу..." aria-label="Поиск...">
+                                <input id="q" name="q" class="form-control" type="text" placeholder="Поиск по каталогу..." aria-label="Поиск...">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                    <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
                                 </span>
                             </div>
                         </form>
