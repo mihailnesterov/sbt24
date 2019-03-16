@@ -96,6 +96,103 @@ class Category extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return [$price_min, $price_max]
+     */
+    public function getMinMaxTovarPrice($id)
+    {
+        //$tovar = Tovar::find()->where(['category_id' => $id]);
+        $tovar_rub = Tovar::find()->where(['category_id' => $id])->andWhere(['!=', 'price_rub', 0]);
+        $tovar_usd = Tovar::find()->where(['category_id' => $id])->andWhere(['!=', 'price_usd', 0]);
+        $tovar_eur = Tovar::find()->where(['category_id' => $id])->andWhere(['!=', 'price_eur', 0]);
+
+        $currencies = Yii::$app->controller->getCurrencies();
+
+        $min_rub = $min_usd = $min_eur = $max_rub = $max_usd = $max_eur = 0;
+        
+        /*$min_rub = $tovar->min('price_rub');
+        $min_usd = $tovar->min('price_usd');
+        $min_eur = $tovar->min('price_eur');
+        
+        $max_rub = $tovar->max('price_rub');
+        $max_usd = $tovar->max('price_usd');
+        $max_eur = $tovar->max('price_eur');*/
+
+        /*$min_rub = $tovar->andWhere(['!=', 'price_rub', '0'])->min('price_rub');
+        $min_usd = $tovar->andWhere(['!=', 'price_usd', '0'])->min('price_usd');
+        $min_eur = $tovar->andWhere(['!=', 'price_eur', '0'])->min('price_eur');
+        
+        $max_rub = $tovar->andWhere(['!=', 'price_rub', '0'])->max('price_rub');
+        $max_usd = $tovar->andWhere(['!=', 'price_usd', '0'])->max('price_usd');
+        $max_eur = $tovar->andWhere(['!=', 'price_eur', '0'])->max('price_eur');*/
+
+        $min_rub = $tovar_rub->min('price_rub') ? $tovar_rub->min('price_rub') : 0;
+        $min_usd = $tovar_usd->min('price_usd') ? $tovar_usd->min('price_usd') : 0;
+        $min_eur = $tovar_eur->min('price_eur') ? $tovar_eur->min('price_eur') : 0;
+        
+        $max_rub = $tovar_rub->max('price_rub') ? $tovar_rub->max('price_rub') : 0;
+        $max_usd = $tovar_usd->max('price_usd') ? $tovar_usd->max('price_usd') : 0;
+        $max_eur = $tovar_eur->max('price_eur') ? $tovar_eur->max('price_eur') : 0;
+
+        /*$price_min = 0;
+        $price_max = 0;*/
+
+        $price_min = round(min($min_rub, $min_usd, $min_eur),2);
+        $price_max = round(max($max_rub, $max_usd, $max_eur),2);
+        
+        /*if ($min_rub != '0') { 
+            $price_min = round($min_rub,2);
+        }
+        if ($min_usd != '0') {
+            $price_min = round($min_usd * $currencies['USD'],2);
+        } 
+        if ($min_eur != '0') {
+            $price_min = round($min_eur * $currencies['EUR'],2);
+        }
+
+        if ($max_rub != '0') { 
+            $price_max = round($max_rub,2);
+        }
+        if ($max_usd != '0') {
+            $price_max = round($max_usd * $currencies['USD'],2);
+        } 
+        if ($max_eur != '0') {
+            $price_max = round($max_eur * $currencies['EUR'],2);
+        }*/
+        
+
+        if(strpos($price_min, '.')) {
+            if(substr($price_min, -3, 1) != '.') {
+                $price_min = round($price_min,2).'0';
+            }
+        }
+        if(!strpos($price_min, '.')) {
+            $price_min = $price_min.'.00';
+        }
+
+        if(strpos($price_max, '.')) {
+            if(substr($price_max, -3, 1) != '.') {
+                $price_max = round($price_max,2).'0';
+            }
+        }
+        if(!strpos($price_max, '.')) {
+            $price_max = $price_max.'.00';
+        }
+
+        $result = [
+            'price_min' => $price_min,
+            'price_max' => $price_max,
+            'max_rub' => $max_rub,
+            'max_usd' => $max_usd,
+            'max_eur' => $max_eur,
+            'min_rub' => $min_rub,
+            'min_usd' => $min_usd,
+            'min_eur' => $min_eur,
+        ];
+        
+        return $result;
+    }
+
+    /**
      * @return uploaded image file
      */
     public function upload($imageFile, $image){

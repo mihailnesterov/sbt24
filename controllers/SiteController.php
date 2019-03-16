@@ -567,22 +567,25 @@ class SiteController extends Controller
     public function actionCatalogView($id)
     {
         $model = $this->findCatalogModel($id);      
-        $tovar = Tovar::find()->where(['category_id' => $model->id])->all();  
+        $tovar = Tovar::find()->where(['category_id' => $model->id])->all(); 
         $sub_category = Category::find()->where(['parent' => $model->id])->all();
         $brands = Tovar::find()->select('brand')->where(['category_id' => $model->id])->orderby(['brand'=>SORT_ASC])->distinct()->all();
         $models = Tovar::find()->select('model')->where(['category_id' => $model->id])->orderby(['brand'=>SORT_ASC])->distinct()->all();
+        $types = Tovar::find()->select('type')->where(['category_id' => $model->id])->orderby(['brand'=>SORT_ASC])->distinct()->all();
         $bannersPos3 = Banners::find()->where((['position' => 3]))->orderby(['rand()'=>SORT_ASC])->limit(1)->all();
         $currencies = $this->getCurrencies();
         
         $catalog_url = '..'.Yii::$app->homeUrl.'catalog';
-        $tovar_count = $model->getTovarCount($model->id);
+        /*$tovar_count = $model->getTovarCount($model->id);
         $sub_tovar_count = $model->getSubTovarCount($model->id);
 
         if($tovar_count == 0) {
             $tovar_count = $sub_tovar_count;
         }
 
-        $this->view->title = $model->title.' ('.$tovar_count.')';
+        $this->view->title = $model->title.' ('.$tovar_count.')';*/
+
+        $this->view->title = $model->title.' купить в Красноярске';
         $this->view->params['breadcrumbs'][] = ['label' => 'Каталог', 'url' => [$catalog_url]];
         if (!$sub_category) {
             $sub_category_url = '..'.Yii::$app->homeUrl.'catalog/'.$model->parent;
@@ -608,6 +611,7 @@ class SiteController extends Controller
             'tovar' => $tovar,
             'brands' => $brands,
             'models' => $models,
+            'types' => $types,
             'bannersPos3' => $bannersPos3,
             'currencies' => $currencies
         ]);
@@ -1181,7 +1185,6 @@ class SiteController extends Controller
         return $this->render('search', [
             'tovar' => $tovar->all(),
             'tovar_count' => $tovar->count(),
-            //'pages' => $pages,
             'currencies' => $currencies,
             'search' => $search,
         ]);

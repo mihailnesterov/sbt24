@@ -7,6 +7,26 @@
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
 use yii\widgets\Breadcrumbs;
+
+// get tovar count
+$tovar_count = $model->getTovarCount($model->id);
+$sub_tovar_count = $model->getSubTovarCount($model->id);
+if($tovar_count == 0) {
+    $tovar_count = $sub_tovar_count;
+}
+// get min/max tovar price
+$tovar_range = $model->getMinMaxTovarPrice($model->id);
+
+echo 'price_min='.$tovar_range['price_min'].'<br>';
+echo 'price_max='.$tovar_range['price_max'].'<br><br>';
+echo 'min_rub='.$tovar_range['min_rub'].'<br>';
+echo 'min_usd='.$tovar_range['min_usd'].'<br>';
+echo 'min_eur='.$tovar_range['min_eur'].'<br><br>';
+echo 'max_rub='.$tovar_range['max_rub'].'<br>';
+echo 'max_usd='.$tovar_range['max_usd'].'<br>';
+echo 'max_eur='.$tovar_range['max_eur'].'<br>';
+
+
 ?>
 
 <main role="main">
@@ -69,13 +89,80 @@ use yii\widgets\Breadcrumbs;
                                     
                                     <div class="content-block">
                                         <header>
-                                            <h1><?= Html::encode($this->title) ?></h1>
+                                            <h1><?= Html::encode($model->title.' ('.$tovar_count.')') ?></h1>
                                         </header>
-                                        
-                                        <div class="filter-block btn-toolbar" role="group" aria-label="...">
-                                            <button type="button" class="btn btn-default"><i class="fa fa-eye" aria-hidden="true"></i> Новинки</button>
-                                            <button type="button" class="btn btn-default"><i class="fa fa-star-o" aria-hidden="true"></i> Популярные</button>
-                                            <button type="button" class="btn btn-default"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Скидки</button>
+
+                                        <div class="filter-block row">
+                                            <div class="toggle-panel col-xs-12 text-right">
+                                                <div class="row">
+                                                    <div class="col-xs-9 col-md-10 text-left">
+                                                        <h3>Расширенный поиск</h3>
+                                                    </div>
+                                                    <div class="col-xs-3 col-md-2">
+                                                        <button id="filter-block-toggle" class="btn btn-link" title="Скрыть расширенный поиск">
+                                                            <i class="fa fa-close"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="filter-block-container col-xs-12">
+                                                <div class="col-xs-6 col-md-4"> 
+                                                    <h4>Бренд</h4>
+                                                    <ul class="filter-by-brand">
+                                                        <?php foreach ($brands as $brand):?>
+                                                            <li>
+                                                                <div class="checkbox">
+                                                                    <label>
+                                                                        <input type="checkbox"> <span><?= $brand->brand ?></span>
+                                                                    </label>
+                                                                </div>
+                                                            </li>
+                                                        <?php endforeach;?>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-xs-6 col-md-4">
+                                                    <h4>Тип</h4>
+                                                    <ul class="filter-by-type">
+                                                        <?php foreach ($types as $type):?>
+                                                            <li>
+                                                                <div class="checkbox">
+                                                                    <label>
+                                                                        <input type="checkbox"> <span><?= $type->type ?></span>
+                                                                    </label>
+                                                                </div>
+                                                            </li>
+                                                        <?php endforeach;?>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-xs-12 col-md-4">
+                                                    <h4>Цена</h4>
+                                                    <div class="filter-block-price">
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                <div class="input-group-addon">от</div>
+                                                                <input class="form-control" type="text" id="price-from" placeholder="цена от..." value="<?= $tovar_range['price_min'] ?>">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                <div class="input-group-addon">до</div>
+                                                                <input class="form-control" type="text" id="price-to" placeholder="цена до..." value="<?= $tovar_range['price_max'] ?>">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="filter-block-buttons col-xs-12 text-center">
+                                                    <button id="btn-filter-apply" class="btn btn-default"><i class="fa fa-check"></i> Найти</button>
+                                                    <button id="btn-filter-cancel" class="btn btn-default"><i class="fa fa-close"></i> Сбросить</button>
+                                                </div>
+                                            </div>  <!-- end filter-block-container -->
+                                        </div>  <!-- end filter-block -->
+
+                                        <div class="filter-block btn-toolbar hidden" role="group" aria-label="...">
+                                            <button type="button" class="btn btn-default"><i class="fa fa-eye"></i> Новинки</button>
+                                            <button type="button" class="btn btn-default"><i class="fa fa-star-o"></i> Популярные</button>
+                                            <button type="button" class="btn btn-default"><i class="fa fa-thumbs-o-up"></i> Скидки</button>
 
                                             <div class="btn-group" role="group">
                                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -100,25 +187,32 @@ use yii\widgets\Breadcrumbs;
                                                 <ul class="dropdown-menu">
                                                     <?php
                                                         // выводим модели
-                                                        foreach ($models as $model):
+                                                        /*foreach ($models as $model):
                                                             echo '<li><a href="#">'.$model->model.'</a></li>';
-                                                        endforeach;
+                                                        endforeach;*/
                                                     ?>
+                                                    <?php foreach ($models as $model):?>
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox"> <?= $model->model ?>
+                                                            </label>
+                                                        </div>
+                                                    <?php endforeach;?>
                                                 </ul>
                                             </div>
-                                        </div>  <!-- end filter-block -->
+                                        </div>  <!-- end filter-block hidden -->
 
                                         
                                         <div class="catalog-view-pagination-block">
                                             <div class="row">
-                                                <div class="col-xs-12 col-md-8">
+                                                <div class="col-xs-9 col-md-8">
                                                     <div class="catalog-view-pagination">
                                                         <div class="btn-group" role="group">
                                                         
                                                         </div>
                                                     </div>
                                                 </div>  <!-- end col -->
-                                                <div class="col-xs-12 col-md-4 text-right">
+                                                <div class="col-xs-3 col-md-4 text-right">
                                                     <div class="btn-group" role="group">                                                       
                                                         <select id="select-catalog-pages-count" class="form-control">
                                                             <option value="5">5</option>
@@ -155,7 +249,7 @@ use yii\widgets\Breadcrumbs;
                                                 } else {
                                                     
                                                     $pageNumber = 1;
-
+                                                    $price = 0;
                                                     foreach ($tovar as $good):
                                                         if ($good->price_rub != 0) { 
                                                             $price = round($good->price_rub);
@@ -197,7 +291,7 @@ use yii\widgets\Breadcrumbs;
                                                             $old_price = $old_price.'.00';
                                                         }
 
-                                                        echo '<div class="goods-list-block" data-page-number="'.$pageNumber.'">'
+                                                        echo '<div class="goods-list-block" data-page-number="'.$pageNumber.'" data-brand="'.$good->brand.'" data-type="'.$good->type.'">'
                                                             .'<div class="row">'
                                                             .'<div class="col-md-4 col-lg-3">'
                                                             .'<a href="'.Yii::$app->urlManager->createUrl(Yii::$app->homeUrl.'../view?id='.$good->id).'"><img src="images/goods/'.$good->photo1.'" alt="" class="img-responsive"></a>'

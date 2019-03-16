@@ -407,6 +407,72 @@
                 'maxWidth': 900,
             });
         });
+
+        /* goods-list-block toggle show/hide*/
+        
+        $(function () {
+            $('#filter-block-toggle').on('click', function() {
+                $('.filter-block-container').toggle(500, function(){
+                    if($(this).css('display') == 'none') {
+                        $('#filter-block-toggle').attr('title', 'Открыть расширенный поиск');
+                        $('#filter-block-toggle')
+                            .find('i')
+                                .removeClass('fa-close')
+                                    .addClass('fa-chevron-down')
+                                        .css({'color':'#5BB112'});
+                    } else {
+                        $('#filter-block-toggle').attr('title', 'Скрыть  расширенный поиск');
+                        $('#filter-block-toggle')
+                            .find('i')
+                                .removeClass('fa-chevron-down')
+                                    .addClass('fa-close')
+                                        .css({'color':'#D9534F'});
+                    }
+                });
+                
+            });
+        });
+
+        // catalog / filter block
+        $('#btn-filter-apply').click(function() {
+            $('.catalog-view-pagination .btn-group .active:first').click();
+            let filterCount = 0;
+            let allBrandsClear = true;
+            let allTypesClear = true;
+            $('.goods-list-block').each(function () {
+                $(this).data('pageNumber', 1);
+                $(this).hide();
+                let goods = $(this);
+                let brand = $(this).data('brand');
+                let type = $(this).data('type');
+                $('.filter-by-brand li').each(function () {
+                    let label = $(this).find('label span').html();
+                    let checked = $(this).find('input[type="checkbox"]').is(':checked');
+                    if( checked == true && brand == label){
+                        $(goods).show();
+                        filterCount++;
+                    }
+                });
+                $('.filter-by-type li').each(function () {
+                    let label = $(this).find('label span').html();
+                    let checked = $(this).find('input[type="checkbox"]').is(':checked');
+                    if( checked == true && type == label){
+                        $(goods).show();
+                        filterCount++;
+                    }
+                });
+            });
+            $(this).html('<i class="fa fa-check"></i> Найдено: ' + filterCount);
+            $('.catalog-view-pagination-block').hide();
+        });
+        $('.filter-by-brand li').find('input[type="checkbox"]').click(function() {
+            $('#btn-filter-apply').html('<i class="fa fa-check"></i> Найти');
+        });
+        $('.filter-by-type li').find('input[type="checkbox"]').click(function() {
+            $('#btn-filter-apply').html('<i class="fa fa-check"></i> Найти');
+        });
+
+        
         
 
         // admin module

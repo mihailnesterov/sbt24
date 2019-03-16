@@ -154,13 +154,47 @@ use yii\widgets\Breadcrumbs;
                                                         <div class="row">
 
                                                                 <div class="col-sm-6 col-lg-4">
-                                                                        <div class="goods-block" style="min-height: 120px;">
+                                                                        <div class="goods-block" data-brend="" style="min-height: 120px;">
                                                                                 <img src="images/brands/dors.png" alt="" class="img-responsive">
                                                                         </div>
                                                                 </div>	<!-- end col -->
                                                                 <div class="col-sm-6 col-lg-4">
                                                                         <div class="goods-block" style="min-height: 120px;">
                                                                                 <img src="images/brands/ctcoin.png" alt="" class="img-responsive">
+                                                                        </div>
+                                                                </div>	<!-- end col -->
+
+                                                                <div class="col-sm-6 col-lg-4">
+                                                                        <div class="goods-block" style="min-height: 120px;">
+                                                                                <img src="images/brands/dors.png" alt="" class="img-responsive">
+                                                                        </div>
+                                                                </div>	<!-- end col -->
+
+                                                                <div class="col-sm-6 col-lg-4">
+                                                                        <div class="goods-block" style="min-height: 120px;">
+                                                                                <img src="images/brands/ctcoin.png" alt="" class="img-responsive">
+                                                                        </div>
+                                                                </div>	<!-- end col -->
+                                                                <div class="col-sm-6 col-lg-4">
+                                                                        <div class="goods-block" style="min-height: 120px;">
+                                                                                <img src="images/brands/dors.png" alt="" class="img-responsive">
+                                                                        </div>
+                                                                </div>	<!-- end col -->
+
+                                                                <div class="col-sm-6 col-lg-4">
+                                                                        <div class="goods-block" style="min-height: 120px;">
+                                                                                <img src="images/brands/magner.png" alt="" class="img-responsive">
+                                                                        </div>
+                                                                </div>	<!-- end col -->
+
+                                                                <div class="col-sm-6 col-lg-4">
+                                                                        <div class="goods-block" style="min-height: 120px;">
+                                                                                <img src="images/brands/dors.png" alt="" class="img-responsive">
+                                                                        </div>
+                                                                </div>	<!-- end col -->
+                                                                <div class="col-sm-6 col-lg-4">
+                                                                        <div class="goods-block" style="min-height: 120px;">
+                                                                                <img src="images/brands/magner.png" alt="" class="img-responsive">
                                                                         </div>
                                                                 </div>	<!-- end col -->
 
