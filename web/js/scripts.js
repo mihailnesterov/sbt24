@@ -437,8 +437,7 @@
         $('#btn-filter-apply').click(function() {
             $('.catalog-view-pagination .btn-group .active:first').click();
             let filterCount = 0;
-            let allBrandsClear = true;
-            let allTypesClear = true;
+            let allBrandsClear = allTypesClear = true;
             $('.goods-list-block').each(function () {
                 $(this).data('pageNumber', 1);
                 $(this).hide();
@@ -446,25 +445,72 @@
                 let brand = $(this).data('brand');
                 let type = $(this).data('type');
                 $('.filter-by-brand li').each(function () {
-                    let label = $(this).find('label span').html();
-                    let checked = $(this).find('input[type="checkbox"]').is(':checked');
-                    if( checked == true && brand == label){
+                    let labelBrand = $(this).find('label span').html();
+                    let checkedBrand = $(this).find('input[type="checkbox"]').is(':checked');
+                    if( checkedBrand && labelBrand == brand ){
+                        $('.filter-by-type li').each(function () {
+                            let labelType = $(this).find('label span').html();
+                            let checkedType = $(this).find('input[type="checkbox"]').is(':checked');
+                            if ( !checkedType ) {
+                                $(goods).hide();
+                                return;
+                            }                    
+                        });                     
                         $(goods).show();
-                        filterCount++;
                     }
+                    if(checkedBrand) allBrandsClear = false;
                 });
                 $('.filter-by-type li').each(function () {
-                    let label = $(this).find('label span').html();
-                    let checked = $(this).find('input[type="checkbox"]').is(':checked');
-                    if( checked == true && type == label){
+                    let labelType = $(this).find('label span').html();
+                    let checkedType = $(this).find('input[type="checkbox"]').is(':checked');
+                    if( checkedType && type == labelType){
                         $(goods).show();
-                        filterCount++;
                     }
+                    if(checkedType) allTypesClear = false;
                 });
+                
             });
-            $(this).html('<i class="fa fa-check"></i> Найдено: ' + filterCount);
-            $('.catalog-view-pagination-block').hide();
-        });
+
+            // if block is visible - calc block, if all checkbox are not checked - show block
+            $('.goods-list-block').each(function () {
+                if($(this).css('display') == 'block') {
+                    filterCount++;
+                }
+                if(allBrandsClear && allTypesClear) {
+                    $(this).show();
+                }
+            });
+
+            // if not any brands not any types selected
+            if(allBrandsClear && allTypesClear) {
+                $(this).html('<i class="fa fa-check"></i> Найти');
+                catalogPagination();
+                $('.catalog-view-pagination .btn-group .active:first').click();
+                $('.catalog-view-pagination-block').show();
+            } else {
+                $('.catalog-view-pagination-block').hide();
+                $(this).html('<i class="fa fa-check"></i> Найдено: ' + filterCount);
+            }
+            
+        }); // end #btn-filter-apply click
+
+        $('#btn-filter-cancel').click(function() {
+            $('.goods-list-block').each(function () {
+                $(this).show();
+            });
+            $('.filter-by-brand li').each(function () {
+                $(this).find('input[type="checkbox"]').prop('checked', false);
+            });
+            $('.filter-by-type li').each(function () {
+                $(this).find('input[type="checkbox"]').prop('checked', false);
+            });
+            $('#btn-filter-apply').html('<i class="fa fa-check"></i> Найти');
+            catalogPagination();
+            $('.catalog-view-pagination .btn-group .active:first').click();
+            $('.catalog-view-pagination-block').show();
+        }); // end #btn-filter-cancel click
+        
+        // init filter buttons html
         $('.filter-by-brand li').find('input[type="checkbox"]').click(function() {
             $('#btn-filter-apply').html('<i class="fa fa-check"></i> Найти');
         });
