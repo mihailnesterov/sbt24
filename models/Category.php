@@ -100,66 +100,67 @@ class Category extends \yii\db\ActiveRecord
      */
     public function getMinMaxTovarPrice($id)
     {
-        //$tovar = Tovar::find()->where(['category_id' => $id]);
-        $tovar_rub = Tovar::find()->where(['category_id' => $id])->andWhere(['!=', 'price_rub', 0]);
-        $tovar_usd = Tovar::find()->where(['category_id' => $id])->andWhere(['!=', 'price_usd', 0]);
-        $tovar_eur = Tovar::find()->where(['category_id' => $id])->andWhere(['!=', 'price_eur', 0]);
-
-        $currencies = Yii::$app->controller->getCurrencies();
-
-        $min_rub = $min_usd = $min_eur = $max_rub = $max_usd = $max_eur = 0;
+        $tovar = Tovar::find()->where(['category_id' => $id]);
         
-        /*$min_rub = $tovar->min('price_rub');
+        /*$tovar_rub = Tovar::find()->where(['category_id' => $id])->andWhere('!=','price_rub',0)->min('price_rub');
+        $tovar_usd = Tovar::find()->where(['category_id' => $id])->andWhere('!=','price_usd',0);
+        $tovar_eur = Tovar::find()->where(['category_id' => $id])->andWhere('!=','price_eur',0);*/
+        
+        // get all prices != 0
+        //$min_rub = $min_usd = $min_eur = $max_rub = $max_usd = $max_eur = 0;
+        
+        /*$min_rub = $tovar ? $tovar->min('price_rub') : 0;
+        $min_usd = $tovar ? $tovar->min('price_usd') : 0;
+        $min_eur = $tovar ? $tovar->min('price_eur') : 0;
+        
+        $max_rub = $tovar ? $tovar->max('price_rub') : 0;
+        $max_usd = $tovar ? $tovar->max('price_usd') : 0;
+        $max_eur = $tovar ? $tovar->max('price_eur') : 0;*/
+
+        $min_rub = $tovar->min('price_rub');
+        if($min_rub == 0) echo $min_rub.'<br>';
+        else $min_rub = $tovar->andWhere('!=','price_rub',0)->min('price_rub');
         $min_usd = $tovar->min('price_usd');
         $min_eur = $tovar->min('price_eur');
         
         $max_rub = $tovar->max('price_rub');
         $max_usd = $tovar->max('price_usd');
-        $max_eur = $tovar->max('price_eur');*/
+        $max_eur = $tovar->max('price_eur');
 
-        /*$min_rub = $tovar->andWhere(['!=', 'price_rub', '0'])->min('price_rub');
-        $min_usd = $tovar->andWhere(['!=', 'price_usd', '0'])->min('price_usd');
-        $min_eur = $tovar->andWhere(['!=', 'price_eur', '0'])->min('price_eur');
-        
-        $max_rub = $tovar->andWhere(['!=', 'price_rub', '0'])->max('price_rub');
-        $max_usd = $tovar->andWhere(['!=', 'price_usd', '0'])->max('price_usd');
-        $max_eur = $tovar->andWhere(['!=', 'price_eur', '0'])->max('price_eur');*/
+        // get curriencies rate
+        $currencies = Yii::$app->controller->getCurrencies();
 
-        $min_rub = $tovar_rub->min('price_rub') ? $tovar_rub->min('price_rub') : 0;
-        $min_usd = $tovar_usd->min('price_usd') ? $tovar_usd->min('price_usd') : 0;
-        $min_eur = $tovar_eur->min('price_eur') ? $tovar_eur->min('price_eur') : 0;
-        
-        $max_rub = $tovar_rub->max('price_rub') ? $tovar_rub->max('price_rub') : 0;
-        $max_usd = $tovar_usd->max('price_usd') ? $tovar_usd->max('price_usd') : 0;
-        $max_eur = $tovar_eur->max('price_eur') ? $tovar_eur->max('price_eur') : 0;
+        // find min / max price
+        $price_min = round(min($min_rub, $min_usd * $currencies['USD'], $min_eur * $currencies['EUR']),2);
+        $price_max = round(max($max_rub, $max_usd * $currencies['USD'], $max_eur * $currencies['EUR']),2);
 
-        /*$price_min = 0;
-        $price_max = 0;*/
+        /*if ($min_rub != 0) { $price_min = $min_rub; }
+            elseif ($min_usd != 0) { $price_min = round($min_usd * $currencies['USD'],2); } 
+            elseif ($min_eur != 0) { $price_min = round($min_eur * $currencies['EUR'],2); }
+        else { $price_min = 0; }
 
-        $price_min = round(min($min_rub, $min_usd, $min_eur),2);
-        $price_max = round(max($max_rub, $max_usd, $max_eur),2);
-        
-        /*if ($min_rub != '0') { 
-            $price_min = round($min_rub,2);
+        if ($max_rub != 0) { $price_max = $max_rub; }
+            elseif ($max_usd != 0) { $price_max = round($max_usd * $currencies['USD'],2); } 
+            elseif ($max_eur != 0) { $price_max = round($max_eur * $currencies['EUR'],2); }
+        else { $price_max = 0; }*/
+
+        /*
+        if ($min_rub != 0) { $price_min = round($min_rub,2); }
+            elseif ($min_usd != 0) { $price_min = round($min_usd * $currencies['USD'],2); } 
+            elseif ($min_eur != 0) { $price_min = round($min_eur * $currencies['EUR'],2); }
+        else { $price_min = 0; }
+
+        if ($max_rub != 0 && $max_usd == 0 && $max_eur == 0) { 
+            $price_max = round($max_rub,2); 
         }
-        if ($min_usd != '0') {
-            $price_min = round($min_usd * $currencies['USD'],2);
-        } 
-        if ($min_eur != '0') {
-            $price_min = round($min_eur * $currencies['EUR'],2);
-        }
-
-        if ($max_rub != '0') { 
-            $price_max = round($max_rub,2);
-        }
-        if ($max_usd != '0') {
-            $price_max = round($max_usd * $currencies['USD'],2);
-        } 
-        if ($max_eur != '0') {
-            $price_max = round($max_eur * $currencies['EUR'],2);
-        }*/
+            elseif ($max_rub == 0 && $max_usd != 0) { $price_max = round($max_usd * $currencies['USD'],2); } 
+            elseif ($max_rub == 0 && $max_eur != 0) { $price_max = round($max_eur * $currencies['EUR'],2); }
+        else { $price_max = 0; }
+        */
+        
         
 
+        // add *.00 or *.*x for min / max prices
         if(strpos($price_min, '.')) {
             if(substr($price_min, -3, 1) != '.') {
                 $price_min = round($price_min,2).'0';

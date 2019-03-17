@@ -434,6 +434,40 @@
         });
 
         // catalog / filter block
+
+        // init function min / max price and fill inputs
+        function initFilterByMinMaxPrice() {
+            let maxPrice = minPrice = 0;
+            let priceArray = [];
+            $('.goods-list-block').each(function () {
+                let price = $(this).find('.goods-price span').html();
+                if( $('.catalog-view-pagination-block').css('display') == 'none' 
+                        && $(this).css('display') != 'none' ) {  
+                    priceArray.push(price);
+                    return;
+                } else if($('.catalog-view-pagination-block').css('display') != 'none') {  
+                    priceArray.push(price);
+                } else {  
+                    return;
+                }
+            });
+            minPrice = Math.min.apply(Math, priceArray);
+            maxPrice = Math.max.apply(Math, priceArray);
+            $('.filter-block-price').find('#price-from').val(minPrice);
+            $('.filter-block-price').find('#price-to').val(maxPrice);
+        }
+
+        // filter by min / max price
+        function filterByMinMaxPrice(minPrice, maxPrice) {
+            $('.goods-list-block').each(function () {
+                $(this).hide();
+                let price = parseFloat($(this).find('.goods-price span').html());
+                if( price >= parseFloat(minPrice) && price <= parseFloat(maxPrice) ) {  
+                    $(this).show();
+                }
+            });
+        }
+
         $('#btn-filter-apply').click(function() {
             $('.catalog-view-pagination .btn-group .active:first').click();
             let filterCount = 0;
@@ -487,9 +521,21 @@
                 catalogPagination();
                 $('.catalog-view-pagination .btn-group .active:first').click();
                 $('.catalog-view-pagination-block').show();
+                initFilterByMinMaxPrice();
             } else {
                 $('.catalog-view-pagination-block').hide();
                 $(this).html('<i class="fa fa-check"></i> Найдено: ' + filterCount);
+            }
+
+            // filter by max/min price and fill values of inputs
+            
+            let minPrice = $('.filter-block-price').find('#price-from').val();
+            let maxPrice = $('.filter-block-price').find('#price-to').val();
+            if (minPrice == '' || maxPrice == '') {
+                return;
+            } else {
+                initFilterByMinMaxPrice();
+                //filterByMinMaxPrice(minPrice, maxPrice);
             }
             
         }); // end #btn-filter-apply click
@@ -508,6 +554,7 @@
             catalogPagination();
             $('.catalog-view-pagination .btn-group .active:first').click();
             $('.catalog-view-pagination-block').show();
+            initFilterByMinMaxPrice();
         }); // end #btn-filter-cancel click
         
         // init filter buttons html
@@ -517,7 +564,16 @@
         $('.filter-by-type li').find('input[type="checkbox"]').click(function() {
             $('#btn-filter-apply').html('<i class="fa fa-check"></i> Найти');
         });
-
+        // init filter by max/min price
+        $(function() {
+            initFilterByMinMaxPrice();
+        });
+        $('.filter-block-price').find('#price-from').change(function() {
+            $('#btn-filter-apply').html('<i class="fa fa-check"></i> Найти');
+        });
+        $('.filter-block-price').find('#price-to').change(function() {
+            $('#btn-filter-apply').html('<i class="fa fa-check"></i> Найти');
+        });
         
         
 

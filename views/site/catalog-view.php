@@ -15,16 +15,16 @@ if($tovar_count == 0) {
     $tovar_count = $sub_tovar_count;
 }
 // get min/max tovar price
-$tovar_range = $model->getMinMaxTovarPrice($model->id);
+//$tovar_range = $model->getMinMaxTovarPrice($model->id);
 
-echo 'price_min='.$tovar_range['price_min'].'<br>';
+/*echo 'price_min='.$tovar_range['price_min'].'<br>';
 echo 'price_max='.$tovar_range['price_max'].'<br><br>';
 echo 'min_rub='.$tovar_range['min_rub'].'<br>';
 echo 'min_usd='.$tovar_range['min_usd'].'<br>';
 echo 'min_eur='.$tovar_range['min_eur'].'<br><br>';
 echo 'max_rub='.$tovar_range['max_rub'].'<br>';
 echo 'max_usd='.$tovar_range['max_usd'].'<br>';
-echo 'max_eur='.$tovar_range['max_eur'].'<br>';
+echo 'max_eur='.$tovar_range['max_eur'].'<br>';*/
 
 
 ?>
@@ -140,13 +140,13 @@ echo 'max_eur='.$tovar_range['max_eur'].'<br>';
                                                         <div class="form-group">
                                                             <div class="input-group">
                                                                 <div class="input-group-addon">от</div>
-                                                                <input class="form-control" type="text" id="price-from" placeholder="цена от..." value="<?= $tovar_range['price_min'] ?>">
+                                                                <input class="form-control" type="text" id="price-from" placeholder="цена от..." value=""  disabled>
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <div class="input-group">
                                                                 <div class="input-group-addon">до</div>
-                                                                <input class="form-control" type="text" id="price-to" placeholder="цена до..." value="<?= $tovar_range['price_max'] ?>">
+                                                                <input class="form-control" type="text" id="price-to" placeholder="цена до..." value=""  disabled>
                                                             </div>
                                                         </div>
                                                     </div>
