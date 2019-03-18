@@ -130,6 +130,15 @@ class Tovar extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTovarById($id)
+    {
+        $tovar = Tovar::find()->where(['id' => $id])->one();
+        return $tovar;
+    }
+
+    /**
      * @return uploaded image file
      */
     public function upload($imageFile, $image){

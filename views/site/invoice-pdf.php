@@ -88,7 +88,8 @@ use yii\helpers\Html;
                                                     $totalSum = 0;
                                                     $rowCount=1;
                                                     foreach ($order['orderItems'] as $item):
-                                                        $tovar = app\models\Tovar::find()->where(['id' => $item->tovar_id])->one();
+                                                        //$tovar = app\models\Tovar::find()->where(['id' => $item->tovar_id])->one();
+                                                        $tovar = $tovar->getTovarById($item->tovar_id);
                                                         if ($tovar->price_rub != 0) { 
                                                             $price = round($tovar->price_rub,2);
                                                         } 
@@ -101,7 +102,23 @@ use yii\helpers\Html;
                                                         if ($tovar->discount != 0) {
                                                             $price = round(($price - $price/100*$tovar->discount),2);
                                                         }
+                                                        if(strpos($price, '.')) {
+                                                            if(substr($price, -3, 1) != '.') {
+                                                                $price = round($price,2).'0';
+                                                            }
+                                                        }
+                                                        if(!strpos($price, '.')) {
+                                                            $price = $price.'.00';
+                                                        }
                                                         $sum = ($price * $item->count);
+                                                        if(strpos($sum, '.')) {
+                                                            if(substr($sum, -3, 1) != '.') {
+                                                                $sum = round($sum,2).'0';
+                                                            }
+                                                        }
+                                                        if(!strpos($sum, '.')) {
+                                                            $sum = $sum.'.00';
+                                                        }
                                                         echo '<tr>'
                                                         .'<td  class="text-center">'
                                                         .$rowCount        
@@ -126,20 +143,37 @@ use yii\helpers\Html;
                                                         $totalSum += $sum;
                                                         $rowCount++;
                                                     endforeach;
+                                                    if(strpos($totalSum, '.')) {
+                                                        if(substr($totalSum, -3, 1) != '.') {
+                                                            $totalSum = round($totalSum,2).'0';
+                                                        }
+                                                    }
+                                                    if(!strpos($totalSum, '.')) {
+                                                        $totalSum = $totalSum.'.00';
+                                                    } else
+                                                    $totalSum = round($totalSum,2);
+
+                                                    $nds = round(($totalSum / 100 * 15),2);
+                                                    if(strpos($nds, '.')) {
+                                                        if(substr($nds, -3, 1) != '.') {
+                                                            $nds = round($nds,2).'0';
+                                                        }
+                                                    }
+                                                    if(!strpos($nds, '.')) {
+                                                        $nds = $nds.'.00';
+                                                    }
                                                 ?>
                                             </tbody>
                                         </table>
                                         <div class="text-right">
-                                            <h5>Итого: <?= round($totalSum,2) ?></h5>
-                                            <h5>В том числе НДС: <?= round(($totalSum / 100 * 15),2) ?></h5>
-                                            <h5>Всего к оплате: <?= round($totalSum,2) ?></h5>
+                                            <h5>Итого: <?= $totalSum ?></h5>
+                                            <h5>В том числе НДС: <?= $nds ?></h5>
+                                            <h5>Всего к оплате: <?= $totalSum ?></h5>
                                         </div>
                                         
                                         <div class="text-left">
                                             <p>Всего наименований <?= $itemCount ?> на сумму <?= $totalSum ?> руб.</p>
-                                            <h5>
-                                                <?= ucfirst(Yii::$app->controller->num2str($totalSum)) ?>
-                                            </h5>
+                                            <h5><?= Yii::$app->controller->ucfirst_utf8(Yii::$app->controller->num2str($totalSum)) ?></h5>
                                         </div>
                                         
                                         <br>

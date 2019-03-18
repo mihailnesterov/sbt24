@@ -304,6 +304,14 @@ class SiteController extends Controller
         if ($n1==1) return $f1;
         return $f5;
     }
+
+    /**
+    * аналог ucfirst для кодировки utf-8
+    * http://blog.xfanis.ru/php-kusochki/ucfirst_utf8-ili-funkciya-ucfirst-dlya-kodirovki-utf-8.html
+    */
+    function ucfirst_utf8($str) {
+        return mb_substr(mb_strtoupper($str, 'utf-8'), 0, 1, 'utf-8') . mb_substr($str, 1, mb_strlen($str)-1, 'utf-8');
+    }
     
     /*
      * вывод товаров со скидками в aside, рандом, лимит 2
@@ -576,14 +584,6 @@ class SiteController extends Controller
         $currencies = $this->getCurrencies();
         
         $catalog_url = '..'.Yii::$app->homeUrl.'catalog';
-        /*$tovar_count = $model->getTovarCount($model->id);
-        $sub_tovar_count = $model->getSubTovarCount($model->id);
-
-        if($tovar_count == 0) {
-            $tovar_count = $sub_tovar_count;
-        }
-
-        $this->view->title = $model->title.' ('.$tovar_count.')';*/
 
         $this->view->title = $model->title.' купить в Красноярске';
         $this->view->params['breadcrumbs'][] = ['label' => 'Каталог', 'url' => [$catalog_url]];
