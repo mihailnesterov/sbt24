@@ -89,6 +89,23 @@
                                             ?>
                                             <p>Курс USD = <?= $usd ?></p>
                                             <p>Курс EUR = <?= $eur ?></p>
+                                            <?php 
+                                                if(Yii::$app->request->cookies->has('sbt24client'))
+                                                {
+                                                    $sbt24client = Yii::$app->getRequest()->getCookies()->getValue('sbt24client');
+                                                } else {
+                                                    $sbt24client = 'no';
+                                                }
+
+                                                if(Yii::$app->request->cookies->has('sbt24order'))
+                                                {
+                                                    $sbt24order = Yii::$app->getRequest()->getCookies()->getValue('sbt24order');
+                                                } else {
+                                                    $sbt24order = 'no';
+                                                }
+                                            ?>
+                                            <p>sbt24client = <?= $sbt24client ?></p>
+                                            <p>sbt24order = <?= $sbt24order ?></p>
                                         </div>
                                         <div id="top-phone-block" class="col-md-3">
                                                 <p id="top-phone" class="text-left"><i class="fa fa-phone" aria-hidden="true"></i><?= $company->phone1 ?></p>
@@ -126,12 +143,8 @@
                                                                     echo '<li><a><i class="fa fa-shopping-cart"></i> Корзина пуста</a></li>';
                                                                 }   
                                                             ?>
-                                                            <!--<li role="separator" class="divider"></li>
-                                                            <li><a href="#"><i class="fa fa-sign-out"></i> Выйти</a></li>-->
                                                         </ul>
                                                     </span>
-                                                    <!--/ 
-                                                    <a href="#">Корзина</a>-->
                                                 </div>
                                         </div>
                                 </div>	<!-- end row -->
@@ -150,7 +163,6 @@
                                 <li><a href="<?= Yii::$app->urlManager->createUrl('about') ?>">О компании</a></li>
                                 <li><a href="<?= Yii::$app->urlManager->createUrl('contacts') ?>">Контакты</a></li>
                             </ul>
-                            <?php //Pjax::begin(); ?>
                             <div id="cart" class="col-sm-2 text-right">
                                 <?php 
                                     $orderItemsSum = "0.00";

@@ -605,6 +605,52 @@ class SiteController extends Controller
             'name' => 'description',
             'content' => $model->description
         ]);       
+
+        $client = new Clients();
+        $order = new Order();
+        
+        // добавляем или находим существующего клиента при добавлении товара в корзину       
+        if(Yii::$app->request->cookies->has('sbt24client')) {
+            
+            // если кука sbt24client существует, значит этот клиент уже есть в БД, находим его:
+            $client = $this->findClientModel(Yii::$app->getRequest()->getCookies()->getValue('sbt24client'));
+            
+            // если post - сохраняем текущего клиента
+            //if ( $client->load(Yii::$app->request->post())) 
+            if ( Yii::$app->request->post()) {
+                // сохранив клиента вызовем метод afterSave в модели Clients
+                $client->save();
+                /* отправляем id клиента в ajax data */
+                return $client->id;
+            }
+            
+            // если кука sbt24order установлена, то заказ в корзине, находим его и сохраняем
+            if(Yii::$app->request->cookies->has('sbt24order')) {
+                $order = $this->findOrderModel(Yii::$app->getRequest()->getCookies()->getValue('sbt24order'));
+                // сохранив заказ вызовем метод afterSave в модели Order - не надо, задваивает пункты в заказе!!!
+                //$order->save();
+            }
+            // если куки sbt24order нет, создаем новый заказ
+            else {
+                // сохранив заказ вызовем метод afterSave в модели Order
+                $order = new Order();
+                $order->client_id = $client->id;
+                $order->save();
+            } 
+        } else {
+            // иначе, если кука отсутствует, значит это новый клиент, тогда создаем его          
+            /*if ( $client->load(Yii::$app->request->post()) && $client->save()) {
+                    $client = new Clients();
+            }*/
+            if ( Yii::$app->request->post()) {
+                // сохранив клиента вызовем метод afterSave в модели Clients
+                $client = new Clients();
+                $client->save();
+                /* отправляем id клиента в ajax data */
+                return $client->id;
+            }
+        }
+
         return $this->render('catalog-view', [
             'model' => $model,
             'sub_category' => $sub_category,
@@ -612,6 +658,7 @@ class SiteController extends Controller
             'brands' => $brands,
             'models' => $models,
             'types' => $types,
+            'client' => $client,
             'bannersPos3' => $bannersPos3,
             'currencies' => $currencies
         ]);
@@ -694,7 +741,7 @@ class SiteController extends Controller
             $hit = '';
         }
         if ($model->video != NULL) {
-            $video = '<div style="position:relative;height:0;padding-bottom:56.25%;margin-bottom: 15px;"><iframe src="https://www.youtube.com/embed/'. $model->video .'?ecver=2" style="position:absolute;width:100%;height:100%;left:0" width="640" height="360" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>';
+            $video = '<div class="goods-video" style=""><iframe src="https://www.youtube.com/embed/'. $model->video .'?ecver=2" style="position:absolute;width:100%;height:100%;left:0" width="640" height="360" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>';
         } else {
             $video = '';
         }

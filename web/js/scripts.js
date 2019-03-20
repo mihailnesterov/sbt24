@@ -88,26 +88,56 @@
 		}) ;
         
         /* add to cart from catalog-view */
-		$('.buy-from-catalog-view').click(function () {			
-                    $('#cart-price').html(
-                            parseInt($('#cart-price').html()) + parseInt($(this.parentNode).find('span').html())
-                    );
-                    $('#cart-quantity').html(parseInt($('#cart-quantity').html()) + 1);
-                    Cookies.set('cart-price', parseInt($('#cart-price').html()), { expires: 10 });
-                    Cookies.set('cart-quantity', parseInt($('#cart-quantity').html()), { expires: 10 });
-                    $.gritter.add({
-                        title: 'Товар добавлен:',
-                        text: $(this.parentNode.parentNode).find('h3 a').html(),
-                        image: $(this.parentNode.parentNode.parentNode).find('img').attr('src'),
-                        sticky: false,
-                        position: 'top-right',
-                        time: '2000'
-                    });
-		}) ;
+		$('.buy-from-catalog-view').click(function () {
+            let goodsId = $(this).closest('.goods-list-block').data('goodsId');
+            // add cookie with goods-id
+            Cookies.set('sbt24goods', parseInt(goodsId), { expires: 10 });
+            let cartSum =  $('#cart-price').html();
+            let thisPrice = $(this.parentNode).find('span').html();
+            let newSum = parseFloat(cartSum) + parseFloat(thisPrice);
+            $('#cart-price').html(parseFloat(newSum).toFixed(2));
+            $('#cart-quantity').html(parseInt($('#cart-quantity').html()) + 1);
+            $.gritter.add({
+                title: 'Товар добавлен:',
+                text: $(this.parentNode.parentNode).find('h3 a').html(),
+                image: $(this.parentNode.parentNode.parentNode).find('img').attr('src'),
+                sticky: false,
+                position: 'top-right',
+                time: '2000'
+            });
+        }) ;
+        
+        /* add to cart from catalog-view (ajax) */
+        $('#catalog-view-form').on('beforeSubmit', function(e) {
+            e.preventDefault();
+            var form = $(this);
+            var formData = form.serialize();
+            $.ajax({
+                url: form.attr('action'),
+                type: form.attr('method'),
+                data: formData,
+                success: function (data) {
+                        /*$.gritter.add({
+                            title: 'Товар добавлен:',
+                            text: $(this.parentNode.parentNode).find('h3 a').html(),
+                            image: $(this.parentNode.parentNode.parentNode).find('img').attr('src'),
+                            sticky: false,
+                            position: 'top-right',
+                            time: '2000'
+                        });*/
+                    return false;
+                },
+                error: function () {
+                    alert('При добавлении товара произошла ошибка!');
+                }
+            });
+        }).on('submit', function(e){
+            e.preventDefault();
+        });
         
         /* add to cart from good's view */
 		$('.buy-from-view1').click(function () {			
-                    $('#cart-price').html(
+                    /*$('#cart-price').html(
                         parseInt($('#cart-price').html()) + parseInt($(this.parentNode).find('span').html())
                     );
                     $('#cart-quantity').html(parseInt($('#cart-quantity').html()) + 1);
@@ -121,6 +151,7 @@
                         '<td>' + $('h1').html() + $('#goods-id').html() + '</td>' +
                         '<td class="cart-table-price">' + parseInt($(this.parentNode).find('span').html()) + '</td></tr>'
                     );
+                    */
                     /*var cartGoods = {
                         image: $(this.parentNode.parentNode.parentNode).find('img').attr('src'), 
                         name: $('h1').html(), 
@@ -132,7 +163,7 @@
                         goodsInCookies.push(Cookies.get('cart-goods'));
                         goodsInCookies.push($('h1').html());
                     }*/
-                    $('#cart-table').append(
+                    /*$('#cart-table').append(
                         '<tr id="cart-table-total-tr">' +
                         '<td></td>' +
                         '<td>Итого:</td>' +
@@ -145,7 +176,7 @@
                     });
                     $('#cart-table-buttons-block').removeClass('hidden');
                     Cookies.set('cart-price', parseInt($('#cart-price').html()), { expires: -1 });
-                    Cookies.set('cart-quantity', parseInt($('#cart-quantity').html()), { expires: -1 });
+                    Cookies.set('cart-quantity', parseInt($('#cart-quantity').html()), { expires: -1 });*/
                     
                     /*
                      * алгоритм:

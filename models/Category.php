@@ -96,7 +96,7 @@ class Category extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return [$price_min, $price_max]
+     * @return [$price_min, $price_max] !!! not used
      */
     public function getMinMaxTovarPrice($id)
     {

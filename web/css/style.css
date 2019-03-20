@@ -1032,6 +1032,12 @@ a:hover {
 .goods-container .goods-view-block .goods-view-tabs .tab-content .tab-pane li {
 	line-height: 2.5;
 }
+.goods-container .goods-view-block .goods-view-tabs .tab-content .tab-pane .goods-video {
+	position:relative;
+	height:0;
+	padding-bottom:56.25%;
+	margin-bottom: 15px;
+}
 
 /* Swiper-cлайдер --------------------------*/
 

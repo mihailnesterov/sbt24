@@ -5,6 +5,7 @@
  */
 
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 use yii\widgets\LinkPager;
 use yii\widgets\Breadcrumbs;
 
@@ -14,19 +15,6 @@ $sub_tovar_count = $model->getSubTovarCount($model->id);
 if($tovar_count == 0) {
     $tovar_count = $sub_tovar_count;
 }
-// get min/max tovar price
-//$tovar_range = $model->getMinMaxTovarPrice($model->id);
-
-/*echo 'price_min='.$tovar_range['price_min'].'<br>';
-echo 'price_max='.$tovar_range['price_max'].'<br><br>';
-echo 'min_rub='.$tovar_range['min_rub'].'<br>';
-echo 'min_usd='.$tovar_range['min_usd'].'<br>';
-echo 'min_eur='.$tovar_range['min_eur'].'<br><br>';
-echo 'max_rub='.$tovar_range['max_rub'].'<br>';
-echo 'max_usd='.$tovar_range['max_usd'].'<br>';
-echo 'max_eur='.$tovar_range['max_eur'].'<br>';*/
-
-
 ?>
 
 <main role="main">
@@ -247,7 +235,11 @@ echo 'max_eur='.$tovar_range['max_eur'].'<br>';*/
                                                         }
                                                     endforeach;
                                                 } else {
-                                                    
+                                                    $form = ActiveForm::begin([
+                                                        'id'  =>  'catalog-view-form',
+                                                    ]);
+                                                    echo $form->field($client, 'company')->textInput(['type' => 'hidden'])->label(false);
+
                                                     $pageNumber = 1;
                                                     $price = 0;
                                                     foreach ($tovar as $good):
@@ -291,7 +283,9 @@ echo 'max_eur='.$tovar_range['max_eur'].'<br>';*/
                                                             $old_price = $old_price.'.00';
                                                         }
 
-                                                        echo '<div class="goods-list-block" data-page-number="'.$pageNumber.'" data-brand="'.$good->brand.'" data-type="'.$good->type.'">'
+                                                        
+
+                                                        echo '<div class="goods-list-block" data-goods-id="'.$good->id.'" data-page-number="'.$pageNumber.'" data-brand="'.$good->brand.'" data-type="'.$good->type.'">'
                                                             .'<div class="row">'
                                                             .'<div class="col-md-4 col-lg-3">'
                                                             .'<a href="'.Yii::$app->urlManager->createUrl(Yii::$app->homeUrl.'../view?id='.$good->id).'"><img src="images/goods/'.$good->photo1.'" alt="" class="img-responsive"></a>'
@@ -302,7 +296,7 @@ echo 'max_eur='.$tovar_range['max_eur'].'<br>';*/
                                                             .'<h3>'.Html::a($good->name, [Yii::$app->urlManager->createUrl('../view?id='.$good->id)], ['class' => 'goods-more']).'</h3>'
                                                             .'<div class="row">'
                                                             .'<i class="goods-price col-md-6"><s>'.$old_price.'</s> <span>'.$price.'</span> &#8381;</i>'
-                                                            .'<button class="goods-buy buy-from-catalog-view col-md-5"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>'
+                                                            .'<button type="submit" class="goods-buy buy-from-catalog-view col-md-5"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>'
                                                             .'<p class="col-xs-12">'
                                                             .'<a class="preview" role="button" data-toggle="collapse" href="#collapse-more-'.$good->id.'" aria-expanded="false" aria-controls="collapse-more-'.$good->id.'">'
                                                             .$good->description
@@ -320,14 +314,6 @@ echo 'max_eur='.$tovar_range['max_eur'].'<br>';*/
                                                             .'</a>'
                                                             .'<div class="collapse" id="collapse-options-'.$good->id.'">'
                                                             .'<div class="well">'
-                                                            /*.'<table class="table table-bordered table-striped">'
-                                                            .'<tbody>'
-                                                            .'<tr> <td>Бренд</td><td>'.$good->brand.'</td></tr>'
-                                                            .'<tr><td>Тип</td><td>'.$good->type.'</td></tr>'
-                                                            .'<tr><td>Модель</td><td>'.$good->model.'</td></tr>'
-                                                            .'<tr><td>Гарантия</td><td>'.$good->garantee.' мес.</td></tr>'
-                                                            .'</tbody>'
-                                                            .'</table>'*/
                                                             .'<div class="catalog-view-props-table">'.$good->properties.'</div>'
                                                             .'</div> <!-- end well -->'
                                                             .'</div>  <!-- end collapse -->'
@@ -335,8 +321,9 @@ echo 'max_eur='.$tovar_range['max_eur'].'<br>';*/
                                                             .'</div>  <!-- end col -->'
                                                             .'</div>  <!-- end row -->'
                                                             .'</div>  <!-- end goods-list-block -->';
+                                                            
                                                     endforeach;
-                                                    
+                                                    ActiveForm::end();
                                                 }
 
                                                 ?>

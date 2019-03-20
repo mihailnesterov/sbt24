@@ -87,9 +87,13 @@ class Order extends \yii\db\ActiveRecord
             $orderItem = new OrderItems();
             $orderItem->order_id = $this->id;
             
-            $url=$_SERVER['REQUEST_URI'];
+            /*$url=$_SERVER['REQUEST_URI'];
             $tovarId = explode('=', $url); 
-            $orderItem->tovar_id = $tovarId[1];
+            $orderItem->tovar_id = $tovarId[1];*/
+            
+            // получаем tovar_id из куки
+            $tovarId = Yii::$app->getRequest()->getCookies()->getValue('sbt24goods', (isset($_COOKIE['sbt24goods']))? $_COOKIE['sbt24goods']: 'sbt24goods');
+            $orderItem->tovar_id = $tovarId;
             /*$tovar = Tovar::find()->where(['id' => $tovarId[1]])->one();
             $currencies = Yii::$app->controller->getCurrencies();
             if ($tovar->price_rub != 0) { 
@@ -117,16 +121,18 @@ class Order extends \yii\db\ActiveRecord
             header("Refresh: 0");
         } else {
             // если order уже существует
-            // если запрос пришел не из action = order, то:
+            // если post пришел не из actionOrder, actionProfile, то:
             if ( Yii::$app->controller->action->id != 'order'
                     && Yii::$app->controller->action->id != 'profile') {  
                 $orderItem = new OrderItems();
                 // получаем order_id из куки
                 $orderItem->order_id = Yii::$app->getRequest()->getCookies()->getValue('sbt24order');
-                // получаем tovar_id из URL
-                $url=$_SERVER['REQUEST_URI'];
+                // получаем tovar_id из куки
+                /*$url=$_SERVER['REQUEST_URI'];
                 $tovarId = explode('=', $url); 
-                $orderItem->tovar_id = $tovarId[1];
+                $orderItem->tovar_id = $tovarId[1];*/
+                $tovarId = Yii::$app->getRequest()->getCookies()->getValue('sbt24goods', (isset($_COOKIE['sbt24goods']))? $_COOKIE['sbt24goods']: 'sbt24goods');
+                $orderItem->tovar_id = $tovarId;
                 $orderItem->count = 1;
                 $orderItem->save();
             }
