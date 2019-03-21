@@ -1236,23 +1236,8 @@ class SiteController extends Controller
         $search = Yii::$app->request->get('q');
 
         $search1 = str_replace(' ', '', $this->ucfirst_utf8($search));
-        //$this->ucfirst_utf8($search);
-        //$search1 = strtolower($search);
+        
         $tovar = Tovar::find()
-                /*->where(['like', 'replace(lower(name), " ", "")', $search1])
-                ->orWhere(['like', 'replace(lower(keywords), " ", "")', $search1])
-                ->orWhere(['like', 'replace(lower(description), " ", "")', $search1])
-                ->orWhere(['like', 'replace(lower(brand), " ", "")', $search1])
-                ->orWhere(['like', 'replace(lower(type), " ", "")', $search1])
-                ->andWhere(['like', 'replace(lower(model), " ", "")', $search1]);*/
-
-                /*->where(['like', 'lower(name)', $search1])
-                ->orWhere(['like', 'lower(keywords)', $search1])
-                ->orWhere(['like', 'lower(description)', $search1])
-                ->orWhere(['like', 'lower(brand)', $search1])
-                ->orWhere(['like', 'lower(type)', $search1])
-                ->andWhere(['like', 'lower(model)', $search1]);*/
-
                 ->where(['like', 'replace(name, " ", "")', $search1])
                 ->orWhere(['like', 'replace(keywords, " ", "")', $search1])
                 ->orWhere(['like', 'replace(description, " ", "")', $search1])
@@ -1261,6 +1246,48 @@ class SiteController extends Controller
                 ->orWhere(['like', 'replace(model, " ", "")', $search1]);
 
         $currencies = $this->getCurrencies();
+
+        $client = new Clients();
+        $order = new Order();
+        
+        // добавляем или находим существующего клиента при добавлении товара в корзину       
+        if(Yii::$app->request->cookies->has('sbt24client')) {
+            
+            // если кука sbt24client существует, значит этот клиент уже есть в БД, находим его:
+            $client = $this->findClientModel(Yii::$app->getRequest()->getCookies()->getValue('sbt24client'));
+            
+            // если post - сохраняем текущего клиента
+            //if ( $client->load(Yii::$app->request->post())) 
+            if ( Yii::$app->request->post()) {
+                // сохранив клиента вызовем метод afterSave в модели Clients
+                $client->save();
+                /* отправляем id клиента в ajax data */
+                return $client->id;
+            }
+            
+            // если кука sbt24order установлена, то заказ в корзине, находим его и сохраняем
+            if(Yii::$app->request->cookies->has('sbt24order')) {
+                $order = $this->findOrderModel(Yii::$app->getRequest()->getCookies()->getValue('sbt24order'));
+                // сохранив заказ вызовем метод afterSave в модели Order - не надо, задваивает пункты в заказе!!!
+                //$order->save();
+            }
+            // если куки sbt24order нет, создаем новый заказ
+            else {
+                // сохранив заказ вызовем метод afterSave в модели Order
+                $order = new Order();
+                $order->client_id = $client->id;
+                $order->save();
+            } 
+        } else {
+            // иначе, если кука отсутствует, значит это новый клиент, тогда создаем его
+            if ( Yii::$app->request->post()) {
+                // сохранив клиента вызовем метод afterSave в модели Clients
+                $client = new Clients();
+                $client->save();
+                /* отправляем id клиента в ajax data */
+                return $client->id;
+            }
+        }
         
         $this->view->title = 'Результаты поиска';
         $this->view->params['breadcrumbs'][] = $this->view->title;
@@ -1270,6 +1297,7 @@ class SiteController extends Controller
             'tovar_count' => $tovar->count(),
             'currencies' => $currencies,
             'search' => $search,
+            'client' => $client,
         ]);
     }
 

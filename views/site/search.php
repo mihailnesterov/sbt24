@@ -5,6 +5,7 @@
  */
 
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 use yii\widgets\Breadcrumbs;
 
 mb_internal_encoding('UTF-8');
@@ -72,6 +73,10 @@ mb_internal_encoding('UTF-8');
                                                         <div class="row">
                                                                 
                                                                 <?php
+                                                                $form = ActiveForm::begin([
+                                                                        'id'  =>  'catalog-view-form',
+                                                                    ]);
+                                                                echo $form->field($client, 'company')->textInput(['type' => 'hidden'])->label(false);
 
                                                                 $pageNumber = 1;
 
@@ -100,23 +105,23 @@ mb_internal_encoding('UTF-8');
                                                                         }
 
                                                                         if(strpos($price, '.')) {
-                                                                        if(substr($price, -3, 1) != '.') {
-                                                                                $price = round($price,2).'0';
-                                                                        }
+                                                                                if(substr($price, -3, 1) != '.') {
+                                                                                        $price = round($price,2).'0';
+                                                                                }
                                                                         }
                                                                         if(strpos($old_price, '.')) {
-                                                                        if(substr($old_price, -3, 1) != '.') {
-                                                                                $old_price = round($old_price,2).'0';
-                                                                        }
+                                                                                if(substr($old_price, -3, 1) != '.') {
+                                                                                        $old_price = round($old_price,2).'0';
+                                                                                }
                                                                         }
                                                                         if(!strpos($price, '.')) {
-                                                                        $price = $price.'.00';
+                                                                                $price = $price.'.00';
                                                                         }
                                                                         if(!strpos($old_price, '.') && $old_price != '') {
-                                                                        $old_price = $old_price.'.00';
+                                                                                $old_price = $old_price.'.00';
                                                                         }
 
-                                                                        echo '<div class="goods-list-block" data-page-number="'.$pageNumber.'">'
+                                                                        echo '<div class="goods-list-block" data-goods-id="'.$good->id.'" data-page-number="'.$pageNumber.'">'
                                                                         .'<div class="row">'
                                                                         .'<div class="col-md-4 col-lg-3">'
                                                                         .'<a href="'.Yii::$app->urlManager->createUrl(Yii::$app->homeUrl.'../view?id='.$good->id).'"><img src="images/goods/'.$good->photo1.'" alt="" class="img-responsive"></a>'
@@ -127,11 +132,11 @@ mb_internal_encoding('UTF-8');
                                                                         .'<h3>'.Html::a($good->name, [Yii::$app->urlManager->createUrl('../view?id='.$good->id)], ['class' => 'goods-more']).'</h3>'
                                                                         .'<div class="row">'
                                                                         .'<i class="goods-price col-md-6"><s>'.$old_price.'</s> <span>'.$price.'</span> &#8381;</i>'
-                                                                        .'<button class="goods-buy buy-from-catalog-view col-md-5"><i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину</button>'
+                                                                        .'<button type="submit" class="goods-buy buy-from-catalog-view col-md-5"><i class="fa fa-shopping-cart"></i> В корзину</button>'
                                                                         .'<p class="col-xs-12">'
                                                                         .'<a class="preview" role="button" data-toggle="collapse" href="#collapse-more-'.$good->id.'" aria-expanded="false" aria-controls="collapse-more-'.$good->id.'">'
                                                                         .$good->description
-                                                                        .'<i class="fa fa-chevron-down" aria-hidden="true"></i>'
+                                                                        .'<i class="fa fa-chevron-down"></i>'
                                                                         .'</a>'
                                                                         .'</p>'
                                                                         .'</div>'
@@ -153,6 +158,7 @@ mb_internal_encoding('UTF-8');
                                                                         .'</div>  <!-- end row -->'
                                                                         .'</div>  <!-- end goods-list-block -->';
                                                                 endforeach;
+                                                                ActiveForm::end();
                                                                 ?>
                                                         
                                                         </div>	<!-- end row -->
