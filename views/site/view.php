@@ -46,7 +46,7 @@ use yii\widgets\Breadcrumbs;
                                             
                                             <div class="goods-container">	
                                                 <div class="row">
-                                                    <div class="goods-view-block">
+                                                    <div class="goods-view-block" data-goods-id="<?= $model->id ?>">
                                                             <div class="goods-view-img-block col-md-4 col-lg-4">
                                                                 <a href="images/goods/<?= $model->photo1 ?>" data-lightbox="photo1"><img src="images/goods/<?= $model->photo1 ?>" alt="<?= $model->name ?>" class="img-responsive"></a>
                                                                 <?= $hit ?>
@@ -54,7 +54,9 @@ use yii\widgets\Breadcrumbs;
                                                             </div>  <!-- end col -->
                                                             
                                                             <div class="col-md-8 col-lg-8">
-                                                                <?php $form = ActiveForm::begin(); ?>
+                                                                <?php $form = ActiveForm::begin([
+                                                                    'id'  =>  'goods-view-form',
+                                                                ]); ?>
                                                                     <div class="row">      
                                                                     <?php
                                                                         if(strpos($price, '.')) {

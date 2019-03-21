@@ -6,7 +6,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\widgets\LinkPager;
 use yii\widgets\Breadcrumbs;
 
 // get tovar count
@@ -282,9 +281,7 @@ if($tovar_count == 0) {
                                                         if(!strpos($old_price, '.') && $old_price != '') {
                                                             $old_price = $old_price.'.00';
                                                         }
-
                                                         
-
                                                         echo '<div class="goods-list-block" data-goods-id="'.$good->id.'" data-page-number="'.$pageNumber.'" data-brand="'.$good->brand.'" data-type="'.$good->type.'">'
                                                             .'<div class="row">'
                                                             .'<div class="col-md-4 col-lg-3">'

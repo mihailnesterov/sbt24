@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\LinkPager;
+use yii\widgets\ActiveForm;
 use yii\widgets\Breadcrumbs;
 ?>
 
@@ -11,7 +11,6 @@ use yii\widgets\Breadcrumbs;
                 <div class="container">
                         <div class="row">
                                 <div class="col-xs-12">
-                                    <!--<h2 class="breadcrumb">СПЕЦБАНКТЕХНИКА - поставка специализированного банковского оборудования в Красноярске</h2>-->
                                 </div>
                             <br>
                         </div>	 <!-- end row -->
@@ -63,6 +62,11 @@ use yii\widgets\Breadcrumbs;
                                                         
                                                             <?php
                                                             // вывод 3-х последних новинок
+                                                                $form = ActiveForm::begin([
+                                                                        'id'  =>  'new-goods-form',
+                                                                ]);
+                                                                echo $form->field($client, 'company')->textInput(['type' => 'hidden'])->label(false);        
+                                                                
                                                                 foreach ($newTovar as $new):
                                                                     if ($new->price_rub != 0) { 
                                                                     $price = round($new->price_rub,2);
@@ -81,16 +85,33 @@ use yii\widgets\Breadcrumbs;
                                                                         $discount = '';
                                                                         $old_price = '';
                                                                     }
+                                                                    if(strpos($price, '.')) {
+                                                                        if(substr($price, -3, 1) != '.') {
+                                                                            $price = round($price,2).'0';
+                                                                        }
+                                                                    }
+                                                                    if(strpos($old_price, '.')) {
+                                                                        if(substr($old_price, -3, 1) != '.') {
+                                                                            $old_price = round($old_price,2).'0';
+                                                                        }
+                                                                    }
+                                                                    if(!strpos($price, '.')) {
+                                                                        $price = $price.'.00';
+                                                                    }
+                                                                    if(!strpos($old_price, '.') && $old_price != '') {
+                                                                        $old_price = $old_price.'.00';
+                                                                    }
                                                                     echo '<div class="col-sm-12 col-lg-4">'
-                                                                        . '<div class="goods-block">'
+                                                                        . '<div class="goods-block" data-goods-id="'.$new->id.'">'
                                                                         . Html::a('<img src="images/goods/'.$new->photo1.'" alt="'.$new->model.'" class="img-responsive">', [Yii::$app->homeUrl.'../view?id='.$new->id])
                                                                         . '<h4>'.$new->name.'</h4>'
                                                                         . '<p class="goods-price"><span>'.$price.'</span> &#8381;</p>'
-                                                                        . Html::button('<i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину', ['class' => 'goods-buy buy-from-preview'])
+                                                                        . Html::submitButton('<i class="fa fa-shopping-cart"></i> В корзину', ['class' => 'goods-buy buy-from-preview'])
                                                                         . '</div>    <!-- end goods-block -->'
-                                                                        . Html::a('<span><i class="fa fa-eye" aria-hidden="true"></i></span>', [Yii::$app->homeUrl.'../view?id='.$new->id], ['class' => 'label'])    
+                                                                        . Html::a('<span><i class="fa fa-eye"></i></span>', [Yii::$app->homeUrl.'../view?id='.$new->id], ['class' => 'label'])    
                                                                         . '</div>    <!-- end col -->';
                                                                 endforeach;
+                                                                ActiveForm::end();
                                                             ?>
                                                         </div>	<!-- end row -->
                                                 </div>	<!-- end goods-container -->
@@ -112,6 +133,11 @@ use yii\widgets\Breadcrumbs;
                                                             
                                                                 <?php
                                                                 // вывод 3-х хитов продаж
+                                                                        $form = ActiveForm::begin([
+                                                                                'id'  =>  'hit-goods-form',
+                                                                        ]);
+                                                                        echo $form->field($client, 'company')->textInput(['type' => 'hidden'])->label(false);        
+                                                                        
                                                                     foreach ($hitTovar as $hit):
                                                                         if ($hit->price_rub != 0) { 
                                                                         $price = round($hit->price_rub,2);
@@ -130,16 +156,33 @@ use yii\widgets\Breadcrumbs;
                                                                             $discount = '';
                                                                             $old_price = '';
                                                                         }
+                                                                        if(strpos($price, '.')) {
+                                                                                if(substr($price, -3, 1) != '.') {
+                                                                                    $price = round($price,2).'0';
+                                                                                }
+                                                                            }
+                                                                            if(strpos($old_price, '.')) {
+                                                                                if(substr($old_price, -3, 1) != '.') {
+                                                                                    $old_price = round($old_price,2).'0';
+                                                                                }
+                                                                            }
+                                                                            if(!strpos($price, '.')) {
+                                                                                $price = $price.'.00';
+                                                                            }
+                                                                            if(!strpos($old_price, '.') && $old_price != '') {
+                                                                                $old_price = $old_price.'.00';
+                                                                            }
                                                                         echo '<div class="col-sm-12 col-lg-4">'
-                                                                            . '<div class="goods-block">'
+                                                                            . '<div class="goods-block" data-goods-id="'.$hit->id.'">'
                                                                             . Html::a('<img src="images/goods/'.$hit->photo1.'" alt="'.$hit->model.'" class="img-responsive">', [Yii::$app->homeUrl.'../view?id='.$hit->id])
                                                                             . '<h4>'.$hit->name.'</h4>'
                                                                             . '<p class="goods-price"><span>'.$price.'</span> &#8381;</p>'
-                                                                            . Html::button('<i class="fa fa-shopping-cart" aria-hidden="true"></i> В корзину', ['class' => 'goods-buy buy-from-preview'])
+                                                                            . Html::submitButton('<i class="fa fa-shopping-cart"></i> В корзину', ['class' => 'goods-buy buy-from-preview'])
                                                                             . '</div>    <!-- end goods-block -->'
-                                                                            . Html::a('<span><i class="fa fa-star-o" aria-hidden="true"></i></span>', [Yii::$app->homeUrl.'../view?id='.$hit->id], ['class' => 'label'])    
+                                                                            . Html::a('<span><i class="fa fa-star-o"></i></span>', [Yii::$app->homeUrl.'../view?id='.$hit->id], ['class' => 'label'])    
                                                                             . '</div>    <!-- end col -->';
                                                                     endforeach;
+                                                                    ActiveForm::end();
                                                                 ?>
                                                         </div>	<!-- end row -->
                                                 </div>	<!-- end goods-container -->

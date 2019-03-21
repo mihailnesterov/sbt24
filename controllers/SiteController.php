@@ -114,18 +114,6 @@ class SiteController extends Controller
         return $randomString;
     }*/
     
-    /*
-     * set cookie when client adds order to cart
-     */
-    /*public function setOrderCookie($order_id)
-    {
-        $orderCookie = new \yii\web\Cookie([
-            'name' => 'sbt24order',
-            'value' => $order_id,
-            'expire' => 86400*30,
-        ]);
-        Yii::$app->response->cookies->add($orderCookie);
-    }*/
     
     /*
      * get order from cookies
@@ -395,6 +383,48 @@ class SiteController extends Controller
         $bannersPos1 = Banners::find()->where((['position' => 1]))->orderby(['created'=>SORT_ASC])->all();
         $bannersPos2 = Banners::find()->where((['position' => 2]))->orderby(['created'=>SORT_ASC])->all();
         $currencies = $this->getCurrencies();
+
+        $client = new Clients();
+        $order = new Order();
+        
+        // добавляем или находим существующего клиента при добавлении товара в корзину       
+        if(Yii::$app->request->cookies->has('sbt24client')) {
+            
+            // если кука sbt24client существует, значит этот клиент уже есть в БД, находим его:
+            $client = $this->findClientModel(Yii::$app->getRequest()->getCookies()->getValue('sbt24client'));
+            
+            // если post - сохраняем текущего клиента
+            //if ( $client->load(Yii::$app->request->post())) 
+            if ( Yii::$app->request->post()) {
+                // сохранив клиента вызовем метод afterSave в модели Clients
+                $client->save();
+                /* отправляем id клиента в ajax data */
+                return $client->id;
+            }
+            
+            // если кука sbt24order установлена, то заказ в корзине, находим его и сохраняем
+            if(Yii::$app->request->cookies->has('sbt24order')) {
+                $order = $this->findOrderModel(Yii::$app->getRequest()->getCookies()->getValue('sbt24order'));
+                // сохранив заказ вызовем метод afterSave в модели Order - не надо, задваивает пункты в заказе!!!
+                //$order->save();
+            }
+            // если куки sbt24order нет, создаем новый заказ
+            else {
+                // сохранив заказ вызовем метод afterSave в модели Order
+                $order = new Order();
+                $order->client_id = $client->id;
+                $order->save();
+            } 
+        } else {
+            // иначе, если кука отсутствует, значит это новый клиент, тогда создаем его
+            if ( Yii::$app->request->post()) {
+                // сохранив клиента вызовем метод afterSave в модели Clients
+                $client = new Clients();
+                $client->save();
+                /* отправляем id клиента в ajax data */
+                return $client->id;
+            }
+        }
         
         $this->view->title = 'Главная';
         \Yii::$app->view->registerMetaTag([
@@ -407,6 +437,7 @@ class SiteController extends Controller
         ]);
         
         return $this->render('index', [
+            'client' => $client,
             'newTovar' => $newTovar,
             'hitTovar' => $hitTovar,
             'brands' => $brands,
@@ -638,10 +669,7 @@ class SiteController extends Controller
                 $order->save();
             } 
         } else {
-            // иначе, если кука отсутствует, значит это новый клиент, тогда создаем его          
-            /*if ( $client->load(Yii::$app->request->post()) && $client->save()) {
-                    $client = new Clients();
-            }*/
+            // иначе, если кука отсутствует, значит это новый клиент, тогда создаем его
             if ( Yii::$app->request->post()) {
                 // сохранив клиента вызовем метод afterSave в модели Clients
                 $client = new Clients();
@@ -756,9 +784,12 @@ class SiteController extends Controller
             $client = $this->findClientModel(Yii::$app->getRequest()->getCookies()->getValue('sbt24client'));
             
             // если post - сохраняем текущего клиента
-            if ( $client->load(Yii::$app->request->post())) {
+            //if ( $client->load(Yii::$app->request->post())) 
+            if ( Yii::$app->request->post()) {
                 // сохранив клиента вызовем метод afterSave в модели Clients
                 $client->save();
+                /* отправляем id клиента в ajax data */
+                return $client->id;
             }
             
             // если кука sbt24order установлена, то заказ в корзине, находим его и сохраняем
@@ -775,9 +806,13 @@ class SiteController extends Controller
                 $order->save();
             } 
         } else {
-            // иначе, если кука отсутствует, значит это новый клиент, тогда создаем его          
-            if ( $client->load(Yii::$app->request->post()) && $client->save()) {
-                    $client = new Clients();
+            // иначе, если кука отсутствует, значит это новый клиент, тогда создаем его
+            if ( Yii::$app->request->post()) {
+                // сохранив клиента вызовем метод afterSave в модели Clients
+                $client = new Clients();
+                $client->save();
+                /* отправляем id клиента в ajax data */
+                return $client->id;
             }
         }
 

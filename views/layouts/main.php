@@ -1,7 +1,6 @@
 <?php
     use yii\helpers\Html;
     use app\assets\AppAsset;
-    use yii\widgets\Pjax;
     
     $directoryAsset = Yii::$app->assetManager->getPublishedUrl(Yii::$app->homeUrl.'web');   
     
@@ -89,23 +88,6 @@
                                             ?>
                                             <p>Курс USD = <?= $usd ?></p>
                                             <p>Курс EUR = <?= $eur ?></p>
-                                            <?php 
-                                                if(Yii::$app->request->cookies->has('sbt24client'))
-                                                {
-                                                    $sbt24client = Yii::$app->getRequest()->getCookies()->getValue('sbt24client');
-                                                } else {
-                                                    $sbt24client = 'no';
-                                                }
-
-                                                if(Yii::$app->request->cookies->has('sbt24order'))
-                                                {
-                                                    $sbt24order = Yii::$app->getRequest()->getCookies()->getValue('sbt24order');
-                                                } else {
-                                                    $sbt24order = 'no';
-                                                }
-                                            ?>
-                                            <p>sbt24client = <?= $sbt24client ?></p>
-                                            <p>sbt24order = <?= $sbt24order ?></p>
                                         </div>
                                         <div id="top-phone-block" class="col-md-3">
                                                 <p id="top-phone" class="text-left"><i class="fa fa-phone" aria-hidden="true"></i><?= $company->phone1 ?></p>
