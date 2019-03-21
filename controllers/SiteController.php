@@ -297,7 +297,7 @@ class SiteController extends Controller
     * аналог ucfirst для кодировки utf-8
     * http://blog.xfanis.ru/php-kusochki/ucfirst_utf8-ili-funkciya-ucfirst-dlya-kodirovki-utf-8.html
     */
-    function ucfirst_utf8($str) {
+    public function ucfirst_utf8($str) {
         return mb_substr(mb_strtoupper($str, 'utf-8'), 0, 1, 'utf-8') . mb_substr($str, 1, mb_strlen($str)-1, 'utf-8');
     }
     
@@ -1235,7 +1235,8 @@ class SiteController extends Controller
         
         $search = Yii::$app->request->get('q');
 
-        $search1 = str_replace(' ', '', strtolower($search));
+        $search1 = str_replace(' ', '', $this->ucfirst_utf8($search));
+        //$this->ucfirst_utf8($search);
         //$search1 = strtolower($search);
         $tovar = Tovar::find()
                 /*->where(['like', 'replace(lower(name), " ", "")', $search1])
