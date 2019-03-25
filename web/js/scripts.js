@@ -738,6 +738,49 @@
         $('#btn-pagination-block-1').click();
     });
 
+    //  admin/goods: fast goods search
+    $('#search-goods-input').keyup(function() {
+        let _this = $(this);
+        $.each($(".tovar-block"), function() {
+            if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1) {
+                $(this).hide();
+            } else {
+                $(this).show();                
+            };
+        });
+    });
+
+    //  admin/clients: fast client search
+    $('#admin-clients-search-input').keyup(function() {
+        let _this = $(this);
+        $.each($(".client-block a"), function() {
+            if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1) {
+                $(this).closest('.client-block').hide();
+                console.log('hide = ' + $(this).html()); // don't work without
+                //return false;
+            } else {
+                $(this).closest('.client-block').show(); 
+                console.log('show = ' + $(this).html()); // don't work without     
+                //return true; 
+            }
+        });
+    });
+
+    //  admin/clients: fast order search
+    $('#admin-order-search-input').keyup(function() {
+        let _this = $(this);
+        $.each($("table tbody tr .searched"), function() {
+            if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1) {
+                $(this).closest('tr').hide();
+                console.log('hide = ' + $(this).html()); // don't work without
+            } else {
+                $(this).closest('tr').show(); 
+                console.log('show = ' + $(this).html()); // don't work without 
+            }
+        });
+    });
+    
+
     // admin/goods-add: goods-pagination-block on button click
     $('.goods-pagination-block').find('.btn-group button').click(function() {
         $('.goods-pagination-block').find('.btn-group button').each(function() {

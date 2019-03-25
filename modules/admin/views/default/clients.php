@@ -50,7 +50,7 @@ use yii\widgets\Breadcrumbs;
                                                 <div class="goods-container">	
                                                     <div class="dashboard row">
 
-                                                        <div class="col-xs-12 col-md-6 col-lg-5 text-left">
+                                                        <div class="col-xs-12 col-sm-8 col-md-10 col-lg-10 text-left">
                                                             <div class="dashboard-block" style="min-height: 70px;">
                                                                 <div id="search" class="form-inline">
                                                                     <div class="input-group col-sm-12">
@@ -62,7 +62,7 @@ use yii\widgets\Breadcrumbs;
                                                                 </div>
                                                             </div>
                                                         </div> <!-- end-col -->
-                                                        <div class="col-xs-12 col-md-6 col-lg-5 text-left">
+                                                        <div class="col-xs-12 col-md-6 col-lg-5 text-left hidden">
                                                             <div class="dashboard-block" style="min-height: 70px;">
                                                                 <!--<div class="row">
                                                                     <div class="col-xs-7">

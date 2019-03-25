@@ -513,15 +513,17 @@ class DefaultController extends Controller
         $this->view->title = 'Заказы';
         $this->view->params['breadcrumbs'][] = $this->view->title;
         
-        $query = Order::find()->groupby(['status'])->orderby(['created'=>SORT_ASC]);
+        /*$query = Order::find()->groupby(['status'])->orderby(['created'=>SORT_ASC]);
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 20]);
         $pages->pageSizeParam = false;
-        $orders = $query->offset($pages->offset)->limit($pages->limit)->all();
+        $orders = $query->offset($pages->offset)->limit($pages->limit)->all();*/
+
+        $orders = Order::find()->orderby(['created'=>SORT_ASC])->all();
 
         return $this->render('orders', [
             'orders' => $orders,
-            'pages' => $pages,
+            //'pages' => $pages,
         ]);
     }
     

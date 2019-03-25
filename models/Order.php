@@ -85,32 +85,18 @@ class Order extends \yii\db\ActiveRecord
         if ($insert) {
             // если новый order
             $orderItem = new OrderItems();
-            $orderItem->order_id = $this->id;
-            
-            /*$url=$_SERVER['REQUEST_URI'];
-            $tovarId = explode('=', $url); 
-            $orderItem->tovar_id = $tovarId[1];*/
-            
+            $orderItem->order_id = $this->id;            
             // получаем tovar_id из куки
             $tovarId = Yii::$app->getRequest()->getCookies()->getValue('sbt24goods', (isset($_COOKIE['sbt24goods']))? $_COOKIE['sbt24goods']: 'sbt24goods');
-            $orderItem->tovar_id = $tovarId;
-            /*$tovar = Tovar::find()->where(['id' => $tovarId[1]])->one();
-            $currencies = Yii::$app->controller->getCurrencies();
-            if ($tovar->price_rub != 0) { 
-                $price = round($tovar->price_rub,2);
-            } 
-            if ($tovar->price_usd != 0) {
-                $price = round(($tovar->price_usd * $currencies['USD']),2);
-            } 
-            if ($tovar->price_eur != 0) {
-                $price = round(($tovar->price_eur * $currencies['EUR']),2);
+            if($tovarId) {
+                $orderItem->tovar_id = $tovarId;
+                $price = $this->convertCurrenciesToPrice($tovarId);
+                $orderItem->sum = $price;
+                $orderItem->count = 1;
+                $orderItem->save();
             }
-            if ($tovar->discount != 0) {
-                $price = round(($price - $price/100*$tovar->discount),2);
-            }
-            $orderItem->sum = $price;*/
-            $orderItem->count = 1;
-            $orderItem->save();           
+            
+            
             // добавляем cookie sbt24order, где храним id заказа
             $cookie = new \yii\web\Cookie([
                 'name' => 'sbt24order',
@@ -118,7 +104,7 @@ class Order extends \yii\db\ActiveRecord
                 'expire' => time() + 60 * 60 * 24 * 365,
             ]);
             Yii::$app->getResponse()->getCookies()->add($cookie);
-            header("Refresh: 0");
+            //header("Refresh: 0");
         } else {
             // если order уже существует
             // если post пришел не из actionOrder, actionProfile, то:
@@ -128,11 +114,12 @@ class Order extends \yii\db\ActiveRecord
                 // получаем order_id из куки
                 $orderItem->order_id = Yii::$app->getRequest()->getCookies()->getValue('sbt24order');
                 // получаем tovar_id из куки
-                /*$url=$_SERVER['REQUEST_URI'];
-                $tovarId = explode('=', $url); 
-                $orderItem->tovar_id = $tovarId[1];*/
                 $tovarId = Yii::$app->getRequest()->getCookies()->getValue('sbt24goods', (isset($_COOKIE['sbt24goods']))? $_COOKIE['sbt24goods']: 'sbt24goods');
                 $orderItem->tovar_id = $tovarId;
+                $price = $this->convertCurrenciesToPrice($tovarId);
+                echo '<script>alert('.$price.');</script>';
+                $orderItem->sum = $price;
+                echo '<script>alert('.$orderItem->sum.');</script>';
                 $orderItem->count = 1;
                 $orderItem->save();
             }
@@ -143,6 +130,54 @@ class Order extends \yii\db\ActiveRecord
     /*  */
     public function getOrderSum($id)
     {
-        return $sum = OrderItems::find()->where(['order_id' => $id])->sum('sum');
+        $items = OrderItems::find()->where(['order_id' => $id])->all();
+        $sum = 0;
+        foreach ($items as $key => $item) {
+            $sum += ($item->sum * $item->count);
+        }
+        //return $sum = OrderItems::find()->where(['order_id' => $id])->sum('sum');
+        return $sum;
     }
+
+    /*  */
+    public function convertCurrenciesToPrice($tovar_id)
+    {
+        $tovar = Tovar::find()->where(['id' => $tovar_id])->one();
+        $currencies = $this->getCurrencies();
+        if ($tovar->price_rub != 0) { 
+            $price = round($tovar->price_rub,2);
+        } 
+        elseif ($tovar->price_usd != 0) {
+            $price = round(($tovar->price_usd * $currencies['USD']),2);
+        } 
+        elseif ($tovar->price_eur != 0) {
+            $price = round(($tovar->price_eur * $currencies['EUR']),2);
+        }
+        elseif ($tovar->discount != 0) {
+            $price = round(($price - $price/100*$tovar->discount),2);
+        }
+        else {
+            return 0;
+        }
+        return round($price,2);
+    }
+
+/*
+    * get currency daily course - http://know-online.com/post/php-valuta
+    */
+    protected function getCurrencies() {
+        //$xml = simplexml_load_file('http://cbr.ru/scripts/XML_daily.asp');
+        if (file_exists('http://cbr.ru/scripts/XML_daily.asp')) {
+            $xml = simplexml_load_file('http://cbr.ru/scripts/XML_daily.asp');
+        } else {
+            $xml = simplexml_load_file('../web/plugins/XML_daily.asp');
+        }
+        
+        $currencies = array();
+        foreach ($xml->xpath('//Valute') as $valute) {
+            $currencies[(string)$valute->CharCode] = (float)str_replace(',', '.', $valute->Value);
+        }
+        return $currencies;
+    }
+
 }

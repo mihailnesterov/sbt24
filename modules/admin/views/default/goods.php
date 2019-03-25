@@ -56,14 +56,14 @@ use yii\widgets\Breadcrumbs;
                                                 </div> <!-- end-col -->
                                                 <div class="col-xs-12 col-md-6 col-lg-5 text-left">
                                                     <div class="dashboard-block" style="min-height: 70px;">
-                                                        <form id="search" class="form-inline">
+                                                        <div id="search" class="form-inline">
                                                             <div class="input-group col-sm-12">
                                                                 <input id="search-goods-input" class="form-control" type="text" placeholder="Найти товар..." aria-label="Поиск...">
                                                                 <span class="input-group-btn">
-                                                                    <button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                                                    <button class="btn btn-default" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
                                                                 </span>
                                                             </div>
-                                                        </form>
+                                                        </div>
                                                     </div>
                                                 </div> <!-- end-col -->
 

@@ -37,14 +37,10 @@ use yii\widgets\Breadcrumbs;
 
                                                 <div class="goods-container">	
                                                         <div class="dashboard row">
-                                                            <div class="col-xs-12 col-md-6 text-center">
+                                                            <div class="col-xs-12 text-left">
                                                                 <div class="dashboard-block">
                                                                     <?= Html::a('<i class="fa fa-plus"></i> Добавить товар', Yii::$app->urlManager->createUrl(['/admin/goods-add']), ['class' => 'btn btn-success']) ?>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-md-6 text-center">
-                                                                <div class="dashboard-block">
-                                                                    <?= Html::a('<i class="fa fa-plus"></i> Добавить категорию', Yii::$app->urlManager->createUrl(['/admin/goods-add']), ['class' => 'btn btn-success']) ?>
+                                                                    <?= Html::a('<i class="fa fa-plus"></i> Добавить категорию', Yii::$app->urlManager->createUrl(['/admin/category-add']), ['class' => 'btn btn-success']) ?>
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-6 col-md-4 text-center">

@@ -134,7 +134,7 @@ use yii2assets\printthis\PrintThis;
                                                         foreach ($order['orderItems'] as $item):
                                                             //$tovar = app\models\Tovar::find()->where(['id' => $item->tovar_id])->one();
                                                             $tovar = $tovar->getTovarById($item->tovar_id);
-                                                            if ($tovar->price_rub != 0) { 
+                                                            /*if ($tovar->price_rub != 0) { 
                                                                 $price = round($tovar->price_rub,2);
                                                             } 
                                                             if ($tovar->price_usd != 0) {
@@ -153,8 +153,18 @@ use yii2assets\printthis\PrintThis;
                                                             }
                                                             if(!strpos($price, '.')) {
                                                                 $price = $price.'.00';
+                                                            }*/
+                                                            $itemSum = $item->sum;
+                                                            $sum = ($item->sum * $item->count);
+
+                                                            if(strpos($itemSum, '.')) {
+                                                                if(substr($itemSum, -3, 1) != '.') {
+                                                                    $itemSum = round($itemSum,2).'0';
+                                                                }
                                                             }
-                                                            $sum = ($price * $item->count);
+                                                            if(!strpos($itemSum, '.')) {
+                                                                $itemSum = $itemSum.'.00';
+                                                            }
                                                             if(strpos($sum, '.')) {
                                                                 if(substr($sum, -3, 1) != '.') {
                                                                     $sum = round($sum,2).'0';
@@ -177,7 +187,7 @@ use yii2assets\printthis\PrintThis;
                                                             .'шт'
                                                             .'</td>'
                                                             .'<td class="text-right">'
-                                                            .$price
+                                                            .$itemSum
                                                             .'</td>'
                                                             .'<td class="text-right">'
                                                             .$sum

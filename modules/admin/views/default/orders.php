@@ -46,7 +46,19 @@ use yii\widgets\Breadcrumbs;
                                         </header>
 
                                         <div class="goods-container">	
-                                            <div class="row">
+                                            <div class="dashboard row">
+                                                <div class="col-xs-12 col-md-6 text-left">
+                                                    <div class="dashboard-block">
+                                                        <div id="search" class="form-inline">
+                                                            <div class="input-group col-sm-12">
+                                                                <input id="admin-order-search-input" class="form-control" type="text" placeholder="Найти заказ..." aria-label="Поиск...">
+                                                                <span class="input-group-btn">
+                                                                    <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> <!-- end-col -->
                                                 <div class="col-sm-12">
                                                     <?php $ordersCounter = 1; ?>
                                                     <table class="table table-bordered table-responsive">
@@ -75,30 +87,30 @@ use yii\widgets\Breadcrumbs;
                                                         <tbody>
                                                         <?php foreach ($orders as $key => $order): ?>
                                                             <tr>
-                                                                <td class="text-center" style="vertical-align: middle;">
+                                                                <td class="text-center">
                                                                     <?= $ordersCounter ?>
                                                                 </td>
-                                                                <td class="text-center" style="vertical-align: middle;">
-                                                                    <?= Html::a('sbt24-'.$order->id, ['../order-view', 'id' => $order->id]) ?>
+                                                                <td class="text-center">
+                                                                    <?= Html::a('sbt24-'.$order->id, ['../order-view', 'id' => $order->id], ['class' => 'searched']) ?>
                                                                 </td>
-                                                                <td class="text-center" style="vertical-align: middle;">
+                                                                <td class="text-center">
                                                                     <?php if($order->client->company != ''): ?>
-                                                                        <?= Html::a($order->client->company, ['../client-view', 'id' => $order->client->id]) ?>
+                                                                        <?= Html::a($order->client->company, ['../client-view', 'id' => $order->client->id], ['class' => 'searched']) ?>
                                                                     <?php else: ?>
                                                                         <?= Html::a('Гость', ['../order-view', 'id' => $order->id]) ?>
                                                                     <?php endif ?>
                                                                 </td>
-                                                                <td class="text-center" style="vertical-align: middle;">
+                                                                <td class="text-center">
                                                                     <?php if($order->status === 0): ?>
                                                                         В корзине
                                                                     <?php else: ?>
                                                                         Выставлен счет
                                                                     <?php endif ?>
                                                                 </td>
-                                                                <td class="text-center" style="vertical-align: middle;">
-                                                                    0.00
+                                                                <td class="text-center">
+                                                                    <?php echo $sum = $order->getOrderSum($order->id); ?>
                                                                 </td>
-                                                                <td class="text-center" style="vertical-align: middle;">
+                                                                <td class="text-center">
                                                                     <?php 
                                                                         $created = new DateTime($order->created);
                                                                     ?>
@@ -116,10 +128,10 @@ use yii\widgets\Breadcrumbs;
                                         </div>	<!-- end goods-container -->
                                         <div>
                                             <?php       
-                                                echo LinkPager::widget([
+                                                /*echo LinkPager::widget([
                                                     'pagination' => $pages,
                                                     'registerLinkTags' => true
-                                                ]);
+                                                ]);*/
                                             ?>
                                         </div>
                                 </div>	<!-- end content-block -->
