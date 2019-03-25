@@ -59,15 +59,15 @@
         
         <div id="wrapper">
             <header id="header">
-                <div id="top" class="container-fluid">
+                <div id="top" class="container-fluid hidden-xs">
                         <div class="container">
                                 <div class="row">
-                                        <div id="logo-block" class="col-md-5">
+                                        <div id="logo-block" class="col-xs-12 col-md-5">
                                                 <div class="row">
                                                         <div id="logo" class="col-sm-3">
                                                                 <a href="<?= Yii::$app->urlManager->createUrl('/') ?>"><img src="images/image.png" alt="logo" class="img-responsive"></a>
                                                         </div>
-                                                        <div class="col-sm-9">
+                                                        <div class="col-xs-12 col-sm-9">
                                                                 <p id="site-name"><a href="/"><?= $company->name ?></a></p>
                                                                 <p id="slogan"><?= $company->description ?></p>
                                                         </div>
@@ -89,12 +89,13 @@
                                             <p>Курс USD = <?= $usd ?></p>
                                             <p>Курс EUR = <?= $eur ?></p>
                                         </div>
-                                        <div id="top-phone-block" class="col-md-3">
+                                        <div id="top-phone-block" class="col-xs-12 col-md-3">
                                                 <p id="top-phone" class="text-left"><i class="fa fa-phone" aria-hidden="true"></i><?= $company->phone1 ?></p>
                                                 <div id="top-user" class="text-left">
                                                     <span class="dropdown">
                                                         <i class="fa fa-user-o"></i>
                                                         <?php 
+                                                        // создать функцию и убрать в модель
                                                             if(Yii::$app->request->cookies->has('sbt24client')) {
                                                                 $clientFromCookie = \app\models\Clients::find()->where(['id' => Yii::$app->getRequest()->getCookies()->getValue('sbt24client')])->one();
                                                                 if($clientFromCookie->company === ''){
@@ -136,16 +137,20 @@
                 <div id="main-menu-container" class="container-fluid">
                     <div class="container">
                         <nav id="main-menu" class="row">
-                            <ul class="col-sm-10">
-                                <li><a href="<?= Yii::$app->urlManager->createUrl('/') ?>">Главная</a></li>
-                                <li><a href="<?= Yii::$app->urlManager->createUrl('catalog') ?>">Каталог</a></li>
-                                <li><a href="<?= Yii::$app->urlManager->createUrl('services') ?>">Услуги</a></li>
-                                <li><a href="<?= Yii::$app->urlManager->createUrl('dostavka') ?>">Доставка</a></li>
-                                <li><a href="<?= Yii::$app->urlManager->createUrl('payment') ?>">Оплата</a></li>
-                                <li><a href="<?= Yii::$app->urlManager->createUrl('about') ?>">О компании</a></li>
-                                <li><a href="<?= Yii::$app->urlManager->createUrl('contacts') ?>">Контакты</a></li>
+                            <!--<header class="col-xs-4 visible-xs">
+                                <a href="<?= Yii::$app->urlManager->createUrl('/') ?>">sbt24.ru</a>
+                            </header>-->
+                            <ul class="col-xs-4 col-sm-10">
+                                <li id="logo-menu-item" class="visible-xs"><a href="<?= Yii::$app->urlManager->createUrl('/') ?>">sbt24.ru</a></li>
+                                <li class="hidden-xs"><a href="<?= Yii::$app->urlManager->createUrl('/') ?>">Главная</a></li>
+                                <li class="hidden-xs"><a href="<?= Yii::$app->urlManager->createUrl('catalog') ?>">Каталог</a></li>
+                                <li class="hidden-xs"><a href="<?= Yii::$app->urlManager->createUrl('services') ?>">Услуги</a></li>
+                                <li class="hidden-xs"><a href="<?= Yii::$app->urlManager->createUrl('dostavka') ?>">Доставка</a></li>
+                                <li class="hidden-xs"><a href="<?= Yii::$app->urlManager->createUrl('payment') ?>">Оплата</a></li>
+                                <li class="hidden-xs"><a href="<?= Yii::$app->urlManager->createUrl('about') ?>">О компании</a></li>
+                                <li class="hidden-xs"><a href="<?= Yii::$app->urlManager->createUrl('contacts') ?>">Контакты</a></li>
                             </ul>
-                            <div id="cart" class="col-sm-2 text-right">
+                            <div id="cart" class="col-xs-8 col-sm-2 text-right">
                                 <?php 
                                     $orderItemsSum = "0.00";
                                     $orderItemsCount = 0;
@@ -160,10 +165,19 @@
                                         $orderItemsCount = $order['orderItemsCount'];
                                     }
 
-                                    if($orderItemsSum != '0.00') {
+                                    /*if($orderItemsSum != '0.00') {
                                         if(substr($orderItemsSum, -3, 1) != '.') {
                                             $orderItemsSum = $orderItemsSum.'0';
                                         }
+                                    }*/
+
+                                    if(strpos($orderItemsSum, '.')) {
+                                        if(substr($orderItemsSum, -3, 1) != '.') {
+                                            $orderItemsSum = round($sum,2).'0';
+                                        }
+                                    }
+                                    if(!strpos($orderItemsSum, '.')) {
+                                        $orderItemsSum = $orderItemsSum.'.00';
                                     }
                                 ?>
                                 <a href="<?= $url ?>" id="cart-link">

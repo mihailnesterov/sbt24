@@ -30,7 +30,7 @@ mb_internal_encoding('UTF-8');
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand visible-xs" href="#"><?= Yii::$app->name ?></a>
+                    <p class="navbar-brand visible-xs">МЕНЮ</p>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -97,7 +97,7 @@ mb_internal_encoding('UTF-8');
         </nav>  <!-- end catalog-menu -->
     </div>  <!-- end aside-block -->
 
-    <div class="aside-block">
+    <div class="aside-block hidden-xs">
             <div class="banner-block">
                     <header>
                             <h3>Товары со скидками</h3>
@@ -160,7 +160,7 @@ mb_internal_encoding('UTF-8');
     </div><!-- end aside-block -->
     
     <?php foreach ($bannersPos4 as $key => $banner): ?>
-        <div class="aside-block">
+        <div class="aside-block hidden-xs">
             <a href="<?= Yii::$app->urlManager->createUrl($banner->link) ?>"><img src="images/banners/<?= $banner->image ?>" alt="<?= $banner->name ?>" class="img-responsive"></a>
         </div><!-- end aside-block -->
     <?php endforeach ?>

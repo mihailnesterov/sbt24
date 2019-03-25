@@ -72,6 +72,15 @@ class OrderItems extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Order::className(), ['id' => 'order_id']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTovarById($id)
+    {
+        $tovar = Tovar::find()->where(['id' => $id])->one();
+        return $tovar;
+    }
     
     /*
      * after delete oder item

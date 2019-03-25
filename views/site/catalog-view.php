@@ -18,7 +18,7 @@ if($tovar_count == 0) {
 
 <main role="main">
 
-        <div id="breadcrumbs-container" class="container-fluid">
+        <div id="breadcrumbs-container" class="container-fluid hidden-xs">
                 <div class="container">
                         <div class="row">
                                 <div class="col-xs-12">

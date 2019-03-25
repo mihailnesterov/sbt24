@@ -257,8 +257,27 @@ a:hover {
 }
 
 #main-menu ul li a:active {
-        background-color: #5BB112;
+	background-color: #5BB112;
 	text-decoration: none;
+}
+
+#main-menu ul #logo-menu-item a {
+	/*background-color: #5BB112;
+	background-color: #fff;*/
+	text-decoration: none;
+	padding: 0;
+	padding-right: 0.5em;
+	font-size: 1.1em;
+	font-weight: 600;
+	letter-spacing: 2px;
+	color: #fff;
+	color: #5BB112;
+	text-transform: uppercase;
+}
+#main-menu ul #logo-menu-item a:hover,
+#main-menu ul #logo-menu-item a:active,
+#main-menu ul #logo-menu-item .active_menu {
+	background-color: transparent;
 }
 
 #main-menu ul li a:hover{

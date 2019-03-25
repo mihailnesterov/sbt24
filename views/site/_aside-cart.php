@@ -47,7 +47,7 @@ mb_internal_encoding('UTF-8');
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand visible-xs" href="<?= Yii::$app->urlManager->createUrl(['/']) ?>"><?= Yii::$app->name ?></a>
+                    <p class="navbar-brand visible-xs">МЕНЮ</p>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">

@@ -756,11 +756,11 @@
         $.each($(".client-block a"), function() {
             if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1) {
                 $(this).closest('.client-block').hide();
-                console.log('hide = ' + $(this).html()); // don't work without
+                //console.log('hide = ' + $(this).html()); // don't work without
                 //return false;
             } else {
                 $(this).closest('.client-block').show(); 
-                console.log('show = ' + $(this).html()); // don't work without     
+                //console.log('show = ' + $(this).html()); // don't work without     
                 //return true; 
             }
         });
@@ -772,10 +772,10 @@
         $.each($("table tbody tr .searched"), function() {
             if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1) {
                 $(this).closest('tr').hide();
-                console.log('hide = ' + $(this).html()); // don't work without
+                //console.log('hide = ' + $(this).html()); // don't work without
             } else {
                 $(this).closest('tr').show(); 
-                console.log('show = ' + $(this).html()); // don't work without 
+                //console.log('show = ' + $(this).html()); // don't work without 
             }
         });
     });

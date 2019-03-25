@@ -10,7 +10,7 @@ use yii\widgets\Breadcrumbs;
 
 <main role="main">
 
-        <div id="breadcrumbs-container" class="container-fluid">
+        <div id="breadcrumbs-container" class="container-fluid hidden-xs">
                 <div class="container">
                         <div class="row">
                                 <div class="col-xs-12">
@@ -58,7 +58,8 @@ use yii\widgets\Breadcrumbs;
                                                         $itemCount = 0;
                                                         $totalSum = 0;
                                                         foreach ($order['orderItems'] as $item):
-                                                            $tovar = app\models\Tovar::find()->where(['id' => $item->tovar_id])->one();
+                                                            $tovar = $item->getTovarById($item->tovar_id);
+                                                            //$tovar = app\models\Tovar::find()->where(['id' => $item->tovar_id])->one();
                                                             if ($tovar->price_rub != 0) { 
                                                                 $price = round($tovar->price_rub,2);
                                                             } 
