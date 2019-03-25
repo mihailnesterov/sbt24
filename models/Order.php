@@ -117,9 +117,7 @@ class Order extends \yii\db\ActiveRecord
                 $tovarId = Yii::$app->getRequest()->getCookies()->getValue('sbt24goods', (isset($_COOKIE['sbt24goods']))? $_COOKIE['sbt24goods']: 'sbt24goods');
                 $orderItem->tovar_id = $tovarId;
                 $price = $this->convertCurrenciesToPrice($tovarId);
-                echo '<script>alert('.$price.');</script>';
                 $orderItem->sum = $price;
-                echo '<script>alert('.$orderItem->sum.');</script>';
                 $orderItem->count = 1;
                 $orderItem->save();
             }
