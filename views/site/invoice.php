@@ -207,7 +207,7 @@ use yii2assets\printthis\PrintThis;
                                                         } else
                                                         $totalSum = round($totalSum,2);
 
-                                                        $nds = round(($totalSum / 100 * 15),2);
+                                                        $nds = round(($totalSum / 1.2*0.2),2);
                                                         if(strpos($nds, '.')) {
                                                             if(substr($nds, -3, 1) != '.') {
                                                                 $nds = round($nds,2).'0';

@@ -13,6 +13,7 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700&amp;subset=cyrillic,cyrillic-ext',
+        'css/jquery-ui.min.css',
         'css/font-awesome.min.css',
         'css/animate.css',
         'css/swiper.min.css',
@@ -21,6 +22,7 @@ class AppAsset extends AssetBundle
         'css/style.css'
     ];
     public $js = [
+        'js/jquery-ui.min.js',
         'plugins/gritter/js/jquery.gritter.js',
         'js/swiper.min.js',
         'js/lightbox.min.js',

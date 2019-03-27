@@ -133,7 +133,15 @@ class Order extends \yii\db\ActiveRecord
         foreach ($items as $key => $item) {
             $sum += ($item->sum * $item->count);
         }
-        //return $sum = OrderItems::find()->where(['order_id' => $id])->sum('sum');
+        if(strpos($sum, '.')) {
+            if(substr($sum, -3, 1) != '.') {
+                $sum = round($sum,2).'0';
+            }
+        }
+        if(!strpos($sum, '.')) {
+            $sum = $sum.'.00';
+        } else
+        $sum = round($sum,2);
         return $sum;
     }
 
@@ -151,12 +159,14 @@ class Order extends \yii\db\ActiveRecord
         elseif ($tovar->price_eur != 0) {
             $price = round(($tovar->price_eur * $currencies['EUR']),2);
         }
-        elseif ($tovar->discount != 0) {
+        else {
+            return $price = 0;
+        }
+
+        if ($tovar->discount != 0) {
             $price = round(($price - $price/100*$tovar->discount),2);
         }
-        else {
-            return 0;
-        }
+
         return round($price,2);
     }
 

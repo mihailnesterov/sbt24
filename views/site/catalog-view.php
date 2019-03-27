@@ -137,6 +137,11 @@ if($tovar_count == 0) {
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <p class="text-center">
+                                                        <!--<label for="amount">Price range:</label>-->
+                                                        <input type="text" id="amount" readonly style="border:0; color:#555; font-weight:bold; padding: 0.2em; text-align: center;">
+                                                    </p>
+                                                    <div id="slider-range"></div>
                                                 </div>
 
                                                 <div class="filter-block-buttons col-xs-12 text-center">
