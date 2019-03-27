@@ -446,24 +446,9 @@
         maxPrice = Math.max.apply(Math, priceArray);
         $('.filter-block-price').find('#price-from').val(minPrice);
         $('.filter-block-price').find('#price-to').val(maxPrice);
+    } // end initFilterByMinMaxPrice()
 
-        // init slider-range
-        minPrice = $('.filter-block-price').find('#price-from').val();
-        maxPrice = $('.filter-block-price').find('#price-to').val();
-
-        $( "#slider-range" ).slider({
-          range: true,
-          min: 0,
-          max: maxPrice,
-          values: [ minPrice, maxPrice ],
-          slide: function( event, ui ) {
-            $( "#amount" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-          }
-        });
-        $("#amount").val( $("#slider-range").slider("values", 0) + " - " + $("#slider-range").slider("values", 1) + " руб.");
-    }
-
-    // catalog / filter block / filter by min / max price
+    // catalog / filter block / filter by min / max price, set slider range
     function filterByMinMaxPrice(minPrice, maxPrice) {
         $('.goods-list-block').each(function () {
             $(this).hide();
@@ -474,6 +459,21 @@
         });
     }
 
+    // catalog / filter block / set slider-range
+    /*function setSliderRange(minPrice, maxPrice) {
+        $( "#slider-range" ).slider({
+          range: true,
+          min: 0,
+          step: 10,
+          max: maxPrice,
+          values: [ minPrice, maxPrice ],
+          slide: function( event, ui ) {
+            $( "#amount" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+          }
+        });
+        $("#amount").val( $("#slider-range").slider("values", 0) + " - " + $("#slider-range").slider("values", 1) + " руб.");
+    }*/
+
 
     $('#btn-filter-apply').click(function() {
         $('.catalog-view-pagination .btn-group .active:first').click();
@@ -482,6 +482,7 @@
         $('.goods-list-block').each(function () {
             $(this).data('pageNumber', 1);
             $(this).hide();
+            $(this).data('show',0);
             let goods = $(this);
             let brand = $(this).data('brand');
             let type = $(this).data('type');
@@ -516,9 +517,13 @@
         $('.goods-list-block').each(function () {
             if($(this).css('display') == 'block') {
                 filterCount++;
+                $(this).data('show',1);
+            } else {
+                $(this).data('show',0);
             }
             if(allBrandsClear && allTypesClear) {
                 $(this).show();
+                $(this).data('show',1);
             }
         });
 
@@ -529,21 +534,48 @@
             $('.catalog-view-pagination .btn-group .active:first').click();
             $('.catalog-view-pagination-block').show();
             initFilterByMinMaxPrice();
+            let minPrice = $('.filter-block-price').find('#price-from').val();
+            let maxPrice = $('.filter-block-price').find('#price-to').val();
+            $( "#slider-range" ).slider( "option", "values", [ minPrice, maxPrice ]  );
         } else {
             $('.catalog-view-pagination-block').hide();
             $(this).html('<i class="fa fa-check"></i> Найдено: ' + filterCount);
         }
 
-        // filter by max/min price and fill values of inputs
         
+        
+
+        /*let minPrice = $('.filter-block-price').find('#price-from').val();
+        let maxPrice = $('.filter-block-price').find('#price-to').val();
+        if (minPrice == '' || maxPrice == '') {
+            return;
+        } else {
+            initFilterByMinMaxPrice();
+            filterByMinMaxPrice(minPrice, maxPrice);
+        }*/
+
         let minPrice = $('.filter-block-price').find('#price-from').val();
         let maxPrice = $('.filter-block-price').find('#price-to').val();
         if (minPrice == '' || maxPrice == '') {
             return;
         } else {
             initFilterByMinMaxPrice();
-            //filterByMinMaxPrice(minPrice, maxPrice);
+            let minPrice = $('.filter-block-price').find('#price-from').val();
+            let maxPrice = $('.filter-block-price').find('#price-to').val();
+            $( "#slider-range" ).slider( "option", "values", [ minPrice, maxPrice ]  );
+            $("#amount").val( $("#slider-range").slider("values", 0) + " - " + $("#slider-range").slider("values", 1) + " руб.");
+            /*filterByMinMaxPrice(minPrice, maxPrice);
+            setSliderRange(minPrice, maxPrice);*/
         }
+
+        // filter by max/min price and fill values of inputs
+        
+        var values = $( "#slider-range" ).slider( "option", "values" );
+        //initFilterByMinMaxPrice();
+        //filterByMinMaxPrice(values[0], values[1]);
+        /*console.log(values);
+        console.log(values[0]);
+        console.log(values[1]);*/
         
     }); // end #btn-filter-apply click
 
@@ -562,6 +594,10 @@
         $('.catalog-view-pagination .btn-group .active:first').click();
         $('.catalog-view-pagination-block').show();
         initFilterByMinMaxPrice();
+        let minPrice = $('.filter-block-price').find('#price-from').val();
+        let maxPrice = $('.filter-block-price').find('#price-to').val();
+        $( "#slider-range" ).slider( "option", "values", [ minPrice, maxPrice ]  );
+        $('#btn-filter-apply').html('<i class="fa fa-check"></i> Найти');
     }); // end #btn-filter-cancel click
     
     // init filter buttons html
@@ -574,6 +610,53 @@
     // init filter by max/min price
     $(function() {
         initFilterByMinMaxPrice();
+        let minPrice = $('.filter-block-price').find('#price-from').val();
+        let maxPrice = $('.filter-block-price').find('#price-to').val();
+        $( "#slider-range" ).slider({
+            range: true,
+            min: 0,
+            step: 10,
+            max: maxPrice,
+            values: [ minPrice, maxPrice ],
+            slide: function( event, ui ) {
+              $( "#amount" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ]  + " руб.");
+            },
+            change: function( event, ui ) {
+                //console.log(ui.values[ 0 ] + ' - '+ ui.values[ 1 ]);
+                //console.clear();
+                let show = hide = 0;
+                $('.goods-list-block').each(function () {
+                    //let block = $(this);
+                        
+                        let price = $(this).find('.goods-price span').html();
+                        let min = ui.values[ 0 ];
+                        let max = ui.values[ 1 ];
+                        
+                        if( parseFloat(price) > parseFloat(min-10) 
+                            && parseFloat(price) < parseFloat(max+10)
+                            && $(this).data('show') == 1) {                           
+                            $(this).show();
+                            //console.log('show' + $(this).data('show'));
+                            show++;
+                        } else {
+                            $(this).hide();
+                            //console.log('hide' + $(this).data('show'));
+                            hide++;
+                        }
+                        /*console.log($(this).css('display'));
+                        console.log('goods-price span=' + $(this).find('.goods-price span').html());
+    
+                        console.log('price=' + price);
+                        console.log('min=' + min);
+                        console.log('max=' + max);*/
+                    
+                });
+                //console.log('show=' + show);
+                //console.log('hide=' + hide);
+                $('#btn-filter-apply').html('<i class="fa fa-check"></i> Найдено: ' + show);
+            }
+        });
+        $("#amount").val( $("#slider-range").slider("values", 0) + " - " + $("#slider-range").slider("values", 1) + " руб.");
     });
     $('.filter-block-price').find('#price-from').change(function() {
         $('#btn-filter-apply').html('<i class="fa fa-check"></i> Найти');

@@ -122,7 +122,7 @@ if($tovar_count == 0) {
                                                     </ul>
                                                 </div>
                                                 <div class="col-xs-12 col-md-4">
-                                                    <h4>Цена</h4>
+                                                    <h4>Цена, руб.</h4>
                                                     <div class="filter-block-price">
                                                         <div class="form-group">
                                                             <div class="input-group">
@@ -287,7 +287,7 @@ if($tovar_count == 0) {
                                                             $old_price = $old_price.'.00';
                                                         }
                                                         
-                                                        echo '<div class="goods-list-block" data-goods-id="'.$good->id.'" data-page-number="'.$pageNumber.'" data-brand="'.$good->brand.'" data-type="'.$good->type.'">'
+                                                        echo '<div class="goods-list-block" data-goods-id="'.$good->id.'" data-page-number="'.$pageNumber.'" data-brand="'.$good->brand.'" data-type="'.$good->type.'" data-show="1">'
                                                             .'<div class="row">'
                                                             .'<div class="col-md-4 col-lg-3">'
                                                             .'<a href="'.Yii::$app->urlManager->createUrl(Yii::$app->homeUrl.'../view?id='.$good->id).'"><img src="images/goods/'.$good->photo1.'" alt="" class="img-responsive"></a>'

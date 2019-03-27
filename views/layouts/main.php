@@ -173,7 +173,7 @@
 
                                     if(strpos($orderItemsSum, '.')) {
                                         if(substr($orderItemsSum, -3, 1) != '.') {
-                                            $orderItemsSum = round($sum,2).'0';
+                                            $orderItemsSum = round($orderItemsSum,2).'0';
                                         }
                                     }
                                     if(!strpos($orderItemsSum, '.')) {
