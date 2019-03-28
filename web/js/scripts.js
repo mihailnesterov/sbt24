@@ -87,6 +87,8 @@
         });
     }).on('submit', function(e){
         e.preventDefault();
+        // Yandex Metrika / goal - add to cart
+        ym(51001274, 'reachGoal', 'addToCart');
     });
 
     /* add to cart from hit goods on main page (ajax) */
@@ -115,6 +117,8 @@
         });
     }).on('submit', function(e){
         e.preventDefault();
+        // Yandex Metrika / goal - add to cart
+        ym(51001274, 'reachGoal', 'addToCart');
     });
     
     /* add to cart from catalog-view */
@@ -163,6 +167,8 @@
         });
     }).on('submit', function(e){
         e.preventDefault();
+        // Yandex Metrika / goal - add to cart
+        ym(51001274, 'reachGoal', 'addToCart');
     });
     
     /* add to cart from good's view */
@@ -211,6 +217,8 @@
         });
     }).on('submit', function(e){
         e.preventDefault();
+        // Yandex Metrika / goal - add to cart
+        ym(51001274, 'reachGoal', 'addToCart');
     });
     
 
@@ -663,6 +671,12 @@
     });
     $('.filter-block-price').find('#price-to').change(function() {
         $('#btn-filter-apply').html('<i class="fa fa-check"></i> Найти');
+    });
+
+    // Yandex Metrika / goal - new invoice
+    $('#cart-order-form').on('submit', function() {
+        ym(51001274, 'reachGoal', 'invoice'); 
+        return true;
     });
 
 

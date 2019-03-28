@@ -75,7 +75,9 @@ use yii\widgets\ActiveForm;
                                             <h3>Покупатель</h3>
                                             
                                             <p class="text-info bg-warning" style="padding: 1.5em; margin: 1em 0 2em 0;">Для получения счета на оплату укажите реквизиты вашей компании:</p>
-                                            <?php $form = ActiveForm::begin(); ?>
+                                            <?php $form = ActiveForm::begin([
+                                                'id'  =>  'cart-order-form',
+                                            ]); ?>
                                             <table class="table table-responsive table-bordered">
                                                 <tbody>
                                                     <tr>
