@@ -865,28 +865,31 @@
     //  admin/clients: fast client search
     $('#admin-clients-search-input').keyup(function() {
         let _this = $(this);
-        $.each($(".client-block a"), function() {
+        //console.clear();
+        $.each($(".client-block"), function() {
+            console.log($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()));
             if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1) {
                 $(this).closest('.client-block').hide();
                 //console.log('hide = ' + $(this).html()); // don't work without
                 //return false;
             } else {
                 $(this).closest('.client-block').show(); 
+                //alert($(this).closest('.client-block').html());
                 //console.log('show = ' + $(this).html()); // don't work without     
                 //return true; 
             }
         });
     });
 
-    //  admin/clients: fast order search
+    //  admin/orders: fast order search
     $('#admin-order-search-input').keyup(function() {
         let _this = $(this);
-        $.each($("table tbody tr .searched"), function() {
+        $.each($("table tbody tr"), function() {
             if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1) {
-                $(this).closest('tr').hide();
+                $(this).hide();
                 //console.log('hide = ' + $(this).html()); // don't work without
             } else {
-                $(this).closest('tr').show(); 
+                $(this).show(); 
                 //console.log('show = ' + $(this).html()); // don't work without 
             }
         });
@@ -1206,7 +1209,7 @@
     });
 
     // admin/clients: search
-    $('#search #admin-clients-search-input').keyup(function(){
+    /*$('#search #admin-clients-search-input').keyup(function(){
         var str = $(this).val();
         var clientCounter = 1;
         $('.client-block').each(function(){
@@ -1217,7 +1220,7 @@
                 $(this).find('.client-counter').html(clientCounter++);
             }
         });
-    });
+    });*/
             
 /* read cart from cookies https://itchief.ru/lessons/javascript/javascript-working-with-cookies */
 

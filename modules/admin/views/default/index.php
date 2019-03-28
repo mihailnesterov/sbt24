@@ -41,6 +41,7 @@ use yii\widgets\Breadcrumbs;
                                                                 <div class="dashboard-block">
                                                                     <?= Html::a('<i class="fa fa-plus"></i> Добавить товар', Yii::$app->urlManager->createUrl(['/admin/goods-add']), ['class' => 'btn btn-success']) ?>
                                                                     <?= Html::a('<i class="fa fa-plus"></i> Добавить категорию', Yii::$app->urlManager->createUrl(['/admin/category-add']), ['class' => 'btn btn-success']) ?>
+                                                                    <?= Html::a('<i class="fa fa-plus"></i> Добавить баннер', Yii::$app->urlManager->createUrl(['/admin/banner-add']), ['class' => 'btn btn-success']) ?>
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-6 col-md-4 text-center">

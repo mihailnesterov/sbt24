@@ -106,10 +106,10 @@ use yii\widgets\Breadcrumbs;
                                                             <div class="dashboard-block">
                                                                 <div class="client-head row">
                                                                     <div class="col-xs-1 text-center">
-                                                                        <h5><a href="#">№</a><i class="fa fa-arrow-down"></i></h5>
+                                                                        <h5><a href="#">№</a><!--<i class="fa fa-arrow-down"></i>--></h5>
                                                                     </div>
                                                                     <div class="col-xs-3 text-center">
-                                                                        <h5><a href="#">Компания</a><i class="fa fa-arrow-down hidden"></i></h5>
+                                                                        <h5><a href="#">Компания</a><!--<i class="fa fa-arrow-down hidden"></i>--></h5>
                                                                     </div>
                                                                     <div class="col-xs-2 text-center">
                                                                         <h5>Контакт</h5>
