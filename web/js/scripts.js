@@ -79,7 +79,9 @@
                         position: 'top-right',
                         time: '2000'
                     });*/
-                return false;
+                    // Yandex Metrika / goal - add to cart
+                    ym(51001274, 'reachGoal', 'addToCart');
+                return true;
             },
             error: function () {
                 alert('При добавлении товара произошла ошибка!');
@@ -87,8 +89,6 @@
         });
     }).on('submit', function(e){
         e.preventDefault();
-        // Yandex Metrika / goal - add to cart
-        ym(51001274, 'reachGoal', 'addToCart');
     });
 
     /* add to cart from hit goods on main page (ajax) */
@@ -109,7 +109,9 @@
                         position: 'top-right',
                         time: '2000'
                     });*/
-                return false;
+                    // Yandex Metrika / goal - add to cart
+                    ym(51001274, 'reachGoal', 'addToCart');
+                return true;
             },
             error: function () {
                 alert('При добавлении товара произошла ошибка!');
@@ -117,8 +119,6 @@
         });
     }).on('submit', function(e){
         e.preventDefault();
-        // Yandex Metrika / goal - add to cart
-        ym(51001274, 'reachGoal', 'addToCart');
     });
     
     /* add to cart from catalog-view */
@@ -159,7 +159,9 @@
                         position: 'top-right',
                         time: '2000'
                     });*/
-                return false;
+                    // Yandex Metrika / goal - add to cart
+                    ym(51001274, 'reachGoal', 'addToCart');
+                return true;
             },
             error: function () {
                 alert('При добавлении товара произошла ошибка!');
@@ -167,8 +169,6 @@
         });
     }).on('submit', function(e){
         e.preventDefault();
-        // Yandex Metrika / goal - add to cart
-        ym(51001274, 'reachGoal', 'addToCart');
     });
     
     /* add to cart from good's view */
@@ -209,7 +209,9 @@
                         position: 'top-right',
                         time: '2000'
                     });*/
-                return false;
+                    // Yandex Metrika / goal - add to cart
+                    ym(51001274, 'reachGoal', 'addToCart');
+                return true;
             },
             error: function () {
                 alert('При добавлении товара произошла ошибка!');
@@ -217,8 +219,6 @@
         });
     }).on('submit', function(e){
         e.preventDefault();
-        // Yandex Metrika / goal - add to cart
-        ym(51001274, 'reachGoal', 'addToCart');
     });
     
 
