@@ -65,7 +65,7 @@
                                         <div id="logo-block" class="col-xs-12 col-md-5">
                                                 <div class="row">
                                                         <div id="logo" class="col-sm-3">
-                                                                <a href="<?= Yii::$app->urlManager->createUrl('/') ?>"><img src="images/image.png" alt="logo" class="img-responsive"></a>
+                                                                <a href="<?= Yii::$app->urlManager->createUrl('/') ?>"><img src="images/sbt24-logo.png" alt="logo" class="img-responsive"></a>
                                                         </div>
                                                         <div class="col-xs-12 col-sm-9">
                                                                 <p id="site-name"><a href="/"><?= $company->name ?></a></p>
