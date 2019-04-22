@@ -6,6 +6,7 @@ use Yii;
 use app\models\Clients;
 use app\models\OrderItems;
 use app\models\Tovar;
+use app\models\Company;
 
 /**
  * This is the model class for table "sbt_order".
@@ -186,6 +187,66 @@ class Order extends \yii\db\ActiveRecord
             $currencies[(string)$valute->CharCode] = (float)str_replace(',', '.', $valute->Value);
         }
         return $currencies;
+    }
+
+    /**
+     * send email to client and company, called from controller/actionOrder/client->save
+     */
+    public function sendEmail($orderItems) {
+        // get company data
+        $company = Company::find()->where(['status' => '1'])->one();
+        Yii::$app->mailer->getView()->params['company'] = $company;
+        Yii::$app->mailer->getView()->params['client_id'] = $this->client->id;
+        Yii::$app->mailer->getView()->params['client_contact'] = $this->client->contact;
+        Yii::$app->mailer->getView()->params['order_id'] = $this->id;
+        Yii::$app->mailer->getView()->params['orderItems'] = $orderItems;
+        Yii::$app->mailer->getView()->params['order_date'] = date('d.m.Y');
+        // send email to client
+        Yii::$app->mailer->compose([
+                'html' => 'view-html',
+                'text' => 'view-text',
+            ],
+            [
+                'company' => $company,
+                'client_id' => $this->client->id,
+                'client_contact' => $this->client->contact,
+                'order_id' => $this->id,
+                'orderItems' => $orderItems,
+                'order_date' => date('d.m.Y'),
+            ])
+            ->setFrom([$company->email => $company->name.' | Заказ № sbt24-'.$this->id])
+            ->setTo($this->client->email)
+            ->setSubject('Оформлен заказ в интернет-магазине № sbt24-'.$this->id.', от '.date('d.m.Y'))
+            //->setTextBody($this->client->contact.', Ваш заказ получен, в ближайшее время мы свяжемся с вами')
+            //->setHtmlBody('<p>'.$this->client->contact.', Ваш заказ получен, в ближайшее время мы свяжемся с вами</p>')
+            ->send();
+        // send email to company
+        Yii::$app->mailer->compose([
+                'html' => 'view-html',
+                'text' => 'view-text',
+            ],
+            [
+                'company' => $company,
+                'client_id' => $this->client->id,
+                'client_contact' => $this->client->contact,
+                'order_id' => $this->id,
+                'orderItems' => $orderItems,
+                'order_date' => date('d.m.Y'),
+            ])
+            ->setFrom(['zgrmarket@mail.ru' => $company->name.' | Заказ № sbt24-'.$this->id])
+            //->setTo($company->email)
+            ->setTo('mhause@mail.ru')
+            ->setSubject('Получен заказ № sbt24-'.$this->id.', от '.date('d.m.Y'))
+            //->setTextBody($this->client->company.', '.$this->client->contact.', '.$this->client->phone.', '.$this->client->email)
+            //->setHtmlBody('<p>'.$this->client->company.', '.$this->client->contact.', '.$this->client->phone.', '.$this->client->email.'</p>')
+            ->send();
+
+            Yii::$app->mailer->getView()->params['company'] = null;
+            Yii::$app->mailer->getView()->params['client_id'] = null;
+            Yii::$app->mailer->getView()->params['client_contact'] = null;
+            Yii::$app->mailer->getView()->params['order_id'] = null;
+            Yii::$app->mailer->getView()->params['orderItems'] = null;
+            Yii::$app->mailer->getView()->params['order_date'] = null;
     }
 
 }

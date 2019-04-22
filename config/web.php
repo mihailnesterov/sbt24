@@ -63,10 +63,16 @@ return [
                 'transport' => [
                     'class' => 'Swift_SmtpTransport',
                     'host' => 'smtp.mail.ru',
-                    'username' => 'mhause@mail.ru',
-                    'password' => 'rexerov',
+                    'username' => 'zgrmarket@mail.ru',
+                    'password' => 'puhvfhrtn',
                     'port' => '465', // Port 25 is a very common port too
                     'encryption' => 'ssl', // It is often used, check your provider or mail server specs
+                ],
+                'htmlLayout' => 'layouts/main-html',
+                'textLayout' => 'layouts/main-text',
+                'messageConfig' => [
+                    'charset' => 'UTF-8',
+                    'from' => ['specbank@bk.ru' => 'СПЕЦБАНКТЕХНИКА'],
                 ],
             ],
     ],

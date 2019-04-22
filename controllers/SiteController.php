@@ -902,6 +902,10 @@ class SiteController extends Controller
                 }
                 // удаляем куку sbt24order, чтобы удалить товары из корзины
                 Yii::$app->response->cookies->remove('sbt24order');
+                // отправляем email клиенту и компании с информацией о заказе
+                if($orderItems) {
+                    $order->sendEmail($orderItems);
+                }
             }
             return $this->redirect(Yii::$app->urlManager->createUrl('invoice?id='.$order->id));
         }
