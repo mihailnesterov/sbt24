@@ -6,11 +6,12 @@
 
 ?>
 
-<h2>Здравствуйте, <?= $client_contact ?>!</h2>
-<p>Ваш заказ получен и находится в обработке. </p>
-<p>В ближайшее время наш менеджер свяжется с Вами для уточнения деталей заказа.</p>
-
-<h3>Ваш заказ № sbt24-<?= $order_id ?> от <?= $order_date ?></h3>
+<h2>Получен заказ № sbt24-<?= $order_id ?> от <?= $order_date ?></h2>
+<p><?= $client_company ?></p>
+<p><?= $client_contact ?></p>
+<p><?= $client_phone ?></p>
+<p><?= $client_email ?></p>
+<h3>Детали заказа № sbt24-<?= $order_id ?> от <?= $order_date ?></h3>
 <table>
     <tr>
         <th>№</th>

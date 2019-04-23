@@ -214,28 +214,33 @@ class Order extends \yii\db\ActiveRecord
                 'orderItems' => $orderItems,
                 'order_date' => date('d.m.Y'),
             ])
-            ->setFrom([$company->email => $company->name.' | Заказ № sbt24-'.$this->id])
+            //->setFrom([$company->email => $company->name.' | Заказ № sbt24-'.$this->id])
+            ->setFrom(['info@24bts.ru' => $company->name.' | Заказ № sbt24-'.$this->id])
             ->setTo($this->client->email)
-            ->setSubject('Оформлен заказ в интернет-магазине № sbt24-'.$this->id.', от '.date('d.m.Y'))
+            ->setSubject('Ваш заказ в интернет-магазине № sbt24-'.$this->id.', от '.date('d.m.Y'))
             //->setTextBody($this->client->contact.', Ваш заказ получен, в ближайшее время мы свяжемся с вами')
             //->setHtmlBody('<p>'.$this->client->contact.', Ваш заказ получен, в ближайшее время мы свяжемся с вами</p>')
             ->send();
         // send email to company
         Yii::$app->mailer->compose([
-                'html' => 'view-html',
-                'text' => 'view-text',
+                'html' => 'company-html',
+                'text' => 'company-text',
             ],
             [
                 'company' => $company,
                 'client_id' => $this->client->id,
+                'client_company' => $this->client->company,
                 'client_contact' => $this->client->contact,
+                'client_phone' => $this->client->phone,
+                'client_email' => $this->client->email,
                 'order_id' => $this->id,
                 'orderItems' => $orderItems,
                 'order_date' => date('d.m.Y'),
             ])
-            ->setFrom(['zgrmarket@mail.ru' => $company->name.' | Заказ № sbt24-'.$this->id])
-            //->setTo($company->email)
-            ->setTo('mhause@mail.ru')
+            //->setFrom([$company->email => $company->name.' | Заказ № sbt24-'.$this->id])
+            ->setFrom(['info@24bts.ru' => $company->name.' | Заказ № sbt24-'.$this->id])
+            ->setTo($company->email)
+            //->setTo('mhause@mail.ru')
             ->setSubject('Получен заказ № sbt24-'.$this->id.', от '.date('d.m.Y'))
             //->setTextBody($this->client->company.', '.$this->client->contact.', '.$this->client->phone.', '.$this->client->email)
             //->setHtmlBody('<p>'.$this->client->company.', '.$this->client->contact.', '.$this->client->phone.', '.$this->client->email.'</p>')

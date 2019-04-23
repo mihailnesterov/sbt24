@@ -5,6 +5,6 @@
 /* @var $content string main view render result */
 
 ?>
-Здравствуйте, <?= $this->params['client_contact'] ?> ваш id = <?= $this->params['client_id'] ?>
-Company: <?= $this->params['company']->name ?>
+<?= $this->params['company']->name ?> интернет-магазин sbt24.ru
+
 <?= $content ?>
